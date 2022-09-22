@@ -12,6 +12,8 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     public float dashSpeed = 10f;
     public float currentSpeed;
 
+    public float dashTime = 1f;
+
     bool isDead = false;
 
     public void Damage(float damageAmount)
