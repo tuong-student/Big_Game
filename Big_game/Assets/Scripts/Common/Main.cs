@@ -9,5 +9,11 @@ public class Main : MonoBehaviour
     private void Start()
     {
         player = PlayerScripts.Create();
+
+        GameCanvas.Create();
+
+        GameManager.Create();
+        UIManager.Create();
+        GoldManager.Create();
     }
 }

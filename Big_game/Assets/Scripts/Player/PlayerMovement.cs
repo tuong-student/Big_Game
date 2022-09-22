@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        playerScripts.currentSpeed = playerScripts.runSpeed;
         PlayerScripts temp = GetComponent<PlayerScripts>();
         if (temp)
         {

@@ -10,7 +10,8 @@ public class PlayerScripts : BaseCharacter
 
     public static PlayerScripts Create(Transform parent = null)
     {
-        return Instantiate<PlayerScripts>(Resources.Load<PlayerScripts>("Prefabs/Game/Player"));
+        //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
+        return Instantiate<PlayerScripts>(Resources.Load<PlayerScripts>("Prefabs/Game/Player/Player"), parent);
     }
 
     private void Awake()
@@ -34,4 +35,12 @@ public class PlayerScripts : BaseCharacter
         playerOncollision = GetComponent<PlayerOncollision>();
     }
     
+    void Buy(float amountOfGold, Upgrade upgrade)
+    {
+        if (GoldManager.i.MinusGold(amountOfGold))
+        {
+            upgrade.AddStats();
+        }
+    }
+
 }

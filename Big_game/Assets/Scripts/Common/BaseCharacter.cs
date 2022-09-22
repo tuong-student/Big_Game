@@ -20,4 +20,9 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     {
         health -= damageAmount;
     }
+
+    public virtual void Die()
+    {
+        Destroy(this.gameObject);
+    }
 }
