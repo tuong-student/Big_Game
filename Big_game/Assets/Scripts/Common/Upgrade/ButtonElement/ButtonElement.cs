@@ -5,32 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ButtonElement : MonoBehaviour
+public class ButtonElement : BaseButton
 {
     [SerializeField] Text buttonText, goldNeedText;
-    [SerializeField] Button button;
-    [SerializeField] Image background;
     Upgrade upgrade;
     Action action;
 
     public static ButtonElement Create(Transform parent)
     {
         return Instantiate<ButtonElement>(Resources.Load<ButtonElement>("Prefabs/Game/Upgrade/UpgradeBtn"), parent);
-    }
-
-    private void Start()
-    {
-        button.onClick.AddListener(() =>
-        {
-            action?.Invoke();
-        });
-        PopupAnimation();
-    }
-
-    void PopupAnimation(float duration = 0.5f)
-    {
-        this.transform.localScale = Vector3.zero;
-        this.transform.DOScale(1, 0.5f).SetEase(Ease.OutBounce);
     }
 
     public void SetBtn(Upgrade upgrade = null, Action action = null)
