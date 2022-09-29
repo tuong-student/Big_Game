@@ -7,12 +7,12 @@ using UnityEngine;
 public class Upgrade
 {
     public StatsType upgradeStats;
-    public float amount;
+    public float upgradeAmount;
     public float goldNeed;
 
     public void AddStats()
     {
-        Debug.Log(upgradeStats.ToString() + "has been upgraded " + amount);
+        Debug.Log(upgradeStats.ToString() + "has been upgraded " + upgradeAmount);
     }
 }
 
@@ -31,11 +31,11 @@ public static class UpgradeMaster
         int r = UnityEngine.Random.Range(0, statsTypeList.Length);
         StatsType randomStats = (StatsType) statsTypeList.GetValue(r);
 
-        r = UnityEngine.Random.Range(0, 5);
+        r = UnityEngine.Random.Range(1, 5);
 
         upgrade.upgradeStats = randomStats;
-        upgrade.amount = r;
-        upgrade.goldNeed = (r * 2) / 1.5f;
+        upgrade.upgradeAmount = r;
+        upgrade.goldNeed = (r * 2);
 
         return upgrade;
     }
@@ -53,11 +53,11 @@ public static class UpgradeMaster
             randomStats = (StatsType)statsTypeList.GetValue(r);
         }
 
-        r = UnityEngine.Random.Range(0, 5);
+        r = UnityEngine.Random.Range(1, 5);
 
         upgrade.upgradeStats = randomStats;
-        upgrade.amount = r;
-        upgrade.goldNeed = (r * 2) / 1.5f;
+        upgrade.upgradeAmount = r;
+        upgrade.goldNeed = (r * 2);
 
 
         return upgrade;

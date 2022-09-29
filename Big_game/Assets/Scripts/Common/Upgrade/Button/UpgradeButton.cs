@@ -5,24 +5,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ButtonElement : BaseButton
+public class UpgradeButton : BaseButton
 {
     [SerializeField] Text buttonText, goldNeedText;
     Upgrade upgrade;
-    Action action;
 
-    public static ButtonElement Create(Transform parent)
+    public static UpgradeButton Create(Transform parent)
     {
-        return Instantiate<ButtonElement>(Resources.Load<ButtonElement>("Prefabs/Game/Upgrade/UpgradeBtn"), parent);
+        return Instantiate<UpgradeButton>(Resources.Load<UpgradeButton>("Prefabs/Game/Upgrade/UpgradeBtn"), parent);
     }
 
-    public void SetBtn(Upgrade upgrade = null, Action action = null)
+    public void SetBtn(Upgrade upgrade = null, Action newAction = null)
     {
-        this.action = action;
+        action = newAction;
         if(upgrade != null)
         {
             this.upgrade = upgrade;
-            this.buttonText.text = upgrade.upgradeStats.ToString();
+            this.buttonText.text = upgrade.upgradeStats.ToString() + " + " + upgrade.upgradeAmount;
             this.goldNeedText.text = upgrade.goldNeed.ToString("0.00");
         }
     }
