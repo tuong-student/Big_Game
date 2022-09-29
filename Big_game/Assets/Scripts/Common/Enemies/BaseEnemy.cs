@@ -16,7 +16,6 @@ public class BaseEnemy : BaseCharacter
     public void AddGold()
     {
         GoldManager.i.AddGold(gold);
-        UIManager.i.RefreshGoldText();
     }
 
     public override void Die()

@@ -20,6 +20,7 @@ public class GameCanvas : MonoBehaviour
 
     public UpgradePanel CreateUpgradePanel()
     {
+        if (GameObject.FindObjectOfType<UpgradePanel>() != null) return null;
         return Instantiate<UpgradePanel>(Resources.Load<UpgradePanel>("Prefabs/Game/Upgrade/UpgradePanel"), this.transform);
     }
 

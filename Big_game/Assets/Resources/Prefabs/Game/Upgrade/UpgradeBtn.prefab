@@ -114,7 +114,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 321.7886, y: 158.1}
+  m_SizeDelta: {x: 321.7886, y: 79.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3608782465034863065
 CanvasRenderer:
@@ -293,7 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44b17699f784384e9ec423b9abb1825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 3502288067943782074}
   buttonText: {fileID: 3609006551500525667}
   goldNeedText: {fileID: 1851136999268192078}
-  button: {fileID: 3502288067943782074}
-  background: {fileID: 1595958614437412218}

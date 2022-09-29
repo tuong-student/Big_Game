@@ -8,12 +8,13 @@ using System;
 public class BaseButton : MonoBehaviour
 {
     [SerializeField] Button button;
-    Action action;
+    protected Action action;
 
     private void Start()
     {
         button.onClick.AddListener(() =>
         {
+            Debug.Log("Button Press");
             action?.Invoke();
         });
         PopupAnimation();

@@ -12,6 +12,14 @@ public class GoldManager : MonoBehaviour
         return Instantiate<GoldManager>(Resources.Load<GoldManager>("Prefabs/Manager/GoldManager"), parent);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            AddGold(100f);
+        }
+    }
+
     private void Awake()
     {
         if (i == null) i = this;
@@ -23,6 +31,7 @@ public class GoldManager : MonoBehaviour
         if(gold >= amount)
         {
             gold -= amount;
+            UIManager.i.RefreshGoldText();
             return true;    
         }
         else
@@ -34,5 +43,6 @@ public class GoldManager : MonoBehaviour
     public void AddGold(float amount)
     {
         gold += amount;
+        UIManager.i.RefreshGoldText();
     }
 }

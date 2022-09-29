@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpgradePanel : MonoBehaviour
 {
-    [SerializeField] ButtonElement buttonRef;
+    [SerializeField] UpgradeButton buttonRef;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class UpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            ButtonElement newBtn = Instantiate<ButtonElement>(buttonRef, this.transform);
+            UpgradeButton newBtn = Instantiate<UpgradeButton>(buttonRef, this.transform);
             newBtn.gameObject.SetActive(true);
             Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
             newBtn.SetBtn(newUpgrade, () =>
