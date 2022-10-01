@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 18182375337995635}
   - component: {fileID: 9122682741685125191}
   - component: {fileID: 2033583306662527487}
+  - component: {fileID: 8170951977071460151}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,10 +101,12 @@ MonoBehaviour:
   health: 100
   mana: 100
   stamina: 50
-  currentSpeed: 0
   walkSpeed: 2
   runSpeed: 5
   dashSpeed: 10
+  dashForce: 30
+  currentSpeed: 0
+  dashTime: 1
   playerMovement: {fileID: 9122682741685125191}
   playerOncollision: {fileID: 2033583306662527487}
 --- !u!114 &9122682741685125191
@@ -132,3 +135,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScripts: {fileID: 18182375337995635}
+--- !u!50 &8170951977071460151
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8340371620407059422}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

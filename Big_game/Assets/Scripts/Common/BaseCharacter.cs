@@ -10,6 +10,7 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
     public float dashSpeed = 10f;
+    public float dashForce = 30f;
     public float currentSpeed;
 
     public float dashTime = 1f;
