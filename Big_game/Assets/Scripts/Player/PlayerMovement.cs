@@ -29,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
 
         movement = new Vector3(moveX, moveY);
 
@@ -53,16 +53,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movement == Vector3.zero) movement = new Vector3(1, 0);
         myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
-        myBody.drag = 5;
+        playerScripts.currentSpeed = 0;
         isDashing = true;
+        myBody.drag = 2;
 
         StartCoroutine(ResetNormal());
         IEnumerator ResetNormal()
         {
             yield return new WaitForSeconds(playerScripts.dashTime);
             //return to normal speed
+            myBody.velocity = Vector3.zero;
+            myBody.drag = 0f;
             playerScripts.currentSpeed = playerScripts.runSpeed;
-            myBody.drag = 0.5f;
             isDashPress = false;
             isDashing = false;
         }

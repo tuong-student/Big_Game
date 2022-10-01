@@ -12,6 +12,7 @@ public class CustomCamera : MonoBehaviour
     [SerializeField] float explodeMagnitude;
     [SerializeField] float smoothTime;
     [SerializeField] string targetTag;
+    Transform targetTransform;
 
     [SerializeField] Vector3 offset;
 
@@ -40,7 +41,9 @@ public class CustomCamera : MonoBehaviour
 
     void FollowPlayer()
     {
-        NOOD.NoodyCustomCode.SmoothCameraFollow(Camera.main.gameObject, smoothTime, GameObject.FindGameObjectWithTag(targetTag).transform, offset);
+        if (!targetTransform) targetTransform = GameObject.FindGameObjectWithTag(targetTag).transform;
+        NOOD.NoodyCustomCode.LerpSmoothCameraFollow(Camera.main.gameObject, smoothTime, targetTransform, offset);
+        //this.transform.LookAt(targetTransform);
     }
     
     public void Shake(){
