@@ -10,6 +10,15 @@ public class CustomCamera : MonoBehaviour
     #region Stats
     [SerializeField] float duration, magnitude;
     [SerializeField] float explodeMagnitude;
+    [SerializeField] float smoothTime;
+    [SerializeField] string targetTag;
+    Transform targetTransform;
+
+    [SerializeField] Vector3 offset;
+
+    [SerializeField] bool isFollow;
+    [SerializeField] bool isShake;
+    [SerializeField] bool isHeavyShake;
     #endregion
 
     public static CustomCamera InsCustomCamera;
@@ -18,12 +27,30 @@ public class CustomCamera : MonoBehaviour
     {
         if(InsCustomCamera == null) InsCustomCamera = this;
     }
+
+    private void Update()
+    {
+        if (isShake) Shake();
+        if (isHeavyShake) HeaveShake();
+    }
+
+    private void LateUpdate()
+    {
+        if (isFollow) FollowPlayer();
+    }
+
+    void FollowPlayer()
+    {
+        if (!targetTransform) targetTransform = GameObject.FindGameObjectWithTag(targetTag).transform;
+        NOOD.NoodyCustomCode.LerpSmoothCameraFollow(Camera.main.gameObject, smoothTime, targetTransform, offset);
+        //this.transform.LookAt(targetTransform);
+    }
     
     public void Shake(){
         StartCoroutine(NOOD.NoodyCustomCode.ObjectShake(this.gameObject, duration, magnitude));
     }
 
-    public void ExplodeShake(){
+    public void HeaveShake(){
         StartCoroutine(NOOD.NoodyCustomCode.ObjectShake(this.gameObject, duration, explodeMagnitude));
     }
 }
