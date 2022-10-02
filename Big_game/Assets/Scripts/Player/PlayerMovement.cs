@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] PlayerScripts playerScripts;
-    Rigidbody2D myBody;
-    Vector3 movement;
+    [HideInInspector] public Rigidbody2D myBody;
+    [HideInInspector] public Vector3 movement;
 
     #region Bool
     bool isDashPress;
@@ -16,22 +16,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< HEAD
-=======
         isDashPress = false;
         isDashing = false;
-        playerScripts.currentSpeed = playerScripts.runSpeed;
->>>>>>> updates/mainCharacter
         PlayerScripts temp = GetComponent<PlayerScripts>();
         if (temp)
         {
             playerScripts = temp;
         }
-<<<<<<< HEAD
         playerScripts.currentSpeed = playerScripts.runSpeed;
-=======
         myBody = GetComponent<Rigidbody2D>();
->>>>>>> updates/mainCharacter
     }
 
     private void Update()
@@ -53,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(Vector3 movement)
     {
-        this.transform.position += movement * playerScripts.currentSpeed * Time.deltaTime;
+        this.myBody.velocity = movement * playerScripts.currentSpeed;
     }
 
     private void Dash()
@@ -63,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         playerScripts.currentSpeed = 0;
         isDashing = true;
         myBody.drag = 2;
+        playerScripts.dashEff.Play();
 
         StartCoroutine(ResetNormal());
         IEnumerator ResetNormal()

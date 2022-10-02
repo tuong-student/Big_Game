@@ -5,8 +5,13 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PlayerScripts : BaseCharacter
 {
-    [SerializeField] PlayerMovement playerMovement;
-    [SerializeField] PlayerOncollision playerOncollision;
+    public PlayerMovement playerMovement;
+    public PlayerOncollision playerOncollision;
+    public PlayerAnimation playerAnimation;
+
+    public ParticleSystem dashEff;
+
+    Vector3 movement;
 
     public static PlayerScripts Create(Transform parent = null)
     {
@@ -17,6 +22,14 @@ public class PlayerScripts : BaseCharacter
     private void Awake()
     {
         AddScripts();
+    }
+
+    private void Update()
+    {
+        this.movement = playerMovement.movement;
+
+        if(playerAnimation != null)
+            SetDirection(this.movement);
     }
 
     void AddScripts()
@@ -31,10 +44,50 @@ public class PlayerScripts : BaseCharacter
             this.gameObject.AddComponent<PlayerOncollision>();
         }
 
+        if (this.gameObject.GetComponent<PlayerAnimation>() == null)
+        {
+            this.gameObject.AddComponent<PlayerAnimation>();
+        }
+
+        playerAnimation = GetComponent<PlayerAnimation>();
         playerMovement = GetComponent<PlayerMovement>();
         playerOncollision = GetComponent<PlayerOncollision>();
     }
     
+    void SetDirection(Vector3 movement)
+    {
+        float x = movement.x;
+        float y = movement.y;
+
+        playerAnimation.left = false;
+        playerAnimation.right = false;
+        playerAnimation.up = false;
+        playerAnimation.down = false;
+        playerAnimation.stand = true;
+
+        if(x < 0)
+        {
+            playerAnimation.left = true;
+            playerAnimation.stand = false;
+        }
+        if(x > 0)
+        {
+            playerAnimation.right = true;
+            playerAnimation.stand = false;
+        }
+
+        if (y < 0)
+        {
+            playerAnimation.down = true;
+            playerAnimation.stand = false;
+        }
+        if (y > 0)
+        {
+            playerAnimation.up = true;
+            playerAnimation.stand = false;
+        }
+    }
+
     void Buy(float amountOfGold, Upgrade upgrade)
     {
         if (GoldManager.i.MinusGold(amountOfGold))

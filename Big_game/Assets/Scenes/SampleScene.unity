@@ -231,7 +231,7 @@ MonoBehaviour:
   duration: 0
   magnitude: 0
   explodeMagnitude: 0
-  smoothTime: 2
+  smoothTime: 5
   targetTag: Player
   offset: {x: 0, y: 0, z: -10}
   isFollow: 1
@@ -294,116 +294,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1184892878
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805550541916450737, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8340371620407059422, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cf10d406cf6534c5db646262818879bc, type: 3}
---- !u!1 &1184892879 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8340371620407059422, guid: cf10d406cf6534c5db646262818879bc, type: 3}
-  m_PrefabInstance: {fileID: 1184892878}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1184892880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184892879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94d044dac65944029a4871d38a0387e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerScripts: {fileID: 1184892882}
---- !u!114 &1184892881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184892879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47adb6ab2c9dd4778a56379cbf1b39ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerScripts: {fileID: 1184892882}
---- !u!114 &1184892882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184892879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  mana: 100
-  stamina: 50
-  walkSpeed: 2
-  runSpeed: 5
-  dashSpeed: 10
-  currentSpeed: 5
-  dashTime: 1
-  playerMovement: {fileID: 1184892881}
-  playerOncollision: {fileID: 1184892880}
 --- !u!1 &1346317343
 GameObject:
   m_ObjectHideFlags: 0
