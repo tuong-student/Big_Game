@@ -7,14 +7,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] PlayerScripts playerScripts;
 
-    private void Start()
+    private void Awake()
     {
-        playerScripts.currentSpeed = playerScripts.runSpeed;
         PlayerScripts temp = GetComponent<PlayerScripts>();
         if (temp)
         {
             playerScripts = temp;
         }
+        playerScripts.currentSpeed = playerScripts.runSpeed;
     }
 
     private void Update()
