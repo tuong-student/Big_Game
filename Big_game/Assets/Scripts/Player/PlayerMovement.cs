@@ -47,24 +47,26 @@ public class PlayerMovement : MonoBehaviour
     private void Move(Vector3 movement)
     {
         this.myBody.velocity = movement * playerScripts.currentSpeed;
+        if (movement == Vector3.zero)
+        {
+            if (Mathf.Abs(myBody.velocity.x) > 0.02f) myBody.drag = 2;
+        }
     }
 
     private void Dash()
     {
+        playerScripts.dashEff.Play();
         if (movement == Vector3.zero) movement = new Vector3(1, 0);
         myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
-        playerScripts.currentSpeed = 0;
-        isDashing = true;
         myBody.drag = 2;
-        playerScripts.dashEff.Play();
+        isDashing = true;
 
         StartCoroutine(ResetNormal());
         IEnumerator ResetNormal()
         {
             yield return new WaitForSeconds(playerScripts.dashTime);
             //return to normal speed
-            myBody.velocity = Vector3.zero;
-            myBody.drag = 0f;
+            myBody.drag = 0;
             playerScripts.currentSpeed = playerScripts.runSpeed;
             isDashPress = false;
             isDashing = false;

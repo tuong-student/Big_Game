@@ -45,6 +45,7 @@ public class PlayerAnimation : MonoBehaviour
         if (left)
         {
             this.transform.localScale = new Vector3(-1, 1, 1);
+
             anim.SetBool("Slide", true);
         }
         else if (right)
