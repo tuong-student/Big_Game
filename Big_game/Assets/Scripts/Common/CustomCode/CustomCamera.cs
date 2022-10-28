@@ -10,7 +10,7 @@ public class CustomCamera : MonoBehaviour
     #region Stats
     [SerializeField] float duration, magnitude;
     [SerializeField] float explodeMagnitude;
-    [SerializeField] float smoothTime = 2f;
+    [SerializeField] float smoothTime;
     [SerializeField] string targetTag;
     Transform targetTransform;
 
