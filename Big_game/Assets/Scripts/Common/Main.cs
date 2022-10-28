@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
+    public Transform respawnPos;
     PlayerScripts player;
 
     private void Start()
     {
-        player = PlayerScripts.Create();
-
+        player = PlayerScripts.Create(respawnPos);
+        
         GameCanvas.Create();
 
         GameManager.Create();
