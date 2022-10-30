@@ -8,9 +8,10 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] PlayerScripts playerScripts;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer sr;
+    Vector3 mouseDirection;
 
     #region Bool
-    [HideInInspector] public bool stand, up, down, left, right;
+    [HideInInspector] public bool stand, up, down, slide;
     #endregion
 
     private void Awake()
@@ -20,11 +21,8 @@ public class PlayerAnimation : MonoBehaviour
         {
             playerScripts = temp;
         }
-
-        anim = playerScripts.GetComponent<Animator>();
-        sr = playerScripts.GetComponent<SpriteRenderer>();
-        up = down = left = right = false;
-        anim.SetBool("Stand", true);
+        up = down = slide = false;
+        stand = true;
     }
 
     private void Update()
@@ -32,32 +30,43 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("Up", up);
         anim.SetBool("Down", down);
         anim.SetBool("Stand", stand);
+        anim.SetBool("Slide", slide);
 
-        if (down)
+        mouseDirection = NOOD.NoodyCustomCode.LookDirection(this.transform.position, NOOD.NoodyCustomCode.MouseToWorldPoint2D());
+
+        if(mouseDirection == Vector3.zero)
         {
-            anim.SetFloat("DownSpeedd", Mathf.Abs(playerScripts.playerMovement.myBody.velocity.y));
+            stand = true;
+            return;
+        }
+
+        if(mouseDirection.x == 0)
+        {
+            slide = false;
         }
         else
         {
-            anim.SetFloat("DownSpeedd", 0);
+            slide = true;
+            if(mouseDirection.x < 0)
+            {
+                sr.flipX = true;
+            }
+            else
+            {
+                sr.flipX = false;
+            }
         }
 
-        if (left)
+        if(mouseDirection.y > 0)
         {
-            this.transform.localScale = new Vector3(-1, 1, 1);
-
-            anim.SetBool("Slide", true);
+            up = true;
+            down = false;
         }
-        else if (right)
+        else if(mouseDirection.y < 0)
         {
-            this.transform.localScale = new Vector3(1, 1, 1);
-            anim.SetBool("Slide", true);
+            up = false;
+            down = true;
         }
-        else
-        {
-            anim.SetBool("Slide", false);
-        }
-
     }
 
 

@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
@@ -37,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) isDashPress = true;
 
         Move(movement);
+
+
     }
 
     private void FixedUpdate()
@@ -55,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash()
     {
-        playerScripts.dashEff.Play();
+        //playerScripts.dashEff.Play();
         if (movement == Vector3.zero) movement = new Vector3(1, 0);
         myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
         myBody.drag = 2;
