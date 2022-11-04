@@ -28,6 +28,7 @@ public class GunScripts : ObjectPool
         GameObject bullet = GetPoolObject();
         bullet.transform.rotation = this.transform.rotation;
         bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * data.bulletForce * 10f);
+        SetBulletDamage(bullet, data.damage);
         SetObjectDeactive deactiveBullet = bullet.GetComponent<SetObjectDeactive>();
         deactiveBullet.action = () =>
         {
@@ -37,6 +38,13 @@ public class GunScripts : ObjectPool
         };
 
         anim.SetTrigger("Shooting");
-        anim.SetInteger("AnimIndex", data.animIndex);
+        anim.SetInteger("AnimIndex", data.animationIndex);
+    }
+
+    void SetBulletDamage(GameObject bullet, float damage)
+    {
+        BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+        // In the future damage will be randomed base on critical rate
+        bulletScript.damage = damage;
     }
 }
