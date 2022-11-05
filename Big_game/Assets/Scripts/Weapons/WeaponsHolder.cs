@@ -39,6 +39,43 @@ public class WeaponsHolder : MonoBehaviour
         }
     }
 
+    public bool SetNewGun(GunData data)
+    {
+        if (IsEnoughGun())
+        {
+            return false;
+        }
+        else
+        {
+            gun2 = data;
+            return true;
+        }
+    }
+
+    public bool IsEnoughGun()
+    {
+        if (gun2 != null) return true;
+        else return false;
+    }
+
+    public void SetCurrentGunData(GunData data)
+    {
+        if (this.currentGun.data.Equals(gun1))
+        {
+            gun1 = data;
+        }
+        else
+        {
+            gun2 = data;
+        }
+        this.currentGun.SetData(data);
+    }
+
+    public GunData GetCurrentGunData()
+    {
+        return this.currentGun.data;
+    }
+
     void Fire()
     {
         nextShootTime = Time.time;

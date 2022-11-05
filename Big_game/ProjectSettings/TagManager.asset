@@ -48,6 +48,9 @@ TagManager:
   - name: Player
     uniqueID: 389058879
     locked: 0
+  - name: Gun
+    uniqueID: 1580085099
+    locked: 0
   - name: Bullet
     uniqueID: 2786249033
     locked: 0

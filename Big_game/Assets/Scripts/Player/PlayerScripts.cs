@@ -14,6 +14,7 @@ public class PlayerScripts : BaseCharacter
     public ParticleSystem dashEff;
 
     Vector3 movement;
+    [SerializeField] GroundGun groundGun = null;
 
     public static PlayerScripts Create(Transform parent = null)
     {
@@ -39,12 +40,10 @@ public class PlayerScripts : BaseCharacter
         {
             weaponsHolder.isShootPress = true;
         }
-
         if (Input.GetButtonUp("Fire1"))
         {
             weaponsHolder.isShootPress = false;
         }
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             weaponsHolder.ChangeItem(1);
@@ -52,6 +51,10 @@ public class PlayerScripts : BaseCharacter
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             weaponsHolder.ChangeItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            PickUpGun();
         }
     }
 
@@ -85,4 +88,31 @@ public class PlayerScripts : BaseCharacter
         }
     }
 
+    public void SetGroundGun(GroundGun groundGun)
+    {
+        this.groundGun = groundGun;
+    }
+
+    public void RemoveGroundGun()
+    {
+        groundGun = null;
+    }
+
+    void PickUpGun()
+    {
+        if (groundGun)
+        {
+            if (weaponsHolder.SetNewGun(groundGun.GetData()))
+            {
+                Destroy(groundGun.gameObject);
+            }
+            else
+            {
+                //Pick up new gun and drop current gun
+                GunData temp = weaponsHolder.GetCurrentGunData();
+                weaponsHolder.SetCurrentGunData(groundGun.GetData());
+                groundGun.SetData(temp);
+            }
+        }
+    }
 }
