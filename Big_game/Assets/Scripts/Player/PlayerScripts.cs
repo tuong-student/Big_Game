@@ -9,14 +9,18 @@ public class PlayerScripts : BaseCharacter
     public PlayerOncollision playerOncollision;
     public PlayerAnimation playerAnimation;
 
+    [SerializeField] WeaponsHolder weaponsHolder;
+
     public ParticleSystem dashEff;
 
     Vector3 movement;
+    [SerializeField] GroundGun groundGun = null;
 
     public static PlayerScripts Create(Transform parent = null)
     {
         //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
-        return Instantiate<PlayerScripts>(Resources.Load<PlayerScripts>("Prefabs/Game/Player/Player"), parent);
+        PlayerScripts player = Instantiate(Resources.Load<GameObject>("Prefabs/Game/Player/Player"), parent).GetComponentInChildren<PlayerScripts>();
+        return player;
     }
 
     private void Awake()
@@ -27,9 +31,31 @@ public class PlayerScripts : BaseCharacter
     private void Update()
     {
         this.movement = playerMovement.movement;
+        GetInput();
+    }
 
-        if(playerAnimation != null)
-            SetDirection(this.movement);
+    void GetInput()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            weaponsHolder.isShootPress = true;
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            weaponsHolder.isShootPress = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weaponsHolder.ChangeItem(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            weaponsHolder.ChangeItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            PickUpGun();
+        }
     }
 
     void AddScripts()
@@ -53,40 +79,6 @@ public class PlayerScripts : BaseCharacter
         playerMovement = GetComponent<PlayerMovement>();
         playerOncollision = GetComponent<PlayerOncollision>();
     }
-    
-    void SetDirection(Vector3 movement)
-    {
-        float x = movement.x;
-        float y = movement.y;
-
-        playerAnimation.left = false;
-        playerAnimation.right = false;
-        playerAnimation.up = false;
-        playerAnimation.down = false;
-        playerAnimation.stand = true;
-
-        if(x < 0)
-        {
-            playerAnimation.left = true;
-            playerAnimation.stand = false;
-        }
-        if(x > 0)
-        {
-            playerAnimation.right = true;
-            playerAnimation.stand = false;
-        }
-
-        if (y < 0)
-        {
-            playerAnimation.down = true;
-            playerAnimation.stand = false;
-        }
-        if (y > 0)
-        {
-            playerAnimation.up = true;
-            playerAnimation.stand = false;
-        }
-    }
 
     void Buy(float amountOfGold, Upgrade upgrade)
     {
@@ -96,4 +88,31 @@ public class PlayerScripts : BaseCharacter
         }
     }
 
+    public void SetGroundGun(GroundGun groundGun)
+    {
+        this.groundGun = groundGun;
+    }
+
+    public void RemoveGroundGun()
+    {
+        groundGun = null;
+    }
+
+    void PickUpGun()
+    {
+        if (groundGun)
+        {
+            if (weaponsHolder.SetNewGun(groundGun.GetData()))
+            {
+                Destroy(groundGun.gameObject);
+            }
+            else
+            {
+                //Pick up new gun and drop current gun
+                GunData temp = weaponsHolder.GetCurrentGunData();
+                weaponsHolder.SetCurrentGunData(groundGun.GetData());
+                groundGun.SetData(temp);
+            }
+        }
+    }
 }

@@ -8,7 +8,7 @@ public class BaseEnemy : BaseCharacter
 
     float gold = 10f;
 
-    public void Move()
+    public virtual void Move()
     {
         
     }
