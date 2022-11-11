@@ -6,11 +6,17 @@ public class ObjectPool : MonoBehaviour
 {
     public GameObject objectToPool;
     [SerializeField] protected int poolSize = 10;
+    public static ObjectPool i;
 
     private Queue<GameObject> objectQueue = new Queue<GameObject>();
 
-    public Transform spawnTransform;
-    public Transform parentTranform;
+    private Transform spawnTransform;
+    private Transform parentTranform;
+
+    private void Awake()
+    {
+        if (i == null) i = this;
+    }
 
     public GameObject GetPoolObject()
     {

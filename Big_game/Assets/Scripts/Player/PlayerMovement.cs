@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     #region Bool
     bool isDashPress;
     bool isDashing;
+    [HideInInspector] public bool isStop;
     #endregion
 
     private void Awake()
@@ -53,7 +54,10 @@ public class PlayerMovement : MonoBehaviour
         if (movement == Vector3.zero)
         {
             if (Mathf.Abs(myBody.velocity.x) > 0.02f) myBody.drag = 2;
+            isStop = true;
         }
+        else
+            isStop = false;
     }
 
     private void Dash()

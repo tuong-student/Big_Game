@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour, IDamageable
 {
+    [SerializeField] ParticleSystem bloodEff;
+
     #region Stats
     public float health = 100f;
     public float mana = 100f;
@@ -22,6 +24,7 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
+        bloodEff?.Play();
     }
 
     public virtual void Die()

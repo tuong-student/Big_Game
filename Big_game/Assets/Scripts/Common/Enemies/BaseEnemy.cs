@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BaseEnemy : BaseCharacter
 {
-    PlayerScripts playerScripts;
-
     float gold = 10f;
 
     public virtual void Move()

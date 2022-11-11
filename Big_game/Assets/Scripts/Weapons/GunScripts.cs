@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunScripts : ObjectPool
+public class GunScripts : MonoBehaviour
 {
     public GunData data;
     public SpriteRenderer sr;
     public Animator anim;
     [SerializeField] Transform shootPoint;
-    [SerializeField] ObjectPool ExplodeSpawn;
+
+    #region
+    ObjectPool bulletPooling;
+    #endregion
 
     private void Awake()
     {
@@ -16,30 +19,29 @@ public class GunScripts : ObjectPool
             sr = GetComponent<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+    }
+
     public void SetData(GunData data)
     {
         this.data = data;
-        objectToPool = data.bulletPrefab;
+        PoolingManager.i.SetBulletPoolingObject(data.bulletPrefab);
         sr.sprite = data.gunImage;
     }
 
     public void Fire()
     {
-        GameObject bullet = GetPoolObject();
-        bullet.transform.rotation = this.transform.rotation;
+        GameObject bullet = PoolingManager.i.GetBullet();
+        bullet.transform.position = shootPoint.transform.position;
+        bullet.transform.rotation = shootPoint.transform.rotation;
         bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * data.bulletForce * 10f);
         SetBulletDamage(bullet, data.damage);
-        SetObjectDeactive deactiveBullet = bullet.GetComponent<SetObjectDeactive>();
-        deactiveBullet.action = () =>
-        {
-            GameObject explode = ExplodeSpawn.GetPoolObject();
-            explode.transform.position = deactiveBullet.transform.position;
-            explode.GetComponent<ParticleSystem>().Play();
-        };
 
         anim.SetTrigger("Shooting");
         anim.SetInteger("AnimIndex", data.animationIndex);
     }
+
 
     void SetBulletDamage(GameObject bullet, float damage)
     {

@@ -16,5 +16,6 @@ public class Main : MonoBehaviour
         GameManager.Create();
         UIManager.Create();
         GoldManager.Create();
+        PoolingManager.Create();
     }
 }

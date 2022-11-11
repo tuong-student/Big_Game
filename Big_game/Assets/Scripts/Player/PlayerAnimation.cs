@@ -25,8 +25,15 @@ public class PlayerAnimation : MonoBehaviour
         stand = true;
     }
 
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>(false);
+        sr = GetComponentInChildren<SpriteRenderer>(false);
+    }
+
     private void Update()
     {
+        stand = playerScripts.playerMovement.isStop;
         anim.SetBool("Up", up);
         anim.SetBool("Down", down);
         anim.SetBool("Stand", stand);
@@ -36,7 +43,6 @@ public class PlayerAnimation : MonoBehaviour
 
         if(mouseDirection == Vector3.zero)
         {
-            stand = true;
             return;
         }
 
