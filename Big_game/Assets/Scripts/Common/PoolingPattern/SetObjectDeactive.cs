@@ -5,9 +5,6 @@ using System;
 
 public class SetObjectDeactive : MonoBehaviour
 {
-    #region Components
-    [HideInInspector] public Action action;
-    #endregion
 
     #region Bool
     public bool whenCollisionEnter;
@@ -32,7 +29,6 @@ public class SetObjectDeactive : MonoBehaviour
 
     void Deactive()
     {
-        action?.Invoke();
         this.gameObject.SetActive(false);
     }
 

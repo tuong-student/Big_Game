@@ -16,6 +16,9 @@ public class PlayerScripts : BaseCharacter
     Vector3 movement;
     [SerializeField] GroundGun groundGun = null;
 
+    [SerializeField] GameObject player1View, player2View, player3View;
+    public float playerNum = 1;
+
     public static PlayerScripts Create(Transform parent = null)
     {
         //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
@@ -26,6 +29,21 @@ public class PlayerScripts : BaseCharacter
     private void Awake()
     {
         AddScripts();
+        player1View.SetActive(false);
+        player2View.SetActive(false);
+        player3View.SetActive(false);
+        switch (playerNum)
+        {
+            case 1:
+                player1View.SetActive(true);
+                break;
+            case 2:
+                player2View.SetActive(true);
+                break;
+            case 3:
+                player3View.SetActive(true);
+                break;
+        }
     }
 
     private void Update()
