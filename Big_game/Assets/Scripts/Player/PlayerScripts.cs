@@ -133,4 +133,9 @@ public class PlayerScripts : BaseCharacter
             }
         }
     }
+
+    public override void Die()
+    {
+        Debug.Log("Player Die");
+    }
 }
