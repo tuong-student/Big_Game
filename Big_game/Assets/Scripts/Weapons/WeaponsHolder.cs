@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class WeaponsHolder : MonoBehaviour
 {
+    [SerializeField] List<GunData> gunDatas = new List<GunData>();
     [SerializeField] GunScripts currentGun;
-    [SerializeField] GunData gun1, gun2;
+    [SerializeField] [Range(0, 6)] int gun1Index, gun2Index;
 
     [HideInInspector] public bool isShootPress;
     private float nextShootTime;
 
     private void Start()
     {
-        currentGun.SetData(gun1);
+        gun2Index = gun1Index;
+        currentGun.SetData(GetGunData(gun1Index));
     }
 
     private void Update()
     {
+        if (PlayerScripts.GetInstance.isDead) return;
         LookAtMouse();
     }
 
@@ -26,15 +29,20 @@ public class WeaponsHolder : MonoBehaviour
             Fire();
     }
 
+    GunData GetGunData(int index)
+    {
+        return gunDatas[index];
+    }
+
     public void ChangeItem(int index)
     {
         switch (index)
         {
             case 1:
-                currentGun.SetData(gun1);
+                currentGun.SetData(GetGunData(gun1Index));
                 break;
             case 2:
-                currentGun.SetData(gun2);
+                currentGun.SetData(GetGunData(gun2Index));
                 break;
         }
     }
@@ -47,26 +55,26 @@ public class WeaponsHolder : MonoBehaviour
         }
         else
         {
-            gun2 = data;
+            gun2Index = gunDatas.IndexOf(data);
             return true;
         }
     }
 
     public bool IsEnoughGun()
     {
-        if (gun2 != null) return true;
+        if (gun2Index != gun1Index) return true;
         else return false;
     }
 
     public void SetCurrentGunData(GunData data)
     {
-        if (this.currentGun.data.Equals(gun1))
+        if (this.currentGun.data.Equals(GetGunData(gun1Index)))
         {
-            gun1 = data;
+            gun1Index = gunDatas.IndexOf(data);
         }
         else
         {
-            gun2 = data;
+            gun2Index = gunDatas.IndexOf(data);
         }
         this.currentGun.SetData(data);
     }

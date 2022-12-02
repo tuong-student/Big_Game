@@ -5,19 +5,25 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PlayerScripts : BaseCharacter
 {
+    #region Component
     public PlayerMovement playerMovement;
     public PlayerOncollision playerOncollision;
     public PlayerAnimation playerAnimation;
-
-    [SerializeField] WeaponsHolder weaponsHolder;
-
     public ParticleSystem dashEff;
 
-    Vector3 movement;
+    [SerializeField] WeaponsHolder weaponsHolder;
     [SerializeField] GroundGun groundGun = null;
-
     [SerializeField] GameObject player1View, player2View, player3View;
-    public float playerNum = 1;
+    #endregion
+
+    public float playerNum = 1; //Index of the player sprite (0 -> 2)
+
+
+    Vector3 movement;
+
+    #region Bool
+
+    #endregion
 
     public static PlayerScripts Create(Transform parent = null)
     {
@@ -25,6 +31,8 @@ public class PlayerScripts : BaseCharacter
         PlayerScripts player = Instantiate(Resources.Load<GameObject>("Prefabs/Game/Player/Player"), parent).GetComponentInChildren<PlayerScripts>();
         return player;
     }
+
+    public static PlayerScripts GetInstance { get { return (PlayerScripts)Instance; } private set { } }
 
     private void Awake()
     {
@@ -45,10 +53,15 @@ public class PlayerScripts : BaseCharacter
                 break;
         }
     }
-
+ 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            health -= 30;
+        }
         this.movement = playerMovement.movement;
+        if (health <= 0 && isDead == false) Die();
         GetInput();
     }
 
@@ -137,5 +150,7 @@ public class PlayerScripts : BaseCharacter
     public override void Die()
     {
         Debug.Log("Player Die");
+        isDead = true;
+        playerAnimation.DeadAnimation();
     }
 }
