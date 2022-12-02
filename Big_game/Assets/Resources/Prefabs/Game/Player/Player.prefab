@@ -146,9 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6697b76e6f5f433e9b3038918bf3b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunDatas:
+  - {fileID: 11400000, guid: aaca33e670e014c37bbfc4b681089995, type: 2}
+  - {fileID: 11400000, guid: f65b4485fac6445cb87149d0482afca0, type: 2}
+  - {fileID: 11400000, guid: d9deaf535a3164e3e9b86c097f47d261, type: 2}
   currentGun: {fileID: 5018497532369957803}
-  gun1: {fileID: 11400000, guid: aaca33e670e014c37bbfc4b681089995, type: 2}
-  gun2: {fileID: 11400000, guid: f65b4485fac6445cb87149d0482afca0, type: 2}
+  gun1Index: 1
+  gun2Index: 0
   isShootPress: 0
 --- !u!1 &2019554750412261173
 GameObject:
@@ -405,7 +409,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 90ab20fd81f7440b494197193db36b41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -428,7 +432,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5dfcae8411c2d844faae6e901a31dc5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.16, y: 0.21}
@@ -554,15 +558,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71db828bab6642feb5cbb78c8c34f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPool: {fileID: 0}
-  poolSize: 10
-  spawnTransform: {fileID: 4760911552239904100}
-  parentTranform: {fileID: 0}
   data: {fileID: 0}
   sr: {fileID: 6364216630835527051}
   anim: {fileID: 9076987504261023118}
   shootPoint: {fileID: 4760911552239904100}
-  ExplodeSpawn: {fileID: 2113140875970023665}
 --- !u!114 &2113140875970023665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,8 +576,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToPool: {fileID: 5460606525638499473, guid: 3e665a1b7f93b42e290d0fb2bea4d3cf, type: 3}
   poolSize: 10
-  spawnTransform: {fileID: 0}
-  parentTranform: {fileID: 0}
 --- !u!1 &6924288752608067878
 GameObject:
   m_ObjectHideFlags: 0
@@ -5723,6 +5720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEff: {fileID: 0}
   health: 100
   mana: 100
   stamina: 50
@@ -5733,8 +5731,8 @@ MonoBehaviour:
   playerMovement: {fileID: 6935578856058936187}
   playerOncollision: {fileID: 6946583462553598074}
   playerAnimation: {fileID: 2971400110636064631}
-  weaponsHolder: {fileID: 1915051232245636687}
   dashEff: {fileID: 0}
+  weaponsHolder: {fileID: 1915051232245636687}
   groundGun: {fileID: 0}
   player1View: {fileID: 6102769691291206813}
   player2View: {fileID: 1426449731092501425}
@@ -5782,11 +5780,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScripts: {fileID: 6715641731601680243}
-  anim: {fileID: 4985441576291850706}
-  sr: {fileID: 4293279584836249286}
+  anim: {fileID: 2144722461413242711}
+  sr: {fileID: 8351695711452664378}
+  fadeTime: 0.5
   stand: 1
-  up: 1
-  down: 0
+  up: 0
+  down: 1
   slide: 1
 --- !u!70 &8501675313230595011
 CapsuleCollider2D:

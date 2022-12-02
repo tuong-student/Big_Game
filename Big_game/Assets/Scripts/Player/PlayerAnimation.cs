@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] PlayerScripts playerScripts;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer sr;
+    [SerializeField] float fadeTime = 0.5f;
     Vector3 mouseDirection;
 
     #region Bool
     [HideInInspector] public bool stand, up, down, slide;
+    bool isDisappear = false;
+    #endregion
+
+    #region Private
+    Material playerMaterial;
     #endregion
 
     private void Awake()
@@ -23,6 +28,7 @@ public class PlayerAnimation : MonoBehaviour
         }
         up = down = slide = false;
         stand = true;
+        playerMaterial = sr.material;
     }
 
     private void Start()
@@ -75,5 +81,20 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
+    public void DeadAnimation()
+    {
+        StartCoroutine(Disappear());
+    }
 
+    IEnumerator Disappear()
+    {
+        isDisappear = true;
+        float fade = 1;
+        while (fade > 0)
+        {
+            fade -= Time.deltaTime * fadeTime;
+            playerMaterial.SetFloat("_Fade", fade);
+            yield return null;
+        }
+    }
 }
