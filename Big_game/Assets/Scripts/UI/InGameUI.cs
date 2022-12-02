@@ -7,18 +7,22 @@ using DG.Tweening;
 public class InGameUI : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider manaSlider;
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
+    private bool isOn = false;
 
 
-    public int maxHealth = 50;
-    public int currenHealth;
+    public float maxHealth = 50;
+    public float currenHealth;
+
+    public float maxMana = 50;
+    public float currentMana;
 
     public void Start()
     {
-        MoveIn(statsMenuRect);
-        currenHealth = maxHealth;
         SetMaxHealth(maxHealth);
+        SetMaxMana(maxMana);
     }
 
     public void Update()
@@ -27,28 +31,69 @@ public class InGameUI : MonoBehaviour
         {
             TakeDamage(20);
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isOn)
+            {
+                MoveOut(statsMenuRect);
+                isOn = false;
+            }
+            else
+            {
+                MoveIn(statsMenuRect);
+                isOn = true;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TakeMana(20);
+        }
+
+
+
     }
 
     public void TakeDamage(int damage)
     {
         currenHealth -= damage;
+        SetHealth(currenHealth);
     }
 
-    public void SetMaxHealth(int health)
+    public void SetMaxHealth(float health)
     {
+        currenHealth = maxHealth;
         healthSlider.maxValue = health;
         healthSlider.value = health;
     }
 
-    public void SetHealth(int health)
+    public void SetHealth(float health)
     {
         healthSlider.value = health;
-        SetHealth(currenHealth);
     }
+
+    public void TakeMana(int mana)
+    {
+        currentMana -= mana;
+        SetMana(currentMana);
+    }
+
+    public void SetMaxMana(float mana)
+    {
+        currentMana = maxMana;
+        manaSlider.maxValue = mana;
+        manaSlider.value = mana;
+    }
+
+    public void SetMana(float mana)
+    {
+        manaSlider.value = mana;
+    }
+
+
 
     public virtual void MoveIn(RectTransform rect)
     {
-        Tween tweenContain = rect.DOAnchorPosX(0, 50).SetEase(Ease.InQuad).Play();
+        Tween tweenContain = rect.DOAnchorPosX(-600, 0.3f).SetEase(Ease.InQuad).Play();
         tweenContain.Play();
     }
 
@@ -59,4 +104,6 @@ public class InGameUI : MonoBehaviour
         tweenContain
             .Play();
     }
+
+
 }
