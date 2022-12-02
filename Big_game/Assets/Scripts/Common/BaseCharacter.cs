@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour, IDamageable
 {
-    public float health = 100f;
+    public float health = 100f ;
     public float mana = 100f;
     public float stamina = 50f;
     public float walkSpeed = 2f;
@@ -16,6 +16,7 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     public float dashTime = 0.5f;
 
     bool isDead = false;
+
 
     public void Damage(float damageAmount)
     {
