@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalDataManager : MonoBehaviour
+public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
 {
     public static int currentGun1Index;
     public static int currentGun2Index;
@@ -27,6 +27,8 @@ public class LocalDataManager : MonoBehaviour
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.level, currentLevel);
+
+        Load();
     }
 }
 
