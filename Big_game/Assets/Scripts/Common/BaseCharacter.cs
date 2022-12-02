@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCharacter : MonoBehaviour, IDamageable
+public class BaseCharacter :MonoBehaviour, IDamageable
 {
     [SerializeField] ParticleSystem bloodEff;
+    public static BaseCharacter Instance { get; private set; }
 
     #region Stats
     public float health = 100f;
@@ -18,8 +19,18 @@ public class BaseCharacter : MonoBehaviour, IDamageable
 
     public float dashTime = 0.5f;
 
-    bool isDead = false;
+    internal bool isDead = false;
     #endregion
+
+    public virtual void OnEnable()
+    {
+        if (Instance == null) Instance = this;
+        else
+        {
+            DestroyImmediate(Instance.gameObject);
+            Instance = this;
+        }
+    }
 
     public void Damage(float damageAmount)
     {
@@ -29,7 +40,7 @@ public class BaseCharacter : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 10f);
     }
 
     
