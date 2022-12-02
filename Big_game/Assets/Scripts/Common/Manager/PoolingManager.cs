@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolingManager : MonoBehaviour
+public class PoolingManager : AbstractMonoBehaviour
 {
     public static PoolingManager i;
     [SerializeField] private ObjectPool bulletPooling, explodePooling;

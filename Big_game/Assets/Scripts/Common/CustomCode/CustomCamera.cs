@@ -41,8 +41,9 @@ public class CustomCamera : MonoBehaviour
 
     void FollowPlayer()
     {
-        if (!targetTransform) targetTransform = GameObject.FindGameObjectWithTag(targetTag).transform;
-        NOOD.NoodyCustomCode.LerpSmoothCameraFollow(Camera.main.gameObject, smoothTime, targetTransform, offset);
+        if (!targetTransform && GameObject.FindGameObjectWithTag(targetTag)) targetTransform = GameObject.FindGameObjectWithTag(targetTag).transform;
+        if(targetTransform)
+            NOOD.NoodyCustomCode.LerpSmoothCameraFollow(Camera.main.gameObject, smoothTime, targetTransform, offset);
         //this.transform.LookAt(targetTransform);
     }
     

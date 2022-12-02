@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCharacter :MonoBehaviour, IDamageable
+public class BaseCharacter :AbstractMonoBehaviour, IDamageable
 {
     [SerializeField] ParticleSystem bloodEff;
     public static BaseCharacter Instance { get; private set; }
