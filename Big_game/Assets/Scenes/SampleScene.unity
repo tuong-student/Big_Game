@@ -155,14 +155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e2161d93584784481a22d57f5fcf47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEff: {fileID: 0}
   health: 100
   mana: 100
   stamina: 50
-  walkSpeed: 1
+  walkSpeed: 2
   runSpeed: 5
-  dashSpeed: 10
   dashForce: 30
-  currentSpeed: 0
   dashTime: 0.5
 --- !u!50 &17342025
 Rigidbody2D:
@@ -270,7 +269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17342023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.365, y: -2.683, z: 0}
+  m_LocalPosition: {x: -1.654, y: -2.157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
@@ -1442,6 +1441,10 @@ PrefabInstance:
       propertyPath: turningTimeDelay
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1729536467365151531, guid: 6323ccab28d8e0a49b48d6855eb71729, type: 3}
+      propertyPath: damageCooldownThershold
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1824255479435189195, guid: 6323ccab28d8e0a49b48d6855eb71729, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1508,6 +1511,10 @@ PrefabInstance:
       propertyPath: chaseSpeed
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8732470799530983, guid: a597ecb6f8f54f049b4b5f812e2be79b, type: 3}
+      propertyPath: damageCooldownThershold
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2808401260357206440, guid: a597ecb6f8f54f049b4b5f812e2be79b, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1570,6 +1577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1751500786}
     m_Modifications:
+    - target: {fileID: 488487688740484790, guid: 0ec82dfb7da66bc44a380fb1e2b4d2e5, type: 3}
+      propertyPath: damageCooldownThershold
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5647556354764181763, guid: 0ec82dfb7da66bc44a380fb1e2b4d2e5, type: 3}
       propertyPath: m_Name
       value: Ice Zom
@@ -1639,6 +1650,10 @@ PrefabInstance:
     - target: {fileID: 1477777323090837764, guid: 1437c63f140698c4fa43d38407b2a472, type: 3}
       propertyPath: turningTimeDelay
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477777323090837764, guid: 1437c63f140698c4fa43d38407b2a472, type: 3}
+      propertyPath: damageCooldownThershold
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6263529921214441058, guid: 1437c63f140698c4fa43d38407b2a472, type: 3}
       propertyPath: m_RootOrder

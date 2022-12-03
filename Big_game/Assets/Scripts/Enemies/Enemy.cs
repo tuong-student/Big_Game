@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Enemy : BaseEnemy
 {
-    [SerializeField]
-    private bool tempPlayerTarget;
     private Transform playerTarget;
     private Vector3 playerLastTrackPos;
     private Vector3 startingPos;
@@ -38,10 +36,14 @@ public class Enemy : BaseEnemy
     private void Update() {
         if(!playerTarget)
             return;
+        if(!IsAlive())
+            return;
 
         HandleFacingDirection();
     }
     private void FixedUpdate() {
+        if(!IsAlive())
+            return;
         HandleChasingPlayer();
     }
     void HandleChasingPlayer()
@@ -103,7 +105,11 @@ public class Enemy : BaseEnemy
         if(other.CompareTag("Player")){
             damageCooldownTimer = Time.time + damageCooldownThershold;
             dealthDamageToPlayer = true;
-            other.GetComponent<BaseCharacter>().TakeDamage(damageAmount);
+            other.GetComponent<BaseCharacter>().Damage(damageAmount);
         }
+    }
+    public bool IsAlive()
+    {
+        return health > 0 ? true:false; 
     }
 }

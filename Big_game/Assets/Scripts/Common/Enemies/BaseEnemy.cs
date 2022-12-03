@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseEnemy : BaseCharacter
+public class BaseEnemy : MonoBehaviour
 {
     PlayerScripts playerScripts;
     float gold = 10f;
@@ -11,6 +11,11 @@ public class BaseEnemy : BaseCharacter
     private RaycastHit2D movementHit;
     private BoxCollider2D myCollider;
 
+    [SerializeField]
+    private float maxHealth = 100f ;
+    [SerializeField]
+    protected float health;
+    [SerializeField] 
     private Vector2 velocity;
     private bool _hasPlayerTarget;
     public bool HasPlayerTarget{
@@ -20,7 +25,6 @@ public class BaseEnemy : BaseCharacter
     }
     protected virtual void  Awake() {
         myCollider = GetComponent<BoxCollider2D>();
-        walkSpeed =1;
     }
 
     public void publicAwake(){
@@ -58,12 +62,15 @@ public class BaseEnemy : BaseCharacter
     {
         GoldManager.i.AddGold(gold);
     }
-    
-    public override void Die()
+    public void TakeDamage(float damageAmount)
     {
-        AddGold();
-        base.Die();
+        health -= damageAmount;
+        if(health <= 0f)
+        {
+            GetComponent<EnemyAnimation>().DeathAnimation();
+        }
     }
+
 }
 
 public enum EnemyType

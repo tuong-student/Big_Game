@@ -2,45 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCharacter : MonoBehaviour, IDamageable
+public class BaseCharacter :MonoBehaviour, IDamageable
 {
-    //TODO: mang may cai nay sang base player, enemy khong can, mang toi '!'
+    [SerializeField] ParticleSystem bloodEff;
+    public static BaseCharacter Instance { get; private set; }
+
+    #region Stats
+    public float health = 100f;
     public float mana = 100f;
     public float stamina = 50f;
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
-    public float dashSpeed = 10f;
+    //public float dashSpeed = 10f;
     public float dashForce = 30f;
-    public float currentSpeed;
+    internal float currentSpeed;
+
     public float dashTime = 0.5f;
-    //! mang den day thoi
-    [SerializeField]
-    private float maxHealth = 100f ;
-    [SerializeField]
-    private float health;
-    [SerializeField] 
-    private Animator anim;
-    private void Awake() {
-        anim = GetComponent<Animator>();
+
+    internal bool isDead = false;
+    #endregion
+
+    public virtual void OnEnable()
+    {
+        if (Instance == null) Instance = this;
+        else
+        {
+            DestroyImmediate(Instance.gameObject);
+            Instance = this;
+        }
     }
-    private void Start() {
-        health = maxHealth;
-    }
-    public void TakeDamage(float damageAmount)
+
+    public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        if(health <= 0f)
-        {
-            anim.SetTrigger("Death");
-        }
+        bloodEff?.Play();
     }
 
     public virtual void Die()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject, 10f);
     }
-    public bool IsAlive()
-    {
-        return health > 0 ? true:false; 
-    }
+
+    
 }
