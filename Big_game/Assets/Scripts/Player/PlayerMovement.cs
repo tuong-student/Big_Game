@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     #region Bool
     bool isDashPress;
     bool isDashing;
+    [HideInInspector] public bool isStop;
     #endregion
 
     private void Awake()
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (playerScripts.isDead) return;
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) isDashPress = true;
 
         Move(movement);
+
+
     }
 
     private void FixedUpdate()
@@ -50,12 +54,15 @@ public class PlayerMovement : MonoBehaviour
         if (movement == Vector3.zero)
         {
             if (Mathf.Abs(myBody.velocity.x) > 0.02f) myBody.drag = 2;
+            isStop = true;
         }
+        else
+            isStop = false;
     }
 
     private void Dash()
     {
-        playerScripts.dashEff.Play();
+        //playerScripts.dashEff.Play();
         if (movement == Vector3.zero) movement = new Vector3(1, 0);
         myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
         myBody.drag = 2;

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviorInstance<GameManager>
 {
     public static GameManager Create(Transform parent = null)
     {
@@ -21,4 +22,6 @@ public class GameManager : MonoBehaviour
     {
         SettingManager.Create();
     }
+    
+    
 }

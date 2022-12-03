@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldManager : MonoBehaviour
+public class GoldManager : AbstractMonoBehaviour
 {
     public static GoldManager i;
     public float gold = 0;

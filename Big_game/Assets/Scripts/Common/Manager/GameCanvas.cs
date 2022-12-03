@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameCanvas : MonoBehaviour
+public class GameCanvas : AbstractMonoBehaviour
 {
     public Text goldText;
     public static GameCanvas i;

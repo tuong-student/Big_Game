@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] PlayerScripts playerScripts;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer sr;
+    [SerializeField] float fadeTime = 0.5f;
+    Vector3 mouseDirection;
 
     #region Bool
-    [HideInInspector] public bool stand, up, down, left, right;
+    [HideInInspector] public bool stand, up, down, slide;
+    bool isDisappear = false;
+    #endregion
+
+    #region Private
+    Material playerMaterial;
     #endregion
 
     private void Awake()
@@ -20,45 +26,75 @@ public class PlayerAnimation : MonoBehaviour
         {
             playerScripts = temp;
         }
+        up = down = slide = false;
+        stand = true;
+        playerMaterial = sr.material;
+    }
 
-        anim = playerScripts.GetComponent<Animator>();
-        sr = playerScripts.GetComponent<SpriteRenderer>();
-        up = down = left = right = false;
-        anim.SetBool("Stand", true);
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>(false);
+        sr = GetComponentInChildren<SpriteRenderer>(false);
     }
 
     private void Update()
     {
+        stand = playerScripts.playerMovement.isStop;
         anim.SetBool("Up", up);
         anim.SetBool("Down", down);
         anim.SetBool("Stand", stand);
+        anim.SetBool("Slide", slide);
 
-        if (down)
+        mouseDirection = NOOD.NoodyCustomCode.LookDirection(this.transform.position, NOOD.NoodyCustomCode.MouseToWorldPoint2D());
+
+        if(mouseDirection == Vector3.zero)
         {
-            anim.SetFloat("DownSpeedd", Mathf.Abs(playerScripts.playerMovement.myBody.velocity.y));
+            return;
+        }
+
+        if(mouseDirection.x == 0)
+        {
+            slide = false;
         }
         else
         {
-            anim.SetFloat("DownSpeedd", 0);
+            slide = true;
+            if(mouseDirection.x < 0)
+            {
+                sr.flipX = true;
+            }
+            else
+            {
+                sr.flipX = false;
+            }
         }
 
-        if (left)
+        if(mouseDirection.y > 0)
         {
-            this.transform.localScale = new Vector3(-1, 1, 1);
-
-            anim.SetBool("Slide", true);
+            up = true;
+            down = false;
         }
-        else if (right)
+        else if(mouseDirection.y < 0)
         {
-            this.transform.localScale = new Vector3(1, 1, 1);
-            anim.SetBool("Slide", true);
+            up = false;
+            down = true;
         }
-        else
-        {
-            anim.SetBool("Slide", false);
-        }
-
     }
 
+    public void DeadAnimation()
+    {
+        StartCoroutine(Disappear());
+    }
 
+    IEnumerator Disappear()
+    {
+        isDisappear = true;
+        float fade = 1;
+        while (fade > 0)
+        {
+            fade -= Time.deltaTime * fadeTime;
+            playerMaterial.SetFloat("_Fade", fade);
+            yield return null;
+        }
+    }
 }
