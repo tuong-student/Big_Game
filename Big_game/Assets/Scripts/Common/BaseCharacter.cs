@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour, IDamageable
 {
-    public float health = 100f ;
+    //TODO: mang may cai nay sang base player, enemy khong can, mang toi '!'
     public float mana = 100f;
     public float stamina = 50f;
     public float walkSpeed = 2f;
@@ -12,19 +12,35 @@ public class BaseCharacter : MonoBehaviour, IDamageable
     public float dashSpeed = 10f;
     public float dashForce = 30f;
     public float currentSpeed;
-
     public float dashTime = 0.5f;
-
-    bool isDead = false;
-
-
-    public void Damage(float damageAmount)
+    //! mang den day thoi
+    [SerializeField]
+    private float maxHealth = 100f ;
+    [SerializeField]
+    private float health;
+    [SerializeField] 
+    private Animator anim;
+    private void Awake() {
+        anim = GetComponent<Animator>();
+    }
+    private void Start() {
+        health = maxHealth;
+    }
+    public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
+        if(health <= 0f)
+        {
+            anim.SetTrigger("Death");
+        }
     }
 
     public virtual void Die()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
+    }
+    public bool IsAlive()
+    {
+        return health > 0 ? true:false; 
     }
 }

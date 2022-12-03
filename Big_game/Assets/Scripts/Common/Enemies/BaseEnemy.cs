@@ -28,7 +28,7 @@ public class BaseEnemy : BaseCharacter
     }
 
     public virtual void HandleMovement(float x, float y){
-        moveDelta = new Vector3(x*walkSpeed, y*walkSpeed,0f);   //! (1)
+        moveDelta = new Vector3(x, y,0f);   //! (1)
         
         movementHit = Physics2D.BoxCast(transform.position,myCollider.size,0f,
         new Vector2(0f,moveDelta.y),Mathf.Abs(moveDelta.y*Time.deltaTime),  

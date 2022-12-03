@@ -84,7 +84,7 @@ public class Enemy : BaseEnemy
     void HandleFacingDirection()
     {
         myScale = transform.localScale; //! (1)
-        if(HasPlayerTarget) //! (2)
+        if(HasPlayerTarget && !dealthDamageToPlayer) //! (2)
         {
             if (playerTarget.position.x > transform.position.x) //! (3)
                 myScale.x = Mathf.Abs(myScale.x); //! (4)
@@ -99,4 +99,11 @@ public class Enemy : BaseEnemy
         }
         transform.localScale = myScale; //!(11)
     }   
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("Player")){
+            damageCooldownTimer = Time.time + damageCooldownThershold;
+            dealthDamageToPlayer = true;
+            other.GetComponent<BaseCharacter>().TakeDamage(damageAmount);
+        }
+    }
 }
