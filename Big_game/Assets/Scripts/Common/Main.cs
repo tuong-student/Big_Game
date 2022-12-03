@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class Main : MonoBehaviorInstance<Main>
 {
-    public Transform respawnPos;
+    Transform respawnPos;
     PlayerScripts player;
 
 
     private IEnumerator Start()
     {
+        LocalDataManager.Load();
+
         LevelManager.Create();
         GoldManager.Create();
         PoolingManager.Create();
+        ExplodeManager.Create();
+        WeaponManager.Create();
 
         GameCanvas.Create().AddTo(this);
         GameManager.Create().AddTo(this);

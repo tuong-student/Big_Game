@@ -141,7 +141,7 @@ public class PlayerScripts : BaseCharacter
             {
                 //Pick up new gun and drop current gun
                 GunData temp = weaponsHolder.GetCurrentGunData();
-                weaponsHolder.SetCurrentGunData(groundGun.GetData());
+                weaponsHolder.ChangeNewGun(groundGun.GetData());
                 groundGun.SetData(temp);
             }
         }

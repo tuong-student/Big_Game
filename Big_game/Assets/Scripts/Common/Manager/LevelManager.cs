@@ -29,6 +29,10 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     public void LoadLevel(int level)
     {
+        if (level <= 0) level = 1;
+        if (level > levels.Count) level = levels.Count;
+        LocalDataManager.currentLevel = level;
+        PlayerPrefs.Save();
         foreach(var lv in activeLevels)
         {
             if (lv) Destroy(lv.gameObject);

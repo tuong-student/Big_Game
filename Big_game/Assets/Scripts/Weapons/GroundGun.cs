@@ -5,12 +5,18 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class GroundGun : MonoBehaviour
 {
-    [SerializeField] GunData data;
+    GunData data;
     SpriteRenderer sr;
     PlayerScripts player;
 
+    public static GroundGun Create(Transform parent = null)
+    {
+        return Instantiate<GroundGun>(Resources.Load<GroundGun>("Prefabs/Game/Weapons/groundGun"), parent);
+    }
+
     private void Start()
     {
+        data = WeaponManager.GetInstace.GetRandomGunData();
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = data.gunImage;
     }

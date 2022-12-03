@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunScripts : MonoBehaviour
 {
-    public GunData data;
+    [HideInInspector] public GunData gunData;
     public SpriteRenderer sr;
     public Animator anim;
     [SerializeField] Transform shootPoint;
@@ -25,21 +25,21 @@ public class GunScripts : MonoBehaviour
 
     public void SetData(GunData data)
     {
-        this.data = data;
-        PoolingManager.i.SetBulletPoolingObject(data.bulletPrefab);
+        this.gunData = data;
+        PoolingManager.GetInstace.SetBulletPoolingObject(data.bulletPrefab);
         sr.sprite = data.gunImage;
     }
 
     public void Fire()
     {
-        GameObject bullet = PoolingManager.i.GetBullet();
+        GameObject bullet = PoolingManager.GetInstace.GetBullet();
         bullet.transform.position = shootPoint.transform.position;
         bullet.transform.rotation = shootPoint.transform.rotation;
-        bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * data.bulletForce * 10f);
-        SetBulletDamage(bullet, data.damage);
+        bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * gunData.bulletForce * 10f);
+        SetBulletDamage(bullet, gunData.damage);
 
         anim.SetTrigger("Shooting");
-        anim.SetInteger("AnimIndex", data.animationIndex);
+        anim.SetInteger("AnimIndex", gunData.animationIndex);
     }
 
 
