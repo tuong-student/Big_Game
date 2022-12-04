@@ -26,12 +26,12 @@ public class GunScripts : MonoBehaviour
     public void SetData(GunData data)
     {
         this.gunData = data;
-        PoolingManager.GetInstace.SetBulletPoolingObject(data.bulletPrefab);
         sr.sprite = data.gunImage;
     }
 
     public void Fire()
     {
+        PoolingManager.GetInstace.SetBulletPoolingObject(this.gunData.bulletPrefab);
         GameObject bullet = PoolingManager.GetInstace.GetBullet();
         bullet.transform.position = shootPoint.transform.position;
         bullet.transform.rotation = shootPoint.transform.rotation;

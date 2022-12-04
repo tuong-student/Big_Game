@@ -16,5 +16,5 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3669793730702312255, guid: 1d50ed87ce2544f1c8f832e481430a56, type: 3}
   animationIndex: 0
   damage: 0
-  fireRate: 0
+  fireRate: 0.5
   bulletForce: 10
