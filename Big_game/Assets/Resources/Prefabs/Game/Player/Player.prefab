@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -7871596639887916719, guid: 3fbbab8172755334b9cc6bf7e7553bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -146,10 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6697b76e6f5f433e9b3038918bf3b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunDatas:
-  - {fileID: 11400000, guid: aaca33e670e014c37bbfc4b681089995, type: 2}
-  - {fileID: 11400000, guid: f65b4485fac6445cb87149d0482afca0, type: 2}
-  - {fileID: 11400000, guid: d9deaf535a3164e3e9b86c097f47d261, type: 2}
   currentGun: {fileID: 5018497532369957803}
   gun1Index: 1
   gun2Index: 0
@@ -260,7 +256,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Time: 0.2
   m_Parameters:
@@ -352,7 +348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5634398891309999142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.204, y: 0, z: 0}
+  m_LocalPosition: {x: 0.128, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 773306270903256411}
@@ -428,7 +424,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5dfcae8411c2d844faae6e901a31dc5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -487,8 +483,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244422886898749129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.072, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.037, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 4760911552239904100}
   - {fileID: 1426330137264485145}
@@ -533,7 +529,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 370a2470b3b3a2f4fad9feb0e5b888a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -558,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71db828bab6642feb5cbb78c8c34f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  gunData: {fileID: 0}
   sr: {fileID: 6364216630835527051}
   anim: {fileID: 9076987504261023118}
   shootPoint: {fileID: 4760911552239904100}
@@ -646,7 +642,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5521,7 +5517,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -5618,7 +5614,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 18677b05fd470e14093f4d336f8b4862, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

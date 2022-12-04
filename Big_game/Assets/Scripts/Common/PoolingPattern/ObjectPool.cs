@@ -38,6 +38,7 @@ public class ObjectPool : MonoBehaviour
             {
                 Destroy(spawnObj.gameObject);
                 spawnObj = Instantiate(objectToPool, null);
+                spawnObj.transform.SetParent(parentTranform);
             }
             if(spawnTransform)
                 spawnObj.transform.position = spawnTransform.position;
