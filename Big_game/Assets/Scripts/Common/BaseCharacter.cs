@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseCharacter :AbstractMonoBehaviour, IDamageable
+public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 {
     [SerializeField] ParticleSystem bloodEff;
     public static BaseCharacter Instance { get; private set; }
@@ -35,7 +35,7 @@ public class BaseCharacter :AbstractMonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        bloodEff?.Play();
+        if (bloodEff) bloodEff.Play();
     }
 
     public virtual void Die()
