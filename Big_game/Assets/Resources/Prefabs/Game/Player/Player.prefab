@@ -5729,7 +5729,6 @@ MonoBehaviour:
   playerAnimation: {fileID: 2971400110636064631}
   dashEff: {fileID: 0}
   weaponsHolder: {fileID: 1915051232245636687}
-  groundGun: {fileID: 0}
   player1View: {fileID: 6102769691291206813}
   player2View: {fileID: 1426449731092501425}
   player3View: {fileID: 8771111814686891754}

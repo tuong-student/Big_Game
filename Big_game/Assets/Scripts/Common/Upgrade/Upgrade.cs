@@ -8,7 +8,7 @@ public class Upgrade
 {
     public StatsType upgradeStats;
     public float upgradeAmount;
-    public float goldNeed;
+    public int goldNeed;
 
     public void AddStats()
     {

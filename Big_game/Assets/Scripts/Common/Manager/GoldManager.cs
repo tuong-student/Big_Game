@@ -5,7 +5,7 @@ using UnityEngine;
 public class GoldManager : MonoBehaviorInstance<GoldManager>
 {
     public static GoldManager i;
-    public float gold = 0;
+    public int gold;
 
     public static GoldManager Create(Transform parent = null)
     {
@@ -16,14 +16,15 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            AddGold(100f);
+            AddGold(100);
         }
     }
 
-    public bool MinusGold(float amount)
+    public bool MinusGold(int amount)
     {
-        if(gold >= amount)
+        if(LocalDataManager.gold >= amount)
         {
+            LocalDataManager.gold -= amount;
             gold -= amount;
             UIManager.i.RefreshGoldText();
             LocalDataManager.Save();
@@ -35,8 +36,9 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
         }
     }
 
-    public void AddGold(float amount)
+    public void AddGold(int amount)
     {
+        LocalDataManager.gold += amount;
         gold += amount;
         UIManager.i.RefreshGoldText();
         LocalDataManager.Save();

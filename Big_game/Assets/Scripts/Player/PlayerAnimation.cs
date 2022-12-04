@@ -95,6 +95,7 @@ public class PlayerAnimation : MonoBehaviour
             fade -= Time.deltaTime * fadeTime;
             playerMaterial.SetFloat("_Fade", fade);
             yield return null;
+            if (fade <= 0) this.gameObject.SetActive(false);
         }
     }
 }

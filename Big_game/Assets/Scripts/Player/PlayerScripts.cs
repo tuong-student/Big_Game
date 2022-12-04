@@ -111,7 +111,7 @@ public class PlayerScripts : BaseCharacter
         playerOncollision = GetComponent<PlayerOncollision>();
     }
 
-    void Buy(float amountOfGold, Upgrade upgrade)
+    void Buy(int amountOfGold, Upgrade upgrade)
     {
         if (GoldManager.GetInstace.MinusGold(amountOfGold))
         {
