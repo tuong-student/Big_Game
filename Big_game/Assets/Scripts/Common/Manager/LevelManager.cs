@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
-        PlayerPrefs.Save();
+        LocalDataManager.Save();
         OnNextLevel?.Invoke();
     }
 
@@ -32,8 +32,8 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         if (level <= 0) level = 1;
         if (level > levels.Count) level = levels.Count;
         LocalDataManager.currentLevel = level;
-        PlayerPrefs.Save();
-        foreach(var lv in activeLevels)
+        LocalDataManager.Save();
+        foreach (var lv in activeLevels)
         {
             if (lv) Destroy(lv.gameObject);
         }

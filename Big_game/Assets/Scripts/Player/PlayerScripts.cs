@@ -12,7 +12,7 @@ public class PlayerScripts : BaseCharacter
     public ParticleSystem dashEff;
 
     [SerializeField] WeaponsHolder weaponsHolder;
-    [SerializeField] GroundGun groundGun = null;
+    GroundGun groundGun = null;
     [SerializeField] GameObject player1View, player2View, player3View;
     #endregion
 
@@ -113,9 +113,10 @@ public class PlayerScripts : BaseCharacter
 
     void Buy(float amountOfGold, Upgrade upgrade)
     {
-        if (GoldManager.i.MinusGold(amountOfGold))
+        if (GoldManager.GetInstace.MinusGold(amountOfGold))
         {
             upgrade.AddStats();
+
         }
     }
 

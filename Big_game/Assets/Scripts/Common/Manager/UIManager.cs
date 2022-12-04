@@ -20,6 +20,6 @@ public class UIManager : MonoBehaviorInstance<UIManager>
 
     public void RefreshGoldText()
     {
-        GameCanvas.i.SetGoldText("Gold: " + GoldManager.i.gold);
+        GameCanvas.GetInstace.SetGoldText("Gold: " + GoldManager.i.gold);
     }
 }

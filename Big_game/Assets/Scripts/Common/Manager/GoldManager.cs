@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldManager : AbstractMonoBehaviour
+public class GoldManager : MonoBehaviorInstance<GoldManager>
 {
     public static GoldManager i;
     public float gold = 0;
@@ -20,18 +20,13 @@ public class GoldManager : AbstractMonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (i == null) i = this;
-    }
-
-
     public bool MinusGold(float amount)
     {
         if(gold >= amount)
         {
             gold -= amount;
             UIManager.i.RefreshGoldText();
+            LocalDataManager.Save();
             return true;    
         }
         else
@@ -44,5 +39,6 @@ public class GoldManager : AbstractMonoBehaviour
     {
         gold += amount;
         UIManager.i.RefreshGoldText();
+        LocalDataManager.Save();
     }
 }

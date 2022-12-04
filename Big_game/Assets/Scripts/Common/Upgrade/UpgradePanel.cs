@@ -21,7 +21,7 @@ public class UpgradePanel : MonoBehaviour
             Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
             newBtn.SetBtn(newUpgrade, () =>
             {
-                if (GoldManager.i.MinusGold(newUpgrade.goldNeed))
+                if (GoldManager.GetInstace.MinusGold(newUpgrade.goldNeed))
                 {
                     newBtn.PerformUpgrade();
                     Dispose();
