@@ -11,6 +11,7 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Start()
     {
+        Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
         LocalDataManager.Load();
 
         LevelManager.Create();
@@ -23,7 +24,6 @@ public class Main : MonoBehaviorInstance<Main>
         GameManager.Create().AddTo(this);
         UIManager.Create().AddTo(this);
 
-        Debug.Log(LocalDataManager.currentLevel);
         LevelManager.OnNextLevel += GenerateNewLevel;
 
         yield return null;

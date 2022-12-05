@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGun: {fileID: 5018497532369957803}
-  gun1Index: 1
+  gun1Index: 7
   gun2Index: 0
   isShootPress: 0
 --- !u!1 &2019554750412261173

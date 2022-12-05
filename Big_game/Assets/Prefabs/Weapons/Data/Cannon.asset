@@ -18,3 +18,4 @@ MonoBehaviour:
   damage: 0
   fireRate: 0.5
   bulletForce: 10
+  range: 0.5

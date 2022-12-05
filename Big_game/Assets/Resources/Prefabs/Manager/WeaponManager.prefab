@@ -53,3 +53,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0bd79300b178460ba314f0cef539c08, type: 2}
   - {fileID: 11400000, guid: 545f4803ad0694845a10ef1b6d58d791, type: 2}
   - {fileID: 11400000, guid: ccab5baa4a02e4553b3b445aec55936a, type: 2}
+  shotgunData: {fileID: 11400000, guid: 545f4803ad0694845a10ef1b6d58d791, type: 2}

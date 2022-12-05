@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviorInstance<WeaponManager>
 {
     [SerializeField] List<GunData> gunDatas;
+    public GunData shotgunData;
 
     public static WeaponManager Create(Transform parent = null)
     {
