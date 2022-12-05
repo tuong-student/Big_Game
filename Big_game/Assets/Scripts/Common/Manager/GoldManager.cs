@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldManager : AbstractMonoBehaviour
+public class GoldManager : MonoBehaviorInstance<GoldManager>
 {
     public static GoldManager i;
-    public float gold = 0;
+    public int gold;
 
     public static GoldManager Create(Transform parent = null)
     {
@@ -16,22 +16,18 @@ public class GoldManager : AbstractMonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            AddGold(100f);
+            AddGold(100);
         }
     }
 
-    private void Awake()
+    public bool MinusGold(int amount)
     {
-        if (i == null) i = this;
-    }
-
-
-    public bool MinusGold(float amount)
-    {
-        if(gold >= amount)
+        if(LocalDataManager.gold >= amount)
         {
+            LocalDataManager.gold -= amount;
             gold -= amount;
             UIManager.i.RefreshGoldText();
+            LocalDataManager.Save();
             return true;    
         }
         else
@@ -40,9 +36,11 @@ public class GoldManager : AbstractMonoBehaviour
         }
     }
 
-    public void AddGold(float amount)
+    public void AddGold(int amount)
     {
+        LocalDataManager.gold += amount;
         gold += amount;
         UIManager.i.RefreshGoldText();
+        LocalDataManager.Save();
     }
 }

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviorInstance<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            GameCanvas.i.CreateUpgradePanel();
+            GameCanvas.GetInstace.CreateUpgradePanel();
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class GroundGun : MonoBehaviour
 {
-    GunData data;
+    [SerializeField] GunData data;
     SpriteRenderer sr;
     PlayerScripts player;
 
@@ -16,7 +16,8 @@ public class GroundGun : MonoBehaviour
 
     private void Start()
     {
-        data = WeaponManager.GetInstace.GetRandomGunData();
+        if(data == null)
+            data = WeaponManager.GetInstace.GetRandomGunData();
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = data.gunImage;
     }

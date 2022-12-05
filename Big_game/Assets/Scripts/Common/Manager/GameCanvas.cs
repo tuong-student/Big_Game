@@ -3,19 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameCanvas : AbstractMonoBehaviour
+public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 {
     public Text goldText;
-    public static GameCanvas i;
 
     public static GameCanvas Create(Transform parent = null)
     {
         return Instantiate<GameCanvas>(Resources.Load<GameCanvas>("Prefabs/Canvas/GameCanvas"), parent);
-    }
-
-    private void Awake()
-    {
-        if (i == null) i = this;
     }
 
     public UpgradePanel CreateUpgradePanel()
