@@ -26,20 +26,21 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) return;
-
-        GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
-        PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
-        GameObject explode = PoolingManager.GetInstace.GetExplode();
-        explode.transform.position = this.transform.position;
-        explode.GetComponent<ParticleSystem>().Play();
-        if (collision.gameObject.GetComponent<BaseEnemy>())
+        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Blocking"))
         {
-            BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
-            enemy.TakeDamage(damage);
-            enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
+            GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
+            PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
+            GameObject explode = PoolingManager.GetInstace.GetExplode();
+            explode.transform.position = this.transform.position;
+            explode.GetComponent<ParticleSystem>().Play();
+            if (collision.gameObject.GetComponent<BaseEnemy>())
+            {
+                BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
+                enemy.TakeDamage(damage);
+                enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
+            }
+            this.gameObject.SetActive(false);
         }
-        this.gameObject.SetActive(false);
     }
 
     private void OnDisable()
