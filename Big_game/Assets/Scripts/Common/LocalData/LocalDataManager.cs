@@ -28,6 +28,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.level, currentLevel);
 
+        PlayerPrefs.Save();
         Load();
     }
 }

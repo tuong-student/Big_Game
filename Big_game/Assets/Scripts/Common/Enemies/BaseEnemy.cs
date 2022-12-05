@@ -6,7 +6,7 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
     PlayerScripts playerScripts;
-    float gold = 10f;
+    int gold = 10;
     private Vector3 moveDelta;
     private RaycastHit2D movementHit;
     private BoxCollider2D myCollider;
@@ -60,7 +60,7 @@ public class BaseEnemy : MonoBehaviour
     
     public void AddGold()
     {
-        GoldManager.i.AddGold(gold);
+        GoldManager.GetInstace.AddGold(gold);
     }
     public void TakeDamage(float damageAmount)
     {

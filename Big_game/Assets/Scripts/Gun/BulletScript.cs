@@ -4,26 +4,51 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float damage = 1;
+    [HideInInspector] public float damage = 1;
+    [HideInInspector] public float backForce = 10f;
     public ExplodeType type;
+    bool isBlock;
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnEnable()
     {
-        IDamageable iDamageableObj = collision.gameObject.GetComponent<IDamageable>();
-        if (iDamageableObj != null)
+        isBlock = false;
+    }
+
+    public void SetRange(float range)
+    {
+        GetComponent<SetObjectDeactive>().second = range;
+    }
+
+    public void SetBackForce(float backForce)
+    {
+        this.backForce = backForce;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) return;
+
+        GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
+        PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
+        GameObject explode = PoolingManager.GetInstace.GetExplode();
+        explode.transform.position = this.transform.position;
+        explode.GetComponent<ParticleSystem>().Play();
+        if (collision.gameObject.GetComponent<BaseEnemy>())
         {
-            iDamageableObj.Damage(damage);
-            Debug.Log(damage);
+            BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
+            enemy.TakeDamage(damage);
+            enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
         }
-        else
-        {
-            GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
-            PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
-            GameObject explode = PoolingManager.GetInstace.GetExplode();
-            explode.transform.position = this.transform.position;
-            explode.GetComponent<ParticleSystem>().Play();
-        }
-        
+        this.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        if (isBlock == true) return;
+        GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
+        PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
+        GameObject explode = PoolingManager.GetInstace.GetExplode();
+        explode.transform.position = this.transform.position;
+        explode.GetComponent<ParticleSystem>().Play();
     }
 }
