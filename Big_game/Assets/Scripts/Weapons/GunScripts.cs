@@ -35,6 +35,7 @@ public class GunScripts : MonoBehaviour
         GameObject bullet = PoolingManager.GetInstace.GetBullet();
         BulletScript bulletScript = bullet.GetComponent<BulletScript>();
         bulletScript.SetRange(gunData.range);
+        bulletScript.SetBackForce(gunData.backForce);
         bullet.transform.position = shootPoint.transform.position;
         bullet.transform.rotation = shootPoint.transform.rotation;
         bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * gunData.bulletForce * 10f);

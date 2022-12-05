@@ -12,4 +12,5 @@ public class GunData : ScriptableObject
     public float fireRate;
     public float bulletForce = 10f;
     public float range = 1f;
+    public float backForce = 10f;
 }

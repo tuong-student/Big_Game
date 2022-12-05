@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float damage = 1;
+    [HideInInspector] public float damage = 1;
+    [HideInInspector] public float backForce = 10f;
     public ExplodeType type;
     bool isBlock;
 
@@ -18,26 +19,27 @@ public class BulletScript : MonoBehaviour
         GetComponent<SetObjectDeactive>().second = range;
     }
 
+    public void SetBackForce(float backForce)
+    {
+        this.backForce = backForce;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Blocking"))
+        if (collision.gameObject.CompareTag("Player")) return;
+
+        GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
+        PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
+        GameObject explode = PoolingManager.GetInstace.GetExplode();
+        explode.transform.position = this.transform.position;
+        explode.GetComponent<ParticleSystem>().Play();
+        if (collision.gameObject.GetComponent<BaseEnemy>())
         {
-            GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
-            PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
-            GameObject explode = PoolingManager.GetInstace.GetExplode();
-            explode.transform.position = this.transform.position;
-            explode.GetComponent<ParticleSystem>().Play();
-            isBlock = true;
-            this.gameObject.SetActive(false);
+            BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
+            enemy.TakeDamage(damage);
+            enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
         }
-        else
-        {
-            if (collision.gameObject.GetComponent<BaseEnemy>())
-            {
-                BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
-                enemy.TakeDamage(damage);
-            }
-        }
+        this.gameObject.SetActive(false);
     }
 
     private void OnDisable()
