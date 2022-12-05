@@ -35,6 +35,7 @@ public class BulletScript : MonoBehaviour
             explode.GetComponent<ParticleSystem>().Play();
             if (collision.gameObject.GetComponent<BaseEnemy>())
             {
+                Debug.Log("Push");
                 BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
                 enemy.TakeDamage(damage);
                 enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
