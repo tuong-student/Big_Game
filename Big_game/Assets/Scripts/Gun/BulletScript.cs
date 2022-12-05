@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public float damage = 1;
+    public ExplodeType type;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -17,7 +18,9 @@ public class BulletScript : MonoBehaviour
         }
         else
         {
-            GameObject explode = PoolingManager.i.GetExplode();
+            GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
+            PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
+            GameObject explode = PoolingManager.GetInstace.GetExplode();
             explode.transform.position = this.transform.position;
             explode.GetComponent<ParticleSystem>().Play();
         }

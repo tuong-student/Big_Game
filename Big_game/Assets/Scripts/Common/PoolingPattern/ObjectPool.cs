@@ -34,6 +34,11 @@ public class ObjectPool : MonoBehaviour
         else
         {
             spawnObj = objectQueue.Dequeue();
+            if (!spawnObj.Equals(objectToPool))
+            {
+                Destroy(spawnObj.gameObject);
+                spawnObj = Instantiate(objectToPool, null);
+            }
             if(spawnTransform)
                 spawnObj.transform.position = spawnTransform.position;
             spawnObj.SetActive(true);

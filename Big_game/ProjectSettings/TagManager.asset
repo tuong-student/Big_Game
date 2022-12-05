@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Blocking
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - 
   - Water
   - UI
+  - Blocking
   - Enemy
-  - 
   - 
   - 
   - 
@@ -42,18 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Monster
-    uniqueID: 2590498615
+  - name: Level
+    uniqueID: 3587301573
+    locked: 0
+  - name: Bullet
+    uniqueID: 3428988177
+    locked: 0
+  - name: Enemy
+    uniqueID: 1119029417
     locked: 0
   - name: Player
     uniqueID: 389058879
     locked: 0
-  - name: Gun
-    uniqueID: 1580085099
-    locked: 0
-  - name: Bullet
-    uniqueID: 2786249033
-    locked: 0
   - name: UI
-    uniqueID: 2734767317
+    uniqueID: 83828587
     locked: 0

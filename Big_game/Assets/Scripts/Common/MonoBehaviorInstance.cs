@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoBehaviorInstance <T> : MonoBehaviour where T : MonoBehaviour
+public class MonoBehaviorInstance <T> : AbstractMonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
     public static T GetInstace

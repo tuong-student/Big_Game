@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviorInstance<GameManager>
 {
-    [SerializeField] List<GameObject> levels;
     public static GameManager Create(Transform parent = null)
     {
         return Instantiate<GameManager>(Resources.Load<GameManager>("Prefabs/Manager/GameManger"), parent);
@@ -24,13 +23,5 @@ public class GameManager : MonoBehaviour
         SettingManager.Create();
     }
     
-    public void NextLevel()
-    {
-        LocalDataManager.currentLevel++;
-        for(int i = 0; i < levels.Count; i++)
-        {
-            if (i != LocalDataManager.currentLevel - 1) levels[i].SetActive(false);
-            else levels[i].SetActive(true);
-        }
-    }
+    
 }

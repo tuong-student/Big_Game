@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WeaponsHolder : MonoBehaviour
 {
-    [SerializeField] List<GunData> gunDatas = new List<GunData>();
     [SerializeField] GunScripts currentGun;
     [SerializeField] [Range(0, 6)] int gun1Index, gun2Index;
 
@@ -31,7 +30,7 @@ public class WeaponsHolder : MonoBehaviour
 
     GunData GetGunData(int index)
     {
-        return gunDatas[index];
+        return WeaponManager.GetInstace.GetGunData(index);
     }
 
     public void ChangeItem(int index)
@@ -55,7 +54,8 @@ public class WeaponsHolder : MonoBehaviour
         }
         else
         {
-            gun2Index = gunDatas.IndexOf(data);
+            gun2Index = WeaponManager.GetInstace.GetIndexOf(data);
+            PlayerPrefs.Save();
             return true;
         }
     }
@@ -66,29 +66,32 @@ public class WeaponsHolder : MonoBehaviour
         else return false;
     }
 
-    public void SetCurrentGunData(GunData data)
+    public void ChangeNewGun(GunData data)
     {
-        if (this.currentGun.data.Equals(GetGunData(gun1Index)))
+        //Set gunIndex
+        if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
         {
-            gun1Index = gunDatas.IndexOf(data);
+            gun1Index = WeaponManager.GetInstace.GetIndexOf(data);
         }
         else
         {
-            gun2Index = gunDatas.IndexOf(data);
+            gun2Index = WeaponManager.GetInstace.GetIndexOf(data);
         }
+
+        //Set new data
         this.currentGun.SetData(data);
     }
 
     public GunData GetCurrentGunData()
     {
-        return this.currentGun.data;
+        return this.currentGun.gunData;
     }
 
     void Fire()
     {
         nextShootTime = Time.time;
         currentGun.Fire();
-        nextShootTime += 1 / currentGun.data.fireRate;
+        nextShootTime += 1 / currentGun.gunData.fireRate;
     }
 
     void LookAtMouse()
