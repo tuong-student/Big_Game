@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using NOOD;
 
 public class GameManager : MonoBehaviorInstance<GameManager>
 {
@@ -23,8 +24,11 @@ public class GameManager : MonoBehaviorInstance<GameManager>
 
         if (isEndGame && !isAnimation)
         {
-            TransitionAnimation();
             isAnimation = true;
+            NoodyCustomCode.StartDelayFunction(() =>
+            {
+                TransitionAnimation();
+            }, 0.5f);
         }
     }
 

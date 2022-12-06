@@ -11,7 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     Vector3 mouseDirection;
 
     #region Bool
-    [HideInInspector] public bool stand, up, down, slide;
+    [HideInInspector] public bool stand, up, down, side;
     bool isDisappear = false;
     #endregion
 
@@ -26,7 +26,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             playerScripts = temp;
         }
-        up = down = slide = false;
+        up = down = side = false;
         stand = true;
         playerMaterial = sr.material;
     }
@@ -43,7 +43,7 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("Up", up);
         anim.SetBool("Down", down);
         anim.SetBool("Stand", stand);
-        anim.SetBool("Slide", slide);
+        anim.SetBool("Side", side);
 
         mouseDirection = NOOD.NoodyCustomCode.LookDirection(this.transform.position, NOOD.NoodyCustomCode.MouseToWorldPoint2D());
 
@@ -54,11 +54,11 @@ public class PlayerAnimation : MonoBehaviour
 
         if(mouseDirection.x == 0)
         {
-            slide = false;
+            side = false;
         }
         else
         {
-            slide = true;
+            side = true;
             if(mouseDirection.x < 0)
             {
                 sr.flipX = true;
@@ -69,15 +69,20 @@ public class PlayerAnimation : MonoBehaviour
             }
         }
 
-        if(mouseDirection.y > 0)
+        if(mouseDirection.y > 0.5f)
         {
             up = true;
             down = false;
         }
-        else if(mouseDirection.y < 0)
+        else if(mouseDirection.y < -0.5f)
         {
             up = false;
             down = true;
+        }
+        else
+        {
+            up = false;
+            down = false;
         }
     }
 

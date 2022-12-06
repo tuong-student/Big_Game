@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using NOOD;
 
 public class Main : MonoBehaviorInstance<Main>
 {
@@ -12,18 +13,17 @@ public class Main : MonoBehaviorInstance<Main>
     private IEnumerator Start()
     {
         LocalDataManager.Load();
-
+        
         LevelManager.Create();
         GoldManager.Create();
-        PoolingManager.Create();
-        ExplodeManager.Create();
         WeaponManager.Create();
         GameManager.Create();
 
+        PoolingManager.Create().AddTo(this);
+        ExplodeManager.Create().AddTo(this);
         GameCanvas.Create().AddTo(this);
         UIManager.Create().AddTo(this);
 
-        Debug.Log(LocalDataManager.currentLevel);
         LevelManager.OnNextLevel += GenerateNewLevel;
 
         yield return new WaitForSeconds(1f);
@@ -41,6 +41,8 @@ public class Main : MonoBehaviorInstance<Main>
         StartCoroutine(LevelManager.GetInstace.LoadLevel(LocalDataManager.currentLevel));
         yield return new WaitForSeconds(1f);
         Clear();
+        PoolingManager.Create().AddTo(this);
+        ExplodeManager.Create().AddTo(this);
         GameCanvas.Create().AddTo(this);
         UIManager.Create().AddTo(this);
         player = (PlayerScripts)PlayerScripts.Create(GameObject.Find("RespawnPos").transform).AddTo(this);

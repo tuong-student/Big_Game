@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 90ab20fd81f7440b494197193db36b41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -7871596639887916719, guid: 3fbbab8172755334b9cc6bf7e7553bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1192042838457669099
 Transform:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 90ab20fd81f7440b494197193db36b41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5561,7 +5561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &387428587735549567
 Transform:
   m_ObjectHideFlags: 0
@@ -5595,7 +5595,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 90ab20fd81f7440b494197193db36b41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5616,7 +5616,7 @@ SpriteRenderer:
   m_SortingLayerID: 389058879
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 18677b05fd470e14093f4d336f8b4862, type: 3}
+  m_Sprite: {fileID: -7921115631410097235, guid: a4ce45dea53a82e4d8ed7caf284f5c99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5732,7 +5732,7 @@ MonoBehaviour:
   player1View: {fileID: 6102769691291206813}
   player2View: {fileID: 1426449731092501425}
   player3View: {fileID: 8771111814686891754}
-  playerNum: 1
+  playerNum: 2
 --- !u!114 &6935578856058936187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5781,7 +5781,7 @@ MonoBehaviour:
   stand: 1
   up: 0
   down: 1
-  slide: 1
+  side: 0
 --- !u!70 &8501675313230595011
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
