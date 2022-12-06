@@ -2,34 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstractMonoBehaviour : MonoBehaviour
+namespace NOOD
 {
-    internal List<AbstractMonoBehaviour> objects = new List<AbstractMonoBehaviour>();
-
-    public AbstractMonoBehaviour AddTo(AbstractMonoBehaviour parent)
+    public class AbstractMonoBehaviour : MonoBehaviour
     {
-        parent.objects.Add(this);
-        return this;
-    }
+        internal List<AbstractMonoBehaviour> objects = new List<AbstractMonoBehaviour>();
 
-    private void OnDestroy()
-    {
-        foreach(var obj in objects)
+        public AbstractMonoBehaviour AddTo(AbstractMonoBehaviour parent)
         {
-            if (obj)
-            {
-                Destroy(obj.gameObject);
-            }
+            parent.objects.Add(this);
+            return this;
         }
-    }
 
-    public void Clear()
-    {
-        foreach (var obj in objects)
+        private void OnDestroy()
         {
-            if (obj)
+            Clear();
+        }
+
+        public void Clear()
+        {
+            foreach (var obj in objects)
             {
-                Destroy(obj.gameObject);
+                if (obj)
+                {
+                    Destroy(obj.gameObject);
+                }
             }
         }
     }
