@@ -152,6 +152,7 @@ public class PlayerScripts : BaseCharacter
     {
         Debug.Log("Player Die");
         isDead = true;
+        GameManager.GetInstace.isEndGame = true;
         playerAnimation.DeadAnimation();
     }
 }
