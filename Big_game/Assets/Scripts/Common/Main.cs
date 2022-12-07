@@ -12,6 +12,7 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Start()
     {
+        Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
         LocalDataManager.Load();
         
         LevelManager.Create();
