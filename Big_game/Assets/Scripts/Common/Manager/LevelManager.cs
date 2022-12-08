@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     [SerializeField] List<GameObject> levels;
     private List<GameObject> activeLevels = new List<GameObject>();
     bool isFirstTime = true;
+    Portal levelPortal;
 
     public static LevelManager Create(Transform parent = null)
     {
@@ -44,5 +45,16 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         }
 
         activeLevels.Add(Instantiate(levels[level - 1]));
+        levelPortal = FindObjectOfType<Portal>();
+    }
+
+    public void OpenPortal()
+    {
+        levelPortal.OpenAnimation();
+    }
+
+    public void ClosePortal()
+    {
+        levelPortal.CloseAnimation();
     }
 }
