@@ -12,7 +12,9 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Start()
     {
+        if (Camera.main != null) Destroy(Camera.main.gameObject);
         Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
+        Instantiate(Resources.Load("Prefabs/Game/Player/Main Camera"), null);
         LocalDataManager.Load();
         
         LevelManager.Create();
