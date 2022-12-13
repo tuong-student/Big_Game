@@ -7,33 +7,41 @@ public class SettingUI : MonoBehaviour
 {
     public Sprite musicOnImage;
     public Sprite musicOffImage;
-    [SerializeField] private Button musicButton;
-    public Sprite soundOnImage;
-    public Sprite soundOffImage;
-    [SerializeField] public Button soundButton;
-    public bool isMusicOn = true;
-    public bool isSoundOn = true;
-    [SerializeField] public Button backButton;
+    [SerializeField] private Button musicButton, soundButton, backButton;
+    public Sprite soundOnImage, soundOffImage;
+    [SerializeField] public Slider musicSlider, soundSlider;
+    [SerializeField] public GameObject MainMenu;
+    
+
+    // public bool isMusicOn = true;
+    // public bool isSoundOn = true;
 
 
     private void Start()
     {
-        if (isMusicOn) { musicButton.image.sprite = soundOnImage; }
-        else { musicButton.image.sprite = soundOffImage; }
-        if (isSoundOn) { soundButton.image.sprite = soundOnImage; }
+//        LocalDataManager.Load();
+
+        if (LocalDataManager.musicsetting == 1) { musicButton.image.sprite = musicOnImage; }
+        else { musicButton.image.sprite = musicOffImage; }
+        if (LocalDataManager.soundsetting == 1) { soundButton.image.sprite = soundOnImage; }
         else { soundButton.image.sprite = soundOffImage; }
+
+        musicSlider.value = LocalDataManager.musicsetting;
+        soundSlider.value = LocalDataManager.soundsetting;
+
     }
     private void OnEnable()
     {
         musicButton.onClick.AddListener(UpdateMusicButtonImage);
-
         soundButton.onClick.AddListener(UpdateSoundButtonImage);
-
+        backButton.onClick.AddListener(BackToMainMenu);
     }
+
     private void OnDisable()
     {
         musicButton.onClick.RemoveListener(UpdateMusicButtonImage);
         soundButton.onClick.RemoveListener(UpdateSoundButtonImage);
+        backButton.onClick.RemoveListener(BackToMainMenu);
 
     }
 
@@ -41,11 +49,73 @@ public class SettingUI : MonoBehaviour
     {
         //AudioManager.instance.PlayManagerSound(Soundame.ButtonClick);
         //UserData.SoundSetting = !UserData.SoundSetting;
-        musicButton.image.sprite = (isMusicOn) ? musicOnImage : musicOffImage;
+        //musicButton.image.sprite = (LocalDataManager.soundsetting ==0) ? musicOnImage : musicOffImage;
+
+        if (LocalDataManager.musicsetting == 0)
+        {
+            AudioManager.Instance.PlaySFX("ButtonClick");
+            musicButton.image.sprite = musicOnImage;
+            LocalDataManager.musicsetting = 1;
+            musicSlider.value = LocalDataManager.musicsetting;
+            AudioManager.Instance.ToggleMusic();
+            LocalDataManager.Save();
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX("ButtonClick");
+            musicButton.image.sprite = musicOffImage;
+            LocalDataManager.musicsetting = 0;
+            musicSlider.value = LocalDataManager.musicsetting;
+            AudioManager.Instance.ToggleMusic();
+            LocalDataManager.Save();
+        }
+
     }
 
     private void UpdateSoundButtonImage()
     {
-        soundButton.image.sprite = (isSoundOn) ? musicOnImage : musicOffImage;
+
+
+        //soundButton.image.sprite = (isSoundOn) ? musicOnImage : musicOffImage;
+
+        if (LocalDataManager.soundsetting == 0)
+        {
+            soundButton.image.sprite = soundOnImage;
+            LocalDataManager.soundsetting = 1;
+            soundSlider.value = LocalDataManager.soundsetting;
+            AudioManager.Instance.ToggleSFX();
+            LocalDataManager.Save();
+        }
+
+        
+        else
+        {
+            soundButton.image.sprite = soundOffImage;
+            AudioManager.Instance.PlaySFX("ButtonClick");
+            LocalDataManager.soundsetting = 0;
+            soundSlider.value = LocalDataManager.soundsetting;
+            AudioManager.Instance.ToggleSFX();
+            LocalDataManager.Save();
+        }
     }
+
+    public void MusicVolume()
+    {
+        AudioManager.Instance.MusicVolume(musicSlider.value);
+        LocalDataManager.musicsetting = musicSlider.value;
+    }
+
+    public void SFXVolume()
+    {
+        AudioManager.Instance.SFXVolume(soundSlider.value);
+        LocalDataManager.soundsetting = soundSlider.value;
+    }
+
+    private void BackToMainMenu()
+    {
+        gameObject.SetActive(false);
+        MainMenu.SetActive(true);
+        AudioManager.Instance.PlaySFX("ButtonClick");
+    }
+
 }

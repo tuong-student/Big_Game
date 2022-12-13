@@ -10,10 +10,11 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private Slider manaSlider;
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
+    [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText;
     private bool isOn = false;
 
 
-    public float maxHealth = 50;
+    public float maxHealth = 300;
     public float currenHealth;
 
     public float maxMana = 50;
@@ -22,7 +23,12 @@ public class InGameUI : MonoBehaviour
     public void Start()
     {
         SetMaxHealth(maxHealth);
+        SetHealth(LocalDataManager.health);
         SetMaxMana(maxMana);
+        Debug.Log(LocalDataManager.health);
+        Debug.Log(maxHealth);
+        LocalDataManager.health = 50;
+        SetStats();
     }
 
     public void Update()
@@ -30,6 +36,10 @@ public class InGameUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDamage(20);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            TakeDamage(-20);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -55,13 +65,28 @@ public class InGameUI : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currenHealth -= damage;
-        SetHealth(currenHealth);
+      
+        if (damage > LocalDataManager.health)
+        {
+            LocalDataManager.health = 0;
+            LocalDataManager.Save();
+            return;
+            
+        }
+       
+      //  currenHealth -= damage;
+      
+        LocalDataManager.health -= damage;
+        LocalDataManager.Save();
+        Debug.Log(LocalDataManager.health);
+
+        SetHealth(LocalDataManager.health);
+        Debug.Log(LocalDataManager.health);
     }
 
     public void SetMaxHealth(float health)
     {
-        currenHealth = maxHealth;
+        //LocalDataManager.health = maxHealth;
         healthSlider.maxValue = health;
         healthSlider.value = health;
     }
@@ -74,6 +99,7 @@ public class InGameUI : MonoBehaviour
     public void TakeMana(int mana)
     {
         currentMana -= mana;
+
         SetMana(currentMana);
     }
 
@@ -89,18 +115,25 @@ public class InGameUI : MonoBehaviour
         manaSlider.value = mana;
     }
 
+    public void SetStats()
+    {
+        fireRateText.text = "Fire Rate: "+LocalDataManager.fireRate;
+        criticalRateText.text = "Crit Rate: " + LocalDataManager.criticalRate;
+        speedText.text = "Speed: " + LocalDataManager.speed;
+        damageText.text = "Damage: " + LocalDataManager.speed;
+    }
 
 
     public virtual void MoveIn(RectTransform rect)
     {
-        Tween tweenContain = rect.DOAnchorPosX(-600, 0.3f).SetEase(Ease.InQuad).Play();
+        Tween tweenContain = rect.DOLocalMoveX(-700, 0.3f).SetEase(Ease.OutExpo).Play();
         tweenContain.Play();
     }
 
     public void MoveOut(RectTransform rect)
     {
         float anchorPosX = -1300;
-        Tween tweenContain = rect.DOAnchorPosX(anchorPosX, 0.05f).SetEase(Ease.InQuad);
+        Tween tweenContain = rect.DOLocalMoveX(anchorPosX, 0.05f).SetEase(Ease.InQuad);
         tweenContain
             .Play();
     }
