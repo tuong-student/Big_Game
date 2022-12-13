@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
+using UnityEngine; 
 [ExecuteInEditMode]
 public class PlayerOncollision : MonoBehaviour
 {
@@ -15,20 +14,7 @@ public class PlayerOncollision : MonoBehaviour
             playerScripts = temp;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Finish"))
-        {
-            LevelManager.GetInstace.OpenPortal();
-        }
-
-        if (collision.gameObject.CompareTag("Portal"))
-        {
-            LevelManager.GetInstace.ClosePortal();
-        }
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Finish"))
