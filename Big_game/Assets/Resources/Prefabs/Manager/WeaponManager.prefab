@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408300369747622925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.29734853, y: -0.0070151556, z: -0.024869382}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,3 +53,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0bd79300b178460ba314f0cef539c08, type: 2}
   - {fileID: 11400000, guid: 545f4803ad0694845a10ef1b6d58d791, type: 2}
   - {fileID: 11400000, guid: ccab5baa4a02e4553b3b445aec55936a, type: 2}
+  shotgunData: {fileID: 11400000, guid: 545f4803ad0694845a10ef1b6d58d791, type: 2}

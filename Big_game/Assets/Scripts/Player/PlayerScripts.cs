@@ -151,7 +151,8 @@ public class PlayerScripts : BaseCharacter
     public override void Die()
     {
         Debug.Log("Player Die");
-        isDead = true;
         playerAnimation.DeadAnimation();
+        isDead = true;
+        GameManager.GetInstace.isEndGame = true;
     }
 }

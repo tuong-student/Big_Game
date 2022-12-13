@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NOOD;
 
 public class PoolingManager : MonoBehaviorInstance<PoolingManager>
 {
@@ -30,5 +31,13 @@ public class PoolingManager : MonoBehaviorInstance<PoolingManager>
     public GameObject GetExplode()
     {
         return explodePooling.GetPoolObject();
+    }
+
+    private void OnDestroy()
+    {
+        if(bulletPooling)
+            Destroy(bulletPooling.gameObject);
+        if(explodePooling)
+            Destroy(explodePooling.gameObject);
     }
 }
