@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 {
     public static Action OnNextLevel;
     [SerializeField] List<GameObject> levels;
+    [SerializeField] GameObject mainMenuDungeon;
     private List<GameObject> activeLevels = new List<GameObject>();
     bool isFirstTime = true;
     Portal levelPortal;
@@ -19,7 +20,11 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     private void Start()
     {
-        StartCoroutine(LoadLevel(LocalDataManager.currentLevel));
+        Instantiate(mainMenuDungeon);
+        ActiveMainMenuLevel();
+        
+        GameManager.OnStartGame += LoadCurrentLevel;
+        GameManager.OnStartGame += DeactiveMainMenuLevel;
     }
 
     public void NextLevel()
@@ -29,9 +34,24 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         OnNextLevel?.Invoke();
     }
 
+    public void ActiveMainMenuLevel()
+    {
+        mainMenuDungeon.SetActive(true);
+    }
+
+    public void DeactiveMainMenuLevel()
+    {
+        mainMenuDungeon.SetActive(false);
+    }
+
+    public void LoadCurrentLevel()
+    {
+        LoadLevel(LocalDataManager.currentLevel);
+    }
+
     public IEnumerator LoadLevel(int level)
     {
-        if(!isFirstTime)
+        if (!isFirstTime)
             GameManager.GetInstace.TransitionAnimation();
         isFirstTime = false;
         yield return new WaitForSeconds(0.5f);

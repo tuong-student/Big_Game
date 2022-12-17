@@ -26,8 +26,8 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
         if(LocalDataManager.gold >= amount)
         {
             LocalDataManager.gold -= amount;
-            gold -= amount;
-            UIManager.i.RefreshGoldText();
+            gold = LocalDataManager.gold;
+            UIManager.GetInstace.RefreshGoldText();
             LocalDataManager.Save();
             return true;    
         }
@@ -41,7 +41,7 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
     {
         LocalDataManager.gold += amount;
         gold += amount;
-        UIManager.i.RefreshGoldText();
+        UIManager.GetInstace.RefreshGoldText();
         LocalDataManager.Save();
     }
 }

@@ -9,11 +9,6 @@ public class Upgrade
     public StatsType upgradeStats;
     public float upgradeAmount;
     public int goldNeed;
-
-    public void AddStats()
-    {
-        Debug.Log(upgradeStats.ToString() + "has been upgraded " + upgradeAmount);
-    }
 }
 
 public static class UpgradeMaster

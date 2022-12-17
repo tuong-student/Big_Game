@@ -21,11 +21,11 @@ public class UpgradePanel : MonoBehaviour
             Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
             newBtn.SetBtn(newUpgrade, () =>
             {
-                if (GoldManager.GetInstace.MinusGold(newUpgrade.goldNeed))
+                if (PlayerScripts.GetInstance.Buy(newUpgrade.goldNeed, newUpgrade))
                 {
-                    newBtn.PerformUpgrade();
                     Dispose();
                 }
+                else Debug.Log("Not Enough Gold");
             });
         }
 
@@ -36,5 +36,5 @@ public class UpgradePanel : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    
+
 }
