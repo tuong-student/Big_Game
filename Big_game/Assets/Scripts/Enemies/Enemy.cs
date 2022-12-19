@@ -22,7 +22,9 @@ public class Enemy : BaseEnemy
     [SerializeField]
     private float turningTimeDelay = 0.2f;
     private Vector3 myScale;
-
+    private PlayerScripts pScripts;
+    private EnemyBatchHandler enemyBatch;
+    private BaseEnemy enemyHealth;
     protected override void Awake()
     {
         base.Awake();
@@ -32,17 +34,23 @@ public class Enemy : BaseEnemy
         playerLastTrackPos = playerTarget.position;
         startingPos =  transform.position;
         lastFollowTime = Time.time;
+        enemyBatch = GetComponent<EnemyBatchHandler>();
+        enemyHealth = GetComponent<BaseEnemy>();
     }
+    // private void OnDisable() {
+    //     if(!enemyHealth.IsAlive())
+    //         enemyBatch.RemoveEnemy(this); 
+    // }
     private void Update() {
         if(!playerTarget)
             return;
-        if(!IsAlive())
+        if(!enemyHealth.IsAlive())
             return;
 
         HandleFacingDirection();
     }
     private void FixedUpdate() {
-        if(!IsAlive())
+        if(!enemyHealth.IsAlive())
             return;
         HandleChasingPlayer();
     }
@@ -107,9 +115,5 @@ public class Enemy : BaseEnemy
             dealthDamageToPlayer = true;
             other.GetComponent<BaseCharacter>().Damage(damageAmount);
         }
-    }
-    public bool IsAlive()
-    {
-        return health > 0 ? true:false; 
     }
 }

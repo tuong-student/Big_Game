@@ -23,7 +23,7 @@ public class BaseEnemy : MonoBehaviour
         set{_hasPlayerTarget = value;}
 
     }
-    protected virtual void  Awake() {
+    protected virtual void Awake() {
         myCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -70,7 +70,13 @@ public class BaseEnemy : MonoBehaviour
             GetComponent<EnemyAnimation>().DeathAnimation();
         }
     }
-
+    private void DestroyEnemies(){
+        Destroy(gameObject);
+    }
+    public bool IsAlive()
+    {
+        return health > 0 ? true:false; 
+    }
 }
 
 public enum EnemyType

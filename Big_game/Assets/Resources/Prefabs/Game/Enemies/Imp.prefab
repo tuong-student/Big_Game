@@ -182,20 +182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50386d153a5602546a24b72aeebcbddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   health: 100
-  mana: 100
-  stamina: 50
-  walkSpeed: 1
-  runSpeed: 5
-  dashSpeed: 10
-  dashForce: 30
-  currentSpeed: 0
-  dashTime: 0.5
-  tempPlayerTarget: 0
-  damageCooldownThershold: 0
+  velocity: {x: 0, y: 0}
+  damageCooldownThershold: 1
   damageAmount: 10
   chaseSpeed: 0.6
-  turningTimeDelay: 0.3
+  turningTimeDelay: 0.2
 --- !u!114 &1824255477519864860
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Blocking
   - Enemy
+  - ShooterEnemy
+  - Boss
   layers:
   - Default
   - TransparentFX
