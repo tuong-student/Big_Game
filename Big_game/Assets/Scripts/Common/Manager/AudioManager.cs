@@ -44,9 +44,9 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlaySFX(string name)
+    public void PlaySFX(sound soundName)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(sfxSounds, x => x.soundtype == soundName);
         if (s == null)
         {
             Debug.Log("Sound not found");
@@ -102,5 +102,15 @@ public class AudioManager : MonoBehaviour
         sfxSource.volume = volume;
     }
 
+    //public enum sound
+    //{
+    //    laserWeapon,
+    //    matterWeapon,
+    //    pistolWeapon,
+    //    buttonClick,
+    //    pickUp,
+    //    lose,
+    //    hitEnemy,
+    //}    
 
 }

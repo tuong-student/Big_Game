@@ -11,10 +11,12 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
     [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText;
+    [SerializeField] private Image gun1, gun2;
+    
     private bool isOn = false;
 
 
-    public float maxHealth = 300;
+    public float maxHealth = 100;
     public float currenHealth;
 
     public float maxMana = 50;
@@ -58,8 +60,6 @@ public class InGameUI : MonoBehaviour
         {
             TakeMana(20);
         }
-
-
 
     }
 
@@ -138,5 +138,10 @@ public class InGameUI : MonoBehaviour
             .Play();
     }
 
+    public void changeGunSprites(Sprite gun1s, Sprite gun2s)
+    {
+        gun1.sprite = gun1s;
+        gun2.sprite = gun2s;
 
+    }
 }

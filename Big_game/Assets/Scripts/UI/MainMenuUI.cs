@@ -7,8 +7,9 @@ public class MainMenuUI : MonoBehaviour
 {
 
     [SerializeField] private Button continueButton, newGameButton, settingButton, creditButton, exitButton;
-    [SerializeField] public GameObject settingPanel,inGamePanel;
+    [SerializeField] public GameObject settingPanel,inGamePanel,creditsPanel;
 
+    [SerializeField] private ResetUI newGame;
 
     private void OnEnable()
     {
@@ -33,32 +34,36 @@ public class MainMenuUI : MonoBehaviour
     private void ContinueGame()
     {
 
-        AudioManager.Instance.PlaySFX("ButtonClick");
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
         gameObject.SetActive(false);
         inGamePanel.SetActive(true);
     }
     private void NewGame()
     {
 
-        AudioManager.Instance.PlaySFX("ButtonClick");
-
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        newGame.NewGame();
     }
     private void ToSetting()
     {
         gameObject.SetActive(false);
         settingPanel.SetActive(true);
-        AudioManager.Instance.PlaySFX("ButtonClick");
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
     }
 
     private void ToCreadit()
     {
-        AudioManager.Instance.PlaySFX("ButtonClick");
+        gameObject.SetActive(false);
+        creditsPanel.SetActive(true);
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
+
 
     }
     private void Exit()
     {
 
-        AudioManager.Instance.PlaySFX("ButtonClick");
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        Application.Quit();
 
     }
 
