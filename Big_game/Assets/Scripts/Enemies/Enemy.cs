@@ -34,23 +34,22 @@ public class Enemy : BaseEnemy
         playerLastTrackPos = playerTarget.position;
         startingPos =  transform.position;
         lastFollowTime = Time.time;
-        enemyBatch = GetComponent<EnemyBatchHandler>();
+        enemyBatch = transform.GetComponentInParent<EnemyBatchHandler>();
         enemyHealth = GetComponent<BaseEnemy>();
     }
-    // private void OnDisable() {
-    //     if(!enemyHealth.IsAlive())
-    //         enemyBatch.RemoveEnemy(this); 
-    // }
+    private void OnDisable() {
+        enemyBatch.RemoveEnemy(this);
+    }
     private void Update() {
         if(!playerTarget)
             return;
-        if(!enemyHealth.IsAlive())
+        if(!IsAlive())
             return;
 
         HandleFacingDirection();
     }
     private void FixedUpdate() {
-        if(!enemyHealth.IsAlive())
+        if(!IsAlive())
             return;
         HandleChasingPlayer();
     }

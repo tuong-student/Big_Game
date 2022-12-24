@@ -170,11 +170,11 @@ GameObject:
   - component: {fileID: 1589411497009468009}
   m_Layer: 7
   m_Name: Devil
-  m_TagString: ShooterEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1589411497009468008
 Transform:
   m_ObjectHideFlags: 0
@@ -342,6 +342,7 @@ MonoBehaviour:
   moveSpeed: 0.75
   shootTimeDelay: 2
   bulletSpawnPos: {fileID: 1589411495735910403}
+  enemyBatch: {fileID: 0}
 --- !u!114 &1589411497009468009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,9 +356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBullet: {fileID: 5077794211186217456, guid: 515fa227ab5b7d14f9b6df5e2ae4e6a3, type: 3}
-  numberOfBullets: 3
-  enemyBulletType: 0
-  bulletSpeed: 1
+  numberOfBullets: 5
+  enemyBulletType: 1
+  bulletSpeed: 1.5
 --- !u!1 &1589411497290276827
 GameObject:
   m_ObjectHideFlags: 0

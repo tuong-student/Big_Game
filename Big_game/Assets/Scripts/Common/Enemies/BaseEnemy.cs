@@ -10,6 +10,7 @@ public class BaseEnemy : MonoBehaviour
     private Vector3 moveDelta;
     private RaycastHit2D movementHit;
     private BoxCollider2D myCollider;
+    private Animator anim;
 
     [SerializeField]
     private float maxHealth = 100f ;
@@ -25,6 +26,8 @@ public class BaseEnemy : MonoBehaviour
     }
     protected virtual void Awake() {
         myCollider = GetComponent<BoxCollider2D>();
+        health = maxHealth;
+        anim = GetComponent<Animator>();
     }
 
     public void publicAwake(){
@@ -63,14 +66,15 @@ public class BaseEnemy : MonoBehaviour
         GoldManager.GetInstace.AddGold(gold);
     }
     public void TakeDamage(float damageAmount)
-    {
-        health -= damageAmount;
+
+    {        health -= damageAmount;
         if(health <= 0f)
         {
-            GetComponent<EnemyAnimation>().DeathAnimation();
+            anim.SetTrigger("Death");
         }
     }
-    private void DestroyEnemies(){
+    protected virtual void DestroyEnemies(){
+        
         Destroy(gameObject);
     }
     public bool IsAlive()
