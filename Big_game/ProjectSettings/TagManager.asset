@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Blocking
   - Enemy
-  - Portal
+  - ShooterEnemy
+  - Boss
+  - Door
   layers:
   - Default
   - TransparentFX

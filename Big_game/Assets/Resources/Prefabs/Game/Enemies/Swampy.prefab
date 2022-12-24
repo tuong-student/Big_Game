@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6263529921214441087}
   - component: {fileID: 6263529921214441086}
   - component: {fileID: 6263529921214441081}
-  - component: {fileID: 1477777323090837764}
+  - component: {fileID: 4948177632851265124}
   - component: {fileID: 6263529921849326260}
   m_Layer: 7
   m_Name: Swampy
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1477777323090837764
+--- !u!114 &4948177632851265124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,20 +182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50386d153a5602546a24b72aeebcbddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   health: 100
-  mana: 100
-  stamina: 50
-  walkSpeed: 1
-  runSpeed: 5
-  dashSpeed: 10
-  dashForce: 30
-  currentSpeed: 0
-  dashTime: 0.2
-  tempPlayerTarget: 0
-  damageCooldownThershold: 0
+  velocity: {x: 0, y: 0}
+  damageCooldownThershold: 1
   damageAmount: 10
-  chaseSpeed: 0.5
-  turningTimeDelay: 0.5
+  chaseSpeed: 0.4
+  turningTimeDelay: 0.6
 --- !u!114 &6263529921849326260
 MonoBehaviour:
   m_ObjectHideFlags: 0
