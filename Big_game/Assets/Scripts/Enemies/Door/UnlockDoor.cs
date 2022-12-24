@@ -5,6 +5,9 @@ using UnityEngine;
 public class UnlockDoor : MonoBehaviour
 {
     private EnemyBatchHandler enemyBatchHandler;
+    private void Awake() {
+        enemyBatchHandler = GetComponent<EnemyBatchHandler>();
+    }
     private void OnTriggerEnter(Collider other) {
         if(enemyBatchHandler.openDoor == true && other.CompareTag("Player"))
         {
