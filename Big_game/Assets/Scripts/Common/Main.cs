@@ -34,6 +34,11 @@ public class Main : MonoBehaviorInstance<Main>
         player = (PlayerScripts) PlayerScripts.Create(respawnPos).AddTo(this);
     }
 
+    void OnDestroy()
+    {
+        
+    }
+
     public void GenerateNewLevel()
     {
         StartCoroutine(Co_GenerateNewLevel());

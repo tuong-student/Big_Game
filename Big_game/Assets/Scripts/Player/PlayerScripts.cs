@@ -17,8 +17,6 @@ public class PlayerScripts : BaseCharacter
     #endregion
 
     public float playerNum = 1; //Index of the player sprite (0 -> 2)
-
-
     Vector3 movement;
 
     #region Bool
@@ -53,12 +51,18 @@ public class PlayerScripts : BaseCharacter
                 break;
         }
     }
- 
+
+    private void Start()
+    {
+        LocalDataManager.health = health;
+        InGameUI.GetInstace.SetHealth(LocalDataManager.health);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            health -= 30;
+            Damage(30);
         }
         this.movement = playerMovement.movement;
         if (health <= 0 && isDead == false) Die();

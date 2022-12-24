@@ -9,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Rigidbody2D myBody;
     [HideInInspector] public Vector3 movement;
 
+    [SerializeField] VoidEventChannelSO pauseGameChannel, continueGameChannel;
     #region Bool
     bool isDashPress;
     bool isDashing;
+    bool isMoveable;
     [HideInInspector] public bool isStop;
     #endregion
 
@@ -28,6 +30,19 @@ public class PlayerMovement : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        if(pauseGameChannel != null)
+        {
+            pauseGameChannel.OnEventRaise += DontMove;
+	    }
+
+        if(continueGameChannel != null)
+        {
+            continueGameChannel.OnEventRaise += CanMove;
+    	}
+    }
+
     private void Update()
     {
         if (playerScripts.isDead) return;
@@ -41,6 +56,29 @@ public class PlayerMovement : MonoBehaviour
         Move(movement);
 
 
+    }
+
+    private void OnDisable()
+    {
+        if (pauseGameChannel != null)
+        {
+            pauseGameChannel.OnEventRaise -= DontMove;
+        }
+
+        if (continueGameChannel != null)
+        {
+            continueGameChannel.OnEventRaise -= CanMove;
+        }
+    }
+
+    private void DontMove()
+    {
+        isMoveable = false;
+    }
+
+    private void CanMove()
+    {
+        isMoveable = true;
     }
 
     private void FixedUpdate()
