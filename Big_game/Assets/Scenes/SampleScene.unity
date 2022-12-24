@@ -1771,6 +1771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b763f3f39c62074b90283bf8c14b74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBatchHandler: {fileID: 0}
+  door: {fileID: 0}
 --- !u!61 &1048744378
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2322,11 +2324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8908385170830048945, guid: cf10d406cf6534c5db646262818879bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.147
+      value: 2.867
       objectReference: {fileID: 0}
     - target: {fileID: 8908385170830048945, guid: cf10d406cf6534c5db646262818879bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.146
+      value: -0.923
       objectReference: {fileID: 0}
     - target: {fileID: 8908385170830048945, guid: cf10d406cf6534c5db646262818879bc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2678,6 +2680,7 @@ MonoBehaviour:
   shooterEnemies: []
   enemies: []
   batchDoor: {fileID: 1048744375}
+  openDoor: 0
 --- !u!1 &1867233430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,6 +2889,10 @@ PrefabInstance:
     - target: {fileID: 1589411497009468001, guid: 08b1f55926cd84f4da0f4e7ce4ea37fb, type: 3}
       propertyPath: m_Name
       value: Devil
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589411497009468002, guid: 08b1f55926cd84f4da0f4e7ce4ea37fb, type: 3}
+      propertyPath: enemyType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1589411497009468002, guid: 08b1f55926cd84f4da0f4e7ce4ea37fb, type: 3}
       propertyPath: enemyBatch

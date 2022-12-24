@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class UnlockDoor : MonoBehaviour
 {
+    [SerializeField]
     private EnemyBatchHandler enemyBatchHandler;
-    private void Awake() {
-        enemyBatchHandler = GetComponent<EnemyBatchHandler>();
-    }
-    private void OnTriggerEnter(Collider other) {
-        if(enemyBatchHandler.openDoor == true && other.CompareTag("Player"))
+    [SerializeField]
+    private GameObject door;
+   private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor ==true)
         {
-            this.gameObject.SetActive(false);
+            door.SetActive(false);
         }
+   }
+   private void OnCollisionExit2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor ==true)
+        {
+            door.SetActive(true);
+        } 
     }
-    private void OnTriggerExit2D(Collider2D other) {
+
+    private void OnTriggerStay2D(Collider2D other) {
         
-        if(enemyBatchHandler.openDoor == true && other.CompareTag("Player"))
-        {
-            this.gameObject.SetActive(true);
-        }
     }
 }
