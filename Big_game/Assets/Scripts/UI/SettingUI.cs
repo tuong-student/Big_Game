@@ -53,7 +53,7 @@ public class SettingUI : MonoBehaviour
 
         if (LocalDataManager.musicsetting == 0)
         {
-            AudioManager.Instance.PlaySFX("ButtonClick");
+            AudioManager.Instance.PlaySFX(sound.buttonClick);
             musicButton.image.sprite = musicOnImage;
             LocalDataManager.musicsetting = 1;
             musicSlider.value = LocalDataManager.musicsetting;
@@ -62,7 +62,7 @@ public class SettingUI : MonoBehaviour
         }
         else
         {
-            AudioManager.Instance.PlaySFX("ButtonClick");
+            AudioManager.Instance.PlaySFX(sound.buttonClick);
             musicButton.image.sprite = musicOffImage;
             LocalDataManager.musicsetting = 0;
             musicSlider.value = LocalDataManager.musicsetting;
@@ -91,7 +91,7 @@ public class SettingUI : MonoBehaviour
         else
         {
             soundButton.image.sprite = soundOffImage;
-            AudioManager.Instance.PlaySFX("ButtonClick");
+            AudioManager.Instance.PlaySFX(sound.buttonClick);
             LocalDataManager.soundsetting = 0;
             soundSlider.value = LocalDataManager.soundsetting;
             AudioManager.Instance.ToggleSFX();
@@ -115,7 +115,7 @@ public class SettingUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         MainMenu.SetActive(true);
-        AudioManager.Instance.PlaySFX("ButtonClick");
+        AudioManager.Instance.PlaySFX(sound.buttonClick);
     }
 
 }
