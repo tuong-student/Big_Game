@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NOOD;
 
 public class WeaponManager : MonoBehaviorInstance<WeaponManager>
 {
     [SerializeField] List<GunData> gunDatas;
+    public GunData shotgunData;
 
     public static WeaponManager Create(Transform parent = null)
     {

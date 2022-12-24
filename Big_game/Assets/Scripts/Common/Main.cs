@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using NOOD;
 
 public class Main : MonoBehaviorInstance<Main>
 {
@@ -11,22 +12,24 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Start()
     {
+        if (Camera.main != null) Destroy(Camera.main.gameObject);
+        Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
+        Instantiate(Resources.Load("Prefabs/Game/Player/Main Camera"), null);
         LocalDataManager.Load();
-
+        
         LevelManager.Create();
         GoldManager.Create();
-        PoolingManager.Create();
-        ExplodeManager.Create();
         WeaponManager.Create();
+        GameManager.Create();
 
+        PoolingManager.Create().AddTo(this);
+        ExplodeManager.Create().AddTo(this);
         GameCanvas.Create().AddTo(this);
-        GameManager.Create().AddTo(this);
         UIManager.Create().AddTo(this);
 
-        Debug.Log(LocalDataManager.currentLevel);
         LevelManager.OnNextLevel += GenerateNewLevel;
 
-        yield return null;
+        yield return new WaitForSeconds(1f);
         if (respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
         player = (PlayerScripts) PlayerScripts.Create(respawnPos).AddTo(this);
     }
@@ -38,12 +41,13 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Co_GenerateNewLevel()
     {
+        StartCoroutine(LevelManager.GetInstace.LoadLevel(LocalDataManager.currentLevel));
+        yield return new WaitForSeconds(1f);
         Clear();
+        PoolingManager.Create().AddTo(this);
+        ExplodeManager.Create().AddTo(this);
         GameCanvas.Create().AddTo(this);
-        GameManager.Create().AddTo(this);
         UIManager.Create().AddTo(this);
-        LevelManager.GetInstace.LoadLevel(LocalDataManager.currentLevel);
-        yield return null;
         player = (PlayerScripts)PlayerScripts.Create(GameObject.Find("RespawnPos").transform).AddTo(this);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponsHolder : MonoBehaviour
 {
     [SerializeField] GunScripts currentGun;
-    [SerializeField] [Range(0, 6)] int gun1Index, gun2Index;
+    [SerializeField] [Range(0, 8)] int gun1Index, gun2Index;
 
     [HideInInspector] public bool isShootPress;
     private float nextShootTime;
@@ -90,7 +90,9 @@ public class WeaponsHolder : MonoBehaviour
     void Fire()
     {
         nextShootTime = Time.time;
-        currentGun.Fire();
+        if (currentGun.gunData == WeaponManager.GetInstace.shotgunData)
+            currentGun.Fire(true);
+        else currentGun.Fire(false);
         nextShootTime += 1 / currentGun.gunData.fireRate;
     }
 

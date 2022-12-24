@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whenCollisionEnter: 1
   afterSecond: 1
-  second: 2
+  second: 0.5
 --- !u!50 &215815743504802682
 Rigidbody2D:
   serializedVersion: 4

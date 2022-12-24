@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NOOD;
 
 public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 {
-    [SerializeField] ParticleSystem bloodEff;
+    //[SerializeField] ParticleSystem bloodEff;
     public static BaseCharacter Instance { get; private set; }
 
     #region Stats
     public float health = 100f;
     public float mana = 100f;
+    public float damage = 1f;
+    public float defence = 0f;
     public float stamina = 50f;
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
@@ -35,7 +38,7 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        if (bloodEff) bloodEff.Play();
+        //if (bloodEff) bloodEff.Play();
     }
 
     public virtual void Die()

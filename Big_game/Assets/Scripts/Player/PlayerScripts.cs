@@ -111,12 +111,36 @@ public class PlayerScripts : BaseCharacter
         playerOncollision = GetComponent<PlayerOncollision>();
     }
 
-    void Buy(int amountOfGold, Upgrade upgrade)
+    public bool Buy(int amountOfGold, Upgrade upgrade)
     {
         if (GoldManager.GetInstace.MinusGold(amountOfGold))
         {
-            upgrade.AddStats();
+            ApplyUpgrade(upgrade);
+            return true;
+        }
+        return false;
+    }
 
+    void ApplyUpgrade(Upgrade upgrade)
+    {
+        switch (upgrade.upgradeStats)
+        {
+            case StatsType.attack:
+                this.damage += upgrade.upgradeAmount; 
+                break;
+            case StatsType.defense:
+                this.defence += upgrade.upgradeAmount;
+                break;
+            case StatsType.mana:
+                this.mana += upgrade.upgradeAmount;
+                break;
+            case StatsType.health:
+                this.health += upgrade.upgradeAmount;
+                break;
+            case StatsType.movement:
+                this.runSpeed += upgrade.upgradeAmount;
+                this.walkSpeed += upgrade.upgradeAmount;
+                break;
         }
     }
 
@@ -151,7 +175,8 @@ public class PlayerScripts : BaseCharacter
     public override void Die()
     {
         Debug.Log("Player Die");
-        isDead = true;
         playerAnimation.DeadAnimation();
+        isDead = true;
+        GameManager.GetInstace.isEndGame = true;
     }
 }

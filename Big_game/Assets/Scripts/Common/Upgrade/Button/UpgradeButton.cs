@@ -26,11 +26,6 @@ public class UpgradeButton : BaseButton
         }
     }
 
-    public void PerformUpgrade()
-    {
-        this.upgrade.AddStats();
-    }
-
     private void OnDestroy()
     {
         action = null;
