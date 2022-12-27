@@ -53,20 +53,20 @@ public class SettingUI : MonoBehaviour
 
         if (LocalDataManager.musicsetting == 0)
         {
-            AudioManager.Instance.PlaySFX(sound.buttonClick);
+            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             musicButton.image.sprite = musicOnImage;
             LocalDataManager.musicsetting = 1;
             musicSlider.value = LocalDataManager.musicsetting;
-            AudioManager.Instance.ToggleMusic();
+            AudioManager.GetInstance.ToggleMusic();
             LocalDataManager.Save();
         }
         else
         {
-            AudioManager.Instance.PlaySFX(sound.buttonClick);
+            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             musicButton.image.sprite = musicOffImage;
             LocalDataManager.musicsetting = 0;
             musicSlider.value = LocalDataManager.musicsetting;
-            AudioManager.Instance.ToggleMusic();
+            AudioManager.GetInstance.ToggleMusic();
             LocalDataManager.Save();
         }
 
@@ -83,7 +83,7 @@ public class SettingUI : MonoBehaviour
             soundButton.image.sprite = soundOnImage;
             LocalDataManager.soundsetting = 1;
             soundSlider.value = LocalDataManager.soundsetting;
-            AudioManager.Instance.ToggleSFX();
+            AudioManager.GetInstance.ToggleSFX();
             LocalDataManager.Save();
         }
 
@@ -91,23 +91,23 @@ public class SettingUI : MonoBehaviour
         else
         {
             soundButton.image.sprite = soundOffImage;
-            AudioManager.Instance.PlaySFX(sound.buttonClick);
+            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             LocalDataManager.soundsetting = 0;
             soundSlider.value = LocalDataManager.soundsetting;
-            AudioManager.Instance.ToggleSFX();
+            AudioManager.GetInstance.ToggleSFX();
             LocalDataManager.Save();
         }
     }
 
     public void MusicVolume()
     {
-        AudioManager.Instance.MusicVolume(musicSlider.value);
+        AudioManager.GetInstance.MusicVolume(musicSlider.value);
         LocalDataManager.musicsetting = musicSlider.value;
     }
 
     public void SFXVolume()
     {
-        AudioManager.Instance.SFXVolume(soundSlider.value);
+        AudioManager.GetInstance.SFXVolume(soundSlider.value);
         LocalDataManager.soundsetting = soundSlider.value;
     }
 
@@ -115,7 +115,7 @@ public class SettingUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         MainMenu.SetActive(true);
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
     }
 
 }

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using NOOD;
 
 public class GameManager : MonoBehaviorInstance<GameManager>
 {
-    public static Action OnStartGame;
+    public static UnityAction OnStartGame;
     [SerializeField] Animator nextLevelAnim;
     public bool isEndGame = false;
     bool isAnimation = false;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviorInstance<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            GameCanvas.GetInstace.CreateUpgradePanel();
+            GameCanvas.GetInstance.CreateUpgradePanel();
         }
 
         if (isEndGame && !isAnimation)

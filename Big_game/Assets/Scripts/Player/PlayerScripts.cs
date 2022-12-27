@@ -53,12 +53,17 @@ public class PlayerScripts : BaseCharacter
                 break;
         }
     }
- 
+
+    private void Start()
+    {
+        LocalDataManager.health = health;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            health -= 30;
+            Damage(30);
         }
         this.movement = playerMovement.movement;
         if (health <= 0 && isDead == false) Die();
@@ -113,7 +118,7 @@ public class PlayerScripts : BaseCharacter
 
     public bool Buy(int amountOfGold, Upgrade upgrade)
     {
-        if (GoldManager.GetInstace.MinusGold(amountOfGold))
+        if (GoldManager.GetInstance.MinusGold(amountOfGold))
         {
             ApplyUpgrade(upgrade);
             return true;
@@ -169,6 +174,7 @@ public class PlayerScripts : BaseCharacter
                 weaponsHolder.ChangeNewGun(groundGun.GetData());
                 groundGun.SetData(temp);
             }
+            AudioManager.GetInstance.PlaySFX(sound.pickUp);
         }
     }
 
@@ -177,6 +183,6 @@ public class PlayerScripts : BaseCharacter
         Debug.Log("Player Die");
         playerAnimation.DeadAnimation();
         isDead = true;
-        GameManager.GetInstace.isEndGame = true;
+        GameManager.GetInstance.isEndGame = true;
     }
 }

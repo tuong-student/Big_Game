@@ -38,6 +38,9 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
+        LocalDataManager.health -= damageAmount;
+        InGameUI.GetInstance.TakeDamage(damageAmount);
+
         //if (bloodEff) bloodEff.Play();
     }
 

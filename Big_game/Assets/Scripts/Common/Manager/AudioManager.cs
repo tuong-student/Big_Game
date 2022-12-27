@@ -2,27 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using NOOD;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviorInstance<AudioManager>
 {
-    public static AudioManager Instance;
-
     public Sound[] musicSound, sfxSounds;
     public AudioSource musicSource, sfxSource;
 
-    private void Awake()
+    public static AudioManager Create(Transform parent = null)
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
+        return Instantiate<AudioManager>(Resources.Load<AudioManager>("Prefabs/Manager/AudioManager"), parent);
     }
+
     private void Start()
     {
         ToggleMusic();

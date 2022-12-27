@@ -33,11 +33,11 @@ public class GunScripts : MonoBehaviour
     {
         if (isShotgun)
         {
-            PoolingManager.GetInstace.SetBulletPoolingObject(this.gunData.bulletPrefab);
+            PoolingManager.GetInstance.SetBulletPoolingObject(this.gunData.bulletPrefab);
             GameObject[] bullets = new GameObject[3];
-            bullets[0] = PoolingManager.GetInstace.GetBullet();
-            bullets[1] = PoolingManager.GetInstace.GetBullet();
-            bullets[2] = PoolingManager.GetInstace.GetBullet();
+            bullets[0] = PoolingManager.GetInstance.GetBullet();
+            bullets[1] = PoolingManager.GetInstance.GetBullet();
+            bullets[2] = PoolingManager.GetInstance.GetBullet();
             foreach(var b in bullets)
             {
                 b.transform.position = shootPoint.transform.position;
@@ -51,8 +51,8 @@ public class GunScripts : MonoBehaviour
         }
         else
         {
-            PoolingManager.GetInstace.SetBulletPoolingObject(this.gunData.bulletPrefab);
-            GameObject bullet = PoolingManager.GetInstace.GetBullet();
+            PoolingManager.GetInstance.SetBulletPoolingObject(this.gunData.bulletPrefab);
+            GameObject bullet = PoolingManager.GetInstance.GetBullet();
             BulletScript bulletScript = bullet.GetComponent<BulletScript>();
             bulletScript.SetRange(gunData.range);
             bullet.transform.position = shootPoint.transform.position;
@@ -61,10 +61,30 @@ public class GunScripts : MonoBehaviour
             SetBulletDamage(bullet, gunData.damage);
         }
 
+        PlayGunSound();
         anim.SetTrigger("Shooting");
         anim.SetInteger("AnimIndex", gunData.animationIndex);
     }
 
+    void PlayGunSound()
+    { 
+        switch(gunData.name)
+        {
+            case "Laser":
+            case "spazer":
+            case "flameThrower":
+                AudioManager.GetInstance.PlaySFX(sound.laserWeapon);
+                break;
+            case "matter":
+                AudioManager.GetInstance.PlaySFX(sound.matterWeapon);
+                break;
+            case "piston":
+            case "mg":
+            case "shotgun":
+                AudioManager.GetInstance.PlaySFX(sound.pistolWeapon);
+                break;
+	    }
+    }
 
     void SetBulletDamage(GameObject bullet, float damage)
     {

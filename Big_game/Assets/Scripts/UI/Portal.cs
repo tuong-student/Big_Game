@@ -6,6 +6,7 @@ using NOOD;
 public class Portal : AbstractMonoBehaviour
 {
     [SerializeField] Animator potalAnim;
+    [SerializeField] bool isMenuLevel;
     bool isOpen;
 
     private void Update()
@@ -27,9 +28,15 @@ public class Portal : AbstractMonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.tag.Equals("Player") && isMenuLevel == false)
         {
-            LevelManager.GetInstace.NextLevel();
+            LevelManager.OnGenerateNewLevel?.Invoke();
+            LevelManager.GetInstance.NextLevel();
+        }
+        if (collision.gameObject.tag.Equals("Player") && isMenuLevel)
+        {
+            GameManager.OnStartGame?.Invoke();
+            LevelManager.OnGenerateNewLevel?.Invoke();
         }
     }
 

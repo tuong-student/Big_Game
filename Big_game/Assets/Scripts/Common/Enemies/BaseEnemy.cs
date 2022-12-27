@@ -63,7 +63,7 @@ public class BaseEnemy : MonoBehaviour
     
     public void AddGold()
     {
-        GoldManager.GetInstace.AddGold(gold);
+        GoldManager.GetInstance.AddGold(gold);
     }
     public void TakeDamage(float damageAmount)
 

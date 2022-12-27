@@ -11,6 +11,7 @@ public class Sound
 }
 public enum sound
 {
+    flameThrowerWeapon,
     laserWeapon,
     matterWeapon,
     pistolWeapon,
@@ -18,8 +19,9 @@ public enum sound
     pickUp,
     lose,
     hitEnemy,
-    telePotarl,
+    telePortal,
     gateClose,
+    gateOpen,
 }
 
 

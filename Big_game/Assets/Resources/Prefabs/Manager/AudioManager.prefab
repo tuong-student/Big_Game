@@ -53,36 +53,36 @@ MonoBehaviour:
   - name: FlameThrowerWeapon
     clip: {fileID: 8300000, guid: 68fa19096fb01214d92f762a930e293f, type: 3}
     soundtype: 0
-  - name: GateOpen
-    clip: {fileID: 8300000, guid: dcd286d55b5fcb346a93972a645e6d0d, type: 3}
-    soundtype: 0
   - name: LaserWeapon
     clip: {fileID: 8300000, guid: 646a8c63a0db42c498955e43556b0bb4, type: 3}
-    soundtype: 0
+    soundtype: 1
   - name: MatterWeapon
     clip: {fileID: 8300000, guid: 31e811303b1bb79449a2f8e7f219ea7c, type: 3}
-    soundtype: 1
+    soundtype: 2
   - name: PistolWeapon
     clip: {fileID: 8300000, guid: 415aa0ba46fd5bd4fa9b60df44612c45, type: 3}
-    soundtype: 2
+    soundtype: 3
   - name: ButtonClick
     clip: {fileID: 8300000, guid: 981321b5c45d5d244a10e2768de369c3, type: 3}
-    soundtype: 3
+    soundtype: 4
   - name: PickUp
     clip: {fileID: 8300000, guid: ec560c059c88c1841bc42dc6f433a490, type: 3}
-    soundtype: 4
+    soundtype: 5
   - name: Lose
     clip: {fileID: 8300000, guid: 61ac571ed107966428d0308598c3675a, type: 3}
-    soundtype: 5
+    soundtype: 6
   - name: HitEnemy
     clip: {fileID: 8300000, guid: b715dec34ceb1f543949aad5db5f7555, type: 3}
-    soundtype: 6
+    soundtype: 7
   - name: TeleSound
     clip: {fileID: 8300000, guid: 156bd2a73b87eda499174dfcf54a1fb6, type: 3}
-    soundtype: 7
+    soundtype: 8
   - name: GateClose
     clip: {fileID: 8300000, guid: f1d7f5db95bb0d74fb1f4021420f435a, type: 3}
-    soundtype: 8
+    soundtype: 9
+  - name: GateOpen
+    clip: {fileID: 8300000, guid: dcd286d55b5fcb346a93972a645e6d0d, type: 3}
+    soundtype: 10
   musicSource: {fileID: 1094215330472764626}
   sfxSource: {fileID: 3467114624209061749}
 --- !u!1 &3822488035949063383

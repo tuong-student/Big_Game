@@ -3003,8 +3003,8 @@ MonoBehaviour:
   damageText: {fileID: 1378253805702932966}
   gun1: {fileID: 485309376746806903}
   gun2: {fileID: 6904799930414028357}
-  maxHealth: 300
-  currenHealth: 0
+  maxHealth: 100
+  currentHealth: 0
   maxMana: 50
   currentMana: 0
 --- !u!1 &5140630178040660556

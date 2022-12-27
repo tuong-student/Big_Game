@@ -30,7 +30,7 @@ public class WeaponsHolder : MonoBehaviour
 
     GunData GetGunData(int index)
     {
-        return WeaponManager.GetInstace.GetGunData(index);
+        return WeaponManager.GetInstance.GetGunData(index);
     }
 
     public void ChangeItem(int index)
@@ -54,7 +54,7 @@ public class WeaponsHolder : MonoBehaviour
         }
         else
         {
-            gun2Index = WeaponManager.GetInstace.GetIndexOf(data);
+            gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
             PlayerPrefs.Save();
             return true;
         }
@@ -71,11 +71,11 @@ public class WeaponsHolder : MonoBehaviour
         //Set gunIndex
         if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
         {
-            gun1Index = WeaponManager.GetInstace.GetIndexOf(data);
+            gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
         }
         else
         {
-            gun2Index = WeaponManager.GetInstace.GetIndexOf(data);
+            gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
         }
 
         //Set new data
@@ -90,7 +90,7 @@ public class WeaponsHolder : MonoBehaviour
     void Fire()
     {
         nextShootTime = Time.time;
-        if (currentGun.gunData == WeaponManager.GetInstace.shotgunData)
+        if (currentGun.gunData == WeaponManager.GetInstance.shotgunData)
             currentGun.Fire(true);
         else currentGun.Fire(false);
         nextShootTime += 1 / currentGun.gunData.fireRate;

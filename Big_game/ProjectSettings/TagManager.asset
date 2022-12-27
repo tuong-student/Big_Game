@@ -9,6 +9,7 @@ TagManager:
   - ShooterEnemy
   - Boss
   - Door
+  - Portal
   layers:
   - Default
   - TransparentFX
