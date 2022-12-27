@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerOncollision : MonoBehaviour
 {
     [SerializeField] PlayerScripts playerScripts;
+    [SerializeField] Collider2D collider;
 
     private void Awake()
     {
@@ -13,10 +14,18 @@ public class PlayerOncollision : MonoBehaviour
         {
             playerScripts = temp;
         }
+        collider = GetComponent<Collider2D>();
     }
-    
+
+    private void Start()
+    {
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () => { collider.enabled = false; };
+        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () => { collider.enabled = true; };
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!playerScripts.IsMoveable) return;
         if (collision.gameObject.CompareTag("Finish"))
         {
             LevelManager.GetInstance.OpenPortal();

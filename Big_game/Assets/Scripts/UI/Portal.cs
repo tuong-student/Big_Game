@@ -7,6 +7,7 @@ public class Portal : AbstractMonoBehaviour
 {
     [SerializeField] Animator potalAnim;
     [SerializeField] bool isMenuLevel;
+
     bool isOpen;
 
     private void Update()
@@ -30,13 +31,12 @@ public class Portal : AbstractMonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player") && isMenuLevel == false)
         {
-            LevelManager.OnGenerateNewLevel?.Invoke();
             LevelManager.GetInstance.NextLevel();
         }
         if (collision.gameObject.tag.Equals("Player") && isMenuLevel)
         {
-            GameManager.OnStartGame?.Invoke();
-            LevelManager.OnGenerateNewLevel?.Invoke();
+            EventManager.GetInstance.OnStartGame.OnEventRaise?.Invoke();
+            EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
         }
     }
 

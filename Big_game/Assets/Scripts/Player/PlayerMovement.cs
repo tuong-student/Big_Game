@@ -28,8 +28,13 @@ public class PlayerMovement : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+    }
+
     private void Update()
     {
+        if (!playerScripts.IsMoveable) return;
         if (playerScripts.isDead) return;
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
@@ -41,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
         Move(movement);
 
 
+    }
+
+    private void OnDisable()
+    {
     }
 
     private void FixedUpdate()

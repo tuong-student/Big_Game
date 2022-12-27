@@ -5,15 +5,28 @@ using UnityEngine;
 public class WeaponsHolder : MonoBehaviour
 {
     [SerializeField] GunScripts currentGun;
-    [SerializeField] [Range(0, 8)] int gun1Index, gun2Index;
+    [SerializeField] [Range(1, 9)] int gun1Index, gun2Index;
+
+    private GunData gun1Data, gun2Data;
 
     [HideInInspector] public bool isShootPress;
     private float nextShootTime;
 
     private void Start()
     {
-        gun2Index = gun1Index;
+        if(gun2Index == 0)
+        {
+            gun2Index = gun1Index;
+	    }
+        gun1Index -= 1;
+        gun2Index -= 1;
+        gun1Data = GetGunData(gun1Index);
+        gun2Data = GetGunData(gun2Index);
         currentGun.SetData(GetGunData(gun1Index));
+        EventManager.GetInstance.OnContinuewGame.OnEventRaise += () => 
+	    { 
+	        InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage); 
+	    };
     }
 
     private void Update()
@@ -33,15 +46,17 @@ public class WeaponsHolder : MonoBehaviour
         return WeaponManager.GetInstance.GetGunData(index);
     }
 
-    public void ChangeItem(int index)
+    public void ChangeGun(int index)
     {
         switch (index)
         {
             case 1:
-                currentGun.SetData(GetGunData(gun1Index));
+                currentGun.SetData(gun1Data);
+                InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
                 break;
             case 2:
-                currentGun.SetData(GetGunData(gun2Index));
+                currentGun.SetData(gun2Data);
+                InGameUI.GetInstance.changeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
                 break;
         }
     }
@@ -55,7 +70,8 @@ public class WeaponsHolder : MonoBehaviour
         else
         {
             gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
-            PlayerPrefs.Save();
+            gun2Data = data;
+            InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
             return true;
         }
     }
@@ -72,14 +88,19 @@ public class WeaponsHolder : MonoBehaviour
         if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
         {
             gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
+            gun1Data = data;
+            InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
         }
         else
         {
             gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
+            gun2Data = data;
+            InGameUI.GetInstance.changeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
         }
 
         //Set new data
         this.currentGun.SetData(data);
+
     }
 
     public GunData GetCurrentGunData()

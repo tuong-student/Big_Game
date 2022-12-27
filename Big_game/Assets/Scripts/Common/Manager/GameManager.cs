@@ -8,7 +8,6 @@ using NOOD;
 
 public class GameManager : MonoBehaviorInstance<GameManager>
 {
-    public static UnityAction OnStartGame;
     [SerializeField] Animator nextLevelAnim;
     public bool isEndGame = false;
     bool isAnimation = false;
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviorInstance<GameManager>
 
     public void StartGame()
     {
-        OnStartGame?.Invoke();
+        EventManager.GetInstance.OnStartGame.OnEventRaise?.Invoke();
     }
 
     private void Update()
