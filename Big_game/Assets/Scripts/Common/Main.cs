@@ -17,6 +17,7 @@ public class Main : MonoBehaviorInstance<Main>
         Instantiate(Resources.Load("Prefabs/Game/Player/Main Camera"), null);
         LocalDataManager.Load();
         
+        EventManager.Create();
         LevelManager.Create();
         GoldManager.Create();
         WeaponManager.Create();
@@ -28,21 +29,16 @@ public class Main : MonoBehaviorInstance<Main>
         ExplodeManager.Create().AddTo(this);
         UIManager.Create().AddTo(this);
 
-        GameManager.OnStartGame += GenerateNewLevel;
-        LevelManager.OnGenerateNewLevel += GenerateNewLevel;
+        EventManager.GetInstance.OnStartGame.OnEventRaise += GenerateNewLevel;
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += GenerateNewLevel;
 
-        LocalDataManager.soundsetting = 1;
-        LocalDataManager.musicsetting = 1;
+        LocalDataManager.soundsetting = 0;
+        LocalDataManager.musicsetting = 0;
 
         yield return new WaitForSeconds(1f);
         if (respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
-        player = (PlayerScripts) PlayerScripts.Create(respawnPos).AddTo(this);
-    }
-
-    private void OnDisable()
-    {
-        LevelManager.OnGenerateNewLevel -= GenerateNewLevel;
-        GameManager.OnStartGame -= GenerateNewLevel;
+        player = (PlayerScripts)PlayerScripts.Create();
+        player.transform.position = respawnPos.transform.position;
     }
 
     public void GenerateNewLevel()
@@ -57,6 +53,8 @@ public class Main : MonoBehaviorInstance<Main>
         PoolingManager.Create().AddTo(this);
         ExplodeManager.Create().AddTo(this);
         UIManager.Create().AddTo(this);
-        player = (PlayerScripts)PlayerScripts.Create(GameObject.Find("RespawnPos").transform).AddTo(this);
+        respawnPos = GameObject.Find("RespawnPos").transform;
+        player.transform.position = respawnPos.transform.position;
+        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise?.Invoke();
     }
 }

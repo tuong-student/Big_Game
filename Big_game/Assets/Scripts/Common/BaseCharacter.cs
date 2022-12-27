@@ -38,14 +38,14 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        LocalDataManager.health -= damageAmount;
         InGameUI.GetInstance.TakeDamage(damageAmount);
-
+        LocalDataManager.health = health;
         //if (bloodEff) bloodEff.Play();
     }
 
     public virtual void Die()
     {
+        InGameUI.GetInstance.SetHealth(0);
         Destroy(this.gameObject, 10f);
     }
 

@@ -6,7 +6,6 @@ using NOOD;
 
 public class LevelManager : MonoBehaviorInstance<LevelManager>
 {
-    public static Action OnGenerateNewLevel;
     [SerializeField] List<GameObject> levels;
     [SerializeField] GameObject mainMenuDungeon;
     private List<GameObject> activeLevels = new List<GameObject>();
@@ -23,24 +22,16 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         mainMenuDungeon = Instantiate(mainMenuDungeon);
         ActiveMainMenuLevel();
 
-        GameManager.OnStartGame += LoadCurrentLevel;
-        GameManager.OnStartGame += DeactiveMainMenuLevel;
-        OnGenerateNewLevel += LoadCurrentLevel;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnStartGame -= LoadCurrentLevel;
-        GameManager.OnStartGame -= DeactiveMainMenuLevel;
-        OnGenerateNewLevel -= LoadCurrentLevel;
-        GameManager.OnStartGame = null;
+        EventManager.GetInstance.OnStartGame.OnEventRaise += LoadCurrentLevel;
+        EventManager.GetInstance.OnStartGame.OnEventRaise += DeactiveMainMenuLevel;
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LoadCurrentLevel;
     }
 
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
         LocalDataManager.Save();
-        OnGenerateNewLevel?.Invoke();
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
     }
 
     public void ActiveMainMenuLevel()

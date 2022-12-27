@@ -123,10 +123,9 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
             .Play();
     }
 
-    public void changeGunSprites(Sprite gun1s, Sprite gun2s)
+    public void changeGunSprites(Sprite mainGun, Sprite subGun)
     {
-        gun1.sprite = gun1s;
-        gun2.sprite = gun2s;
-
+        gun1.sprite = mainGun;
+        gun2.sprite = subGun;
     }
 }

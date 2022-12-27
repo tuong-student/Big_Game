@@ -18,11 +18,11 @@ public class PlayerScripts : BaseCharacter
 
     public float playerNum = 1; //Index of the player sprite (0 -> 2)
 
-
     Vector3 movement;
 
     #region Bool
-
+    private bool isMoveable = false;
+    public bool IsMoveable { get { return isMoveable; } }
     #endregion
 
     public static PlayerScripts Create(Transform parent = null)
@@ -57,10 +57,29 @@ public class PlayerScripts : BaseCharacter
     private void Start()
     {
         LocalDataManager.health = health;
+        EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
+        {
+            isMoveable = true;
+        };
+        EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
+        {
+            isMoveable = false;
+        };
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () =>
+        {
+            Debug.Log("OnGenerateNewLevel");
+            isMoveable = false;
+        };
+        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () =>
+        {
+            Debug.Log("OnGenerateNewLevelComplete");
+            isMoveable = true;
+        };
     }
 
     private void Update()
     {
+        if (!isMoveable) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Damage(30);
@@ -82,11 +101,11 @@ public class PlayerScripts : BaseCharacter
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            weaponsHolder.ChangeItem(1);
+            weaponsHolder.ChangeGun(1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            weaponsHolder.ChangeItem(2);
+            weaponsHolder.ChangeGun(2);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {

@@ -18,8 +18,7 @@ namespace NOOD
 
                 if (instance == null)
                 {
-                    GameObject newObj = new GameObject(typeof(T).ToString());
-                    instance = newObj.AddComponent<T>();
+                    Debug.Log("Errorrrrr: " + typeof(T) + " not exit");
                 }
                 return instance;
             }
