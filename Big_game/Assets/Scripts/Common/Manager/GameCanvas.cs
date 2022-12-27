@@ -51,11 +51,6 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
     {
         goldText.text = text;
     }
-    private void Awake()
-    {
-        LocalDataManager.Load();
-
-    }
 }
 
 

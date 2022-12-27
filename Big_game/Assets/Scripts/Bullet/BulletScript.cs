@@ -28,14 +28,14 @@ public class BulletScript : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Blocking"))
         {
-            GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
-            PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
-            GameObject explode = PoolingManager.GetInstace.GetExplode();
+            GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(type);
+            PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
+            GameObject explode = PoolingManager.GetInstance.GetExplode();
             explode.transform.position = this.transform.position;
             explode.GetComponent<ParticleSystem>().Play();
             if (collision.gameObject.GetComponent<BaseEnemy>())
             {
-                Debug.Log("Push");
+                AudioManager.GetInstance.PlaySFX(sound.hitEnemy);
                 BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
                 enemy.TakeDamage(damage);
                 enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
@@ -47,9 +47,9 @@ public class BulletScript : MonoBehaviour
     private void OnDisable()
     {
         if (isBlock == true) return;
-        GameObject explodePref = ExplodeManager.GetInstace.GetExplodePref(type);
-        PoolingManager.GetInstace.SetExpldePoolingObject(explodePref);
-        GameObject explode = PoolingManager.GetInstace.GetExplode();
+        GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(type);
+        PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
+        GameObject explode = PoolingManager.GetInstance.GetExplode();
         explode.transform.position = this.transform.position;
         explode.GetComponent<ParticleSystem>().Play();
     }

@@ -19,12 +19,12 @@ public class PlayerOncollision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-            LevelManager.GetInstace.OpenPortal();
+            LevelManager.GetInstance.OpenPortal();
         }
 
-        if (collision.gameObject.CompareTag("Portal"))
+        if (collision.GetComponent<Portal>())
         {
-            LevelManager.GetInstace.ClosePortal();
+            LevelManager.GetInstance.ClosePortal();
         }
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NOOD;
 
-public class InGameUI : MonoBehaviour
+public class InGameUI : MonoBehaviorInstance<InGameUI>
 {
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider manaSlider;
@@ -15,9 +16,7 @@ public class InGameUI : MonoBehaviour
     
     private bool isOn = false;
 
-
     public float maxHealth = 100;
-    public float currenHealth;
 
     public float maxMana = 50;
     public float currentMana;
@@ -25,63 +24,49 @@ public class InGameUI : MonoBehaviour
     public void Start()
     {
         SetMaxHealth(maxHealth);
-        SetHealth(LocalDataManager.health);
         SetMaxMana(maxMana);
-        Debug.Log(LocalDataManager.health);
-        Debug.Log(maxHealth);
-        LocalDataManager.health = 50;
         SetStats();
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(20);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakeDamage(-20);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (isOn)
-            {
-                MoveOut(statsMenuRect);
-                isOn = false;
-            }
-            else
-            {
-                MoveIn(statsMenuRect);
-                isOn = true;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            TakeMana(20);
-        }
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    TakeDamage(20);
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    TakeDamage(-20);
+        //}
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    if (isOn)
+        //    {
+        //        MoveOut(statsMenuRect);
+        //        isOn = false;
+        //    }
+        //    else
+        //    {
+        //        MoveIn(statsMenuRect);
+        //        isOn = true;
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    TakeMana(20);
+        //}
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-      
-        if (damage > LocalDataManager.health)
+        if (LocalDataManager.health <= 0)
         {
-            LocalDataManager.health = 0;
-            LocalDataManager.Save();
+            SetHealth(0);
             return;
-            
         }
-       
-      //  currenHealth -= damage;
-      
-        LocalDataManager.health -= damage;
-        LocalDataManager.Save();
-        Debug.Log(LocalDataManager.health);
 
         SetHealth(LocalDataManager.health);
-        Debug.Log(LocalDataManager.health);
     }
 
     public void SetMaxHealth(float health)

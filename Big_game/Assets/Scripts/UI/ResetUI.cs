@@ -26,6 +26,6 @@ public class ResetUI : MonoBehaviour
         LocalDataManager.currentLevel = 1;
         LocalDataManager.gold = 0;
 
-        Main.GetInstace.GenerateNewLevel(); 
+        //Main.GetInstance.GenerateNewLevel(); 
     }
 }

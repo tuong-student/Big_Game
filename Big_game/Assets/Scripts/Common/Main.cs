@@ -21,17 +21,28 @@ public class Main : MonoBehaviorInstance<Main>
         GoldManager.Create();
         WeaponManager.Create();
         GameManager.Create();
+        AudioManager.Create();
+        GameCanvas.Create();
 
         PoolingManager.Create().AddTo(this);
         ExplodeManager.Create().AddTo(this);
-        GameCanvas.Create().AddTo(this);
         UIManager.Create().AddTo(this);
 
-        LevelManager.OnNextLevel += GenerateNewLevel;
+        GameManager.OnStartGame += GenerateNewLevel;
+        LevelManager.OnGenerateNewLevel += GenerateNewLevel;
+
+        LocalDataManager.soundsetting = 1;
+        LocalDataManager.musicsetting = 1;
 
         yield return new WaitForSeconds(1f);
         if (respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
         player = (PlayerScripts) PlayerScripts.Create(respawnPos).AddTo(this);
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnGenerateNewLevel -= GenerateNewLevel;
+        GameManager.OnStartGame -= GenerateNewLevel;
     }
 
     public void GenerateNewLevel()
@@ -41,12 +52,10 @@ public class Main : MonoBehaviorInstance<Main>
 
     private IEnumerator Co_GenerateNewLevel()
     {
-        StartCoroutine(LevelManager.GetInstace.LoadLevel(LocalDataManager.currentLevel));
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
         Clear();
         PoolingManager.Create().AddTo(this);
         ExplodeManager.Create().AddTo(this);
-        GameCanvas.Create().AddTo(this);
         UIManager.Create().AddTo(this);
         player = (PlayerScripts)PlayerScripts.Create(GameObject.Find("RespawnPos").transform).AddTo(this);
     }

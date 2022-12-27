@@ -34,35 +34,31 @@ public class MainMenuUI : MonoBehaviour
     private void ContinueGame()
     {
 
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
-        gameObject.SetActive(false);
-        inGamePanel.SetActive(true);
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
     }
     private void NewGame()
     {
-
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         newGame.NewGame();
     }
     private void ToSetting()
     {
-        gameObject.SetActive(false);
-        settingPanel.SetActive(true);
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        GameCanvas.GetInstance.ActiveMenu(Menu.Setting);
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
     }
 
     private void ToCreadit()
     {
         gameObject.SetActive(false);
         creditsPanel.SetActive(true);
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
-
-
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
     }
     private void Exit()
     {
 
-        AudioManager.Instance.PlaySFX(sound.buttonClick);
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         Application.Quit();
 
     }

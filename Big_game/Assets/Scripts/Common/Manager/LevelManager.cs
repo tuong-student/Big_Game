@@ -6,7 +6,7 @@ using NOOD;
 
 public class LevelManager : MonoBehaviorInstance<LevelManager>
 {
-    public static Action OnNextLevel;
+    public static Action OnGenerateNewLevel;
     [SerializeField] List<GameObject> levels;
     [SerializeField] GameObject mainMenuDungeon;
     private List<GameObject> activeLevels = new List<GameObject>();
@@ -20,18 +20,27 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     private void Start()
     {
-        Instantiate(mainMenuDungeon);
+        mainMenuDungeon = Instantiate(mainMenuDungeon);
         ActiveMainMenuLevel();
-        
+
         GameManager.OnStartGame += LoadCurrentLevel;
         GameManager.OnStartGame += DeactiveMainMenuLevel;
+        OnGenerateNewLevel += LoadCurrentLevel;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnStartGame -= LoadCurrentLevel;
+        GameManager.OnStartGame -= DeactiveMainMenuLevel;
+        OnGenerateNewLevel -= LoadCurrentLevel;
+        GameManager.OnStartGame = null;
     }
 
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
         LocalDataManager.Save();
-        OnNextLevel?.Invoke();
+        OnGenerateNewLevel?.Invoke();
     }
 
     public void ActiveMainMenuLevel()
@@ -46,19 +55,21 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     public void LoadCurrentLevel()
     {
-        LoadLevel(LocalDataManager.currentLevel);
+        StartCoroutine(LoadLevel(LocalDataManager.currentLevel));
     }
 
     public IEnumerator LoadLevel(int level)
     {
         if (!isFirstTime)
-            GameManager.GetInstace.TransitionAnimation();
+            GameManager.GetInstance.TransitionAnimation();
         isFirstTime = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (level <= 0) level = 1;
         if (level > levels.Count) level = levels.Count;
+
         LocalDataManager.currentLevel = level;
         LocalDataManager.Save();
+
         foreach (var lv in activeLevels)
         {
             if (lv) Destroy(lv.gameObject);
@@ -70,11 +81,16 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     public void OpenPortal()
     {
-        levelPortal.OpenAnimation();
+        if(levelPortal != null)
+        { 
+            AudioManager.GetInstance.PlaySFX(sound.telePortal);
+            levelPortal.OpenAnimation();
+	    }
     }
 
     public void ClosePortal()
     {
-        levelPortal.CloseAnimation();
+        if(levelPortal != null)
+            levelPortal.CloseAnimation();
     }
 }

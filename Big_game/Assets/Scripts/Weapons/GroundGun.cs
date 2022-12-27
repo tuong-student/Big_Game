@@ -17,7 +17,7 @@ public class GroundGun : MonoBehaviour
     private void Start()
     {
         if(data == null)
-            data = WeaponManager.GetInstace.GetRandomGunData();
+            data = WeaponManager.GetInstance.GetRandomGunData();
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = data.gunImage;
     }
