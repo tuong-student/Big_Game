@@ -25,7 +25,7 @@ public class WeaponsHolder : MonoBehaviour
         currentGun.SetData(GetGunData(gun1Index));
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += () => 
 	    { 
-	        InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage); 
+	        InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage); 
 	    };
     }
 
@@ -52,11 +52,11 @@ public class WeaponsHolder : MonoBehaviour
         {
             case 1:
                 currentGun.SetData(gun1Data);
-                InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+                InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
                 break;
             case 2:
                 currentGun.SetData(gun2Data);
-                InGameUI.GetInstance.changeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
+                InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
                 break;
         }
     }
@@ -71,7 +71,7 @@ public class WeaponsHolder : MonoBehaviour
         {
             gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
             gun2Data = data;
-            InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+            InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
             return true;
         }
     }
@@ -89,13 +89,13 @@ public class WeaponsHolder : MonoBehaviour
         {
             gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
             gun1Data = data;
-            InGameUI.GetInstance.changeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+            InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
         }
         else
         {
             gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
             gun2Data = data;
-            InGameUI.GetInstance.changeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
+            InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
         }
 
         //Set new data

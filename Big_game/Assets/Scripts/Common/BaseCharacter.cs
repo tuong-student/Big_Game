@@ -9,9 +9,13 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public static BaseCharacter Instance { get; private set; }
 
     #region Stats
-    public float health = 100f;
+    public float maxHealth = 100f;
+    public float currentHealth = 100f;
     public float mana = 100f;
-    public float damage = 1f;
+    public float bonusDamage = 1f;
+    public float criticalRate = 0f;
+    public float fireRate = 0f;
+    public float reloadSpeed = 0f;
     public float defence = 0f;
     public float stamina = 50f;
     public float walkSpeed = 2f;
@@ -37,9 +41,9 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 
     public void Damage(float damageAmount)
     {
-        health -= damageAmount;
+        currentHealth -= damageAmount;
         InGameUI.GetInstance.TakeDamage(damageAmount);
-        LocalDataManager.health = health;
+        LocalDataManager.maxHealth = currentHealth;
         //if (bloodEff) bloodEff.Play();
     }
 
