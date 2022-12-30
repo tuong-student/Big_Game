@@ -16,12 +16,12 @@ public class ResetUI : MonoBehaviour
 
     public void NewGame()
     {
-        LocalDataManager.fireRate = 5;
+        LocalDataManager.bonusFireRate = 5;
         LocalDataManager.criticalRate = 5;
-        LocalDataManager.speed = 5;
-        LocalDataManager.damage = 1f;
+        LocalDataManager.runSpeed = 5;
+        LocalDataManager.bonusDamage = 1f;
         LocalDataManager.defence = 0f;
-        LocalDataManager.health = 100;
+        LocalDataManager.maxHealth = 100;
         LocalDataManager.mana = 50;
         LocalDataManager.currentLevel = 1;
         LocalDataManager.gold = 0;

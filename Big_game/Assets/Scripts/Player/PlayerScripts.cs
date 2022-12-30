@@ -12,16 +12,13 @@ public class PlayerScripts : BaseCharacter
     public ParticleSystem dashEff;
 
     [SerializeField] WeaponsHolder weaponsHolder;
-    GroundGun groundGun = null;
     [SerializeField] GameObject player1View, player2View, player3View;
     #endregion
 
     public float playerNum = 1; //Index of the player sprite (0 -> 2)
 
-    Vector3 movement;
-
     #region Bool
-    private bool isMoveable = false;
+    private bool isMoveable = true;
     public bool IsMoveable { get { return isMoveable; } }
     #endregion
 
@@ -37,6 +34,7 @@ public class PlayerScripts : BaseCharacter
     private void Awake()
     {
         AddScripts();
+        playerNum = LocalDataManager.playerNumber;
         player1View.SetActive(false);
         player2View.SetActive(false);
         player3View.SetActive(false);
@@ -56,7 +54,7 @@ public class PlayerScripts : BaseCharacter
 
     private void Start()
     {
-        LocalDataManager.health = health;
+        LoadFromSave();
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
         {
             isMoveable = true;
@@ -67,12 +65,10 @@ public class PlayerScripts : BaseCharacter
         };
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () =>
         {
-            Debug.Log("OnGenerateNewLevel");
             isMoveable = false;
         };
         EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () =>
         {
-            Debug.Log("OnGenerateNewLevelComplete");
             isMoveable = true;
         };
     }
@@ -84,8 +80,7 @@ public class PlayerScripts : BaseCharacter
         {
             Damage(30);
         }
-        this.movement = playerMovement.movement;
-        if (health <= 0 && isDead == false) Die();
+        if (currentHealth <= 0 && isDead == false) Die();
         GetInput();
     }
 
@@ -107,10 +102,25 @@ public class PlayerScripts : BaseCharacter
         {
             weaponsHolder.ChangeGun(2);
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PickUpGun();
-        }
+    }
+
+    void LoadFromSave()
+    {
+        bonusDamage = LocalDataManager.bonusDamage;
+        defence = LocalDataManager.defence;
+        maxHealth = LocalDataManager.maxHealth;
+        mana = LocalDataManager.mana;
+        runSpeed = LocalDataManager.runSpeed;
+        walkSpeed = LocalDataManager.walkSpeed;
+        currentSpeed = runSpeed;
+        criticalRate = LocalDataManager.criticalRate;
+        fireRate = LocalDataManager.bonusFireRate;
+        reloadSpeed = LocalDataManager.bonusReloadSpeed;
+    }
+
+    public GunData GetCurrentGunData()
+    {
+        return weaponsHolder.GetCurrentGunData();
     }
 
     void AddScripts()
@@ -140,6 +150,7 @@ public class PlayerScripts : BaseCharacter
         if (GoldManager.GetInstance.MinusGold(amountOfGold))
         {
             ApplyUpgrade(upgrade);
+            InGameUI.GetInstance.SetStats();
             return true;
         }
         return false;
@@ -150,7 +161,7 @@ public class PlayerScripts : BaseCharacter
         switch (upgrade.upgradeStats)
         {
             case StatsType.attack:
-                this.damage += upgrade.upgradeAmount; 
+                this.bonusDamage += upgrade.upgradeAmount;
                 break;
             case StatsType.defense:
                 this.defence += upgrade.upgradeAmount;
@@ -158,27 +169,36 @@ public class PlayerScripts : BaseCharacter
             case StatsType.mana:
                 this.mana += upgrade.upgradeAmount;
                 break;
-            case StatsType.health:
-                this.health += upgrade.upgradeAmount;
+            case StatsType.maxHealth:
+                this.maxHealth += upgrade.upgradeAmount;
                 break;
             case StatsType.movement:
                 this.runSpeed += upgrade.upgradeAmount;
                 this.walkSpeed += upgrade.upgradeAmount;
+                this.currentSpeed += upgrade.upgradeAmount;
+                break;
+            case StatsType.critical:
+                this.criticalRate += upgrade.upgradeAmount;
+                break;
+            case StatsType.fireRate:
+                this.fireRate += upgrade.upgradeAmount;
+                break;
+            case StatsType.reloadSpeed:
+                this.reloadSpeed += upgrade.upgradeAmount;
                 break;
         }
+        LocalDataManager.bonusDamage = bonusDamage;
+        LocalDataManager.defence = defence;
+        LocalDataManager.mana = mana;
+        LocalDataManager.maxHealth = currentHealth;
+        LocalDataManager.runSpeed = runSpeed;
+        LocalDataManager.walkSpeed = walkSpeed;
+        LocalDataManager.criticalRate = criticalRate;
+        LocalDataManager.bonusFireRate = fireRate;
+        LocalDataManager.bonusReloadSpeed = reloadSpeed;
     }
 
-    public void SetGroundGun(GroundGun groundGun)
-    {
-        this.groundGun = groundGun;
-    }
-
-    public void RemoveGroundGun()
-    {
-        groundGun = null;
-    }
-
-    void PickUpGun()
+    public void PickUpGun(GroundGun groundGun)
     {
         if (groundGun)
         {

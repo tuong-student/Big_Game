@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class GroundGun : MonoBehaviour
+public class GroundGun : MonoBehaviour, IInteractable
 {
     [SerializeField] GunData data;
     SpriteRenderer sr;
@@ -33,20 +33,8 @@ public class GroundGun : MonoBehaviour
         return this.data;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Interact()
     {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            player = collision.gameObject.GetComponent<PlayerScripts>();
-            player.SetGroundGun(this);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            player.RemoveGroundGun();
-        }
+        
     }
 }
