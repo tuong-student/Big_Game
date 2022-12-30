@@ -26,7 +26,7 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Blocking"))
+        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Blocking") || collision.gameObject.CompareTag("Door"))
         {
             GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(type);
             PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);

@@ -43,7 +43,11 @@ public class Main : MonoBehaviorInstance<Main>
         if (Camera.main != null) Destroy(Camera.main.gameObject);
         Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
         Instantiate(Resources.Load("Prefabs/Game/Player/Main Camera"), null);
-        LocalDataManager.Load();
+        LocalDataManager.LoadInit();
+        if(LocalDataManager.isSaveBefore == 1)
+        {
+            LocalDataManager.Load();
+	    }
 
         EventManager.Create();
         LevelManager.Create();

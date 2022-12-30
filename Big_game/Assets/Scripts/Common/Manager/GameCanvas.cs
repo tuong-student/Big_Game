@@ -17,7 +17,14 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 
     private void Start()
     {
-        ActiveMenu(Menu.ChooseCharacter);
+        if (LocalDataManager.playerNumber == 0)
+            ActiveChooseCharacterMenu();
+        else
+        {
+            EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+            ActiveInGameMenu();
+        }
+
         EventManager.GetInstance.OnStartGame.OnEventRaise += ActiveInGameMenu;
         EventManager.GetInstance.OnPauseGame.OnEventRaise += () => 
 	    {
@@ -72,7 +79,7 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
         ActiveMenu(Menu.Setting);
     }
 
-    public void ChooseCharacterMenu()
+    public void ActiveChooseCharacterMenu()
     {
         ActiveMenu(Menu.ChooseCharacter);
     }

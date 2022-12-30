@@ -11,6 +11,8 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     public VoidEventChannelSO OnPauseGame;
     public VoidEventChannelSO OnGenerateLevel;
     public VoidEventChannelSO OnGenerateLevelComplete;
+    public VoidEventChannelSO OnLoseGame;
+    public VoidEventChannelSO OnWinGame;
 
     public static EventManager Create(Transform parent = null)
     {

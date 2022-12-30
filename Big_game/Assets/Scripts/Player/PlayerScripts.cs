@@ -54,7 +54,8 @@ public class PlayerScripts : BaseCharacter
 
     private void Start()
     {
-        LoadFromSave();
+        if(LocalDataManager.isSaveBefore == 1)    
+	        LoadFromSave();
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
         {
             isMoveable = true;
@@ -223,5 +224,6 @@ public class PlayerScripts : BaseCharacter
         playerAnimation.DeadAnimation();
         isDead = true;
         GameManager.GetInstance.isEndGame = true;
+        EventManager.GetInstance.OnLoseGame.RaiseEvent();
     }
 }

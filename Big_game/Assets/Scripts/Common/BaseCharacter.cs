@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NOOD;
+using NOOD.NoodCamera;
 
 public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 {
@@ -18,8 +19,8 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public float reloadSpeed = 0f;
     public float defence = 0f;
     public float stamina = 50f;
-    public float walkSpeed = 2f;
-    public float runSpeed = 5f;
+    public float walkSpeed = 0.5f;
+    public float runSpeed = 0.8f;
     //public float dashSpeed = 10f;
     public float dashForce = 30f;
     internal float currentSpeed;
@@ -42,8 +43,8 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        InGameUI.GetInstance.TakeDamage(damageAmount);
-        LocalDataManager.maxHealth = currentHealth;
+        InGameUI.GetInstance.SetHealth(currentHealth);
+        CameraShake.GetInstance.Shake();
         //if (bloodEff) bloodEff.Play();
     }
 

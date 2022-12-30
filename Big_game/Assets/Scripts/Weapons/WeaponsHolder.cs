@@ -22,11 +22,8 @@ public class WeaponsHolder : MonoBehaviour
         gun2Index -= 1;
         gun1Data = GetGunData(gun1Index);
         gun2Data = GetGunData(gun2Index);
-        currentGun.SetData(GetGunData(gun1Index));
-        EventManager.GetInstance.OnContinuewGame.OnEventRaise += () => 
-	    { 
-	        InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage); 
-	    };
+        currentGun.SetData(GetGunData(gun1Index)); 
+	    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
     }
 
     private void Update()
