@@ -18,7 +18,7 @@ public class PlayerScripts : BaseCharacter
     public float playerNum = 1; //Index of the player sprite (0 -> 2)
 
     #region Bool
-    private bool isMoveable = false;
+    private bool isMoveable = true;
     public bool IsMoveable { get { return isMoveable; } }
     #endregion
 
@@ -34,6 +34,7 @@ public class PlayerScripts : BaseCharacter
     private void Awake()
     {
         AddScripts();
+        playerNum = LocalDataManager.playerNumber;
         player1View.SetActive(false);
         player2View.SetActive(false);
         player3View.SetActive(false);
@@ -150,7 +151,6 @@ public class PlayerScripts : BaseCharacter
         {
             ApplyUpgrade(upgrade);
             InGameUI.GetInstance.SetStats();
-            LocalDataManager.Save();
             return true;
         }
         return false;

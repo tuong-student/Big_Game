@@ -11,7 +11,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     [SerializeField] private Slider manaSlider;
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
-    [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText;
+    [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText, goldText;
     [SerializeField] private Image gun1, gun2;
     
     private bool isOn = false;
@@ -25,6 +25,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     {
         SetMaxHealth(maxHealth);
         SetMaxMana(maxMana);
+        ResetGoldText();
     }
 
     public void Update()
@@ -81,6 +82,11 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
         healthSlider.value = health;
     }
 
+    public void ResetGoldText()
+    {
+        goldText.text = "Gold: " + LocalDataManager.gold.ToString("0");
+    }
+    
     public void TakeMana(int mana)
     {
         currentMana -= mana;

@@ -10,18 +10,45 @@ public class Main : MonoBehaviorInstance<Main>
     PlayerScripts player;
 
 
-    private IEnumerator Start()
+    private void Start()
     {
+        GameManager.Create();
+        //SelectCharacter();
+        PlayGame();
+    }
+
+    public void SelectCharacter()
+    {
+        StartCoroutine(CO_SelectCharacter());
+    }
+
+    public void PlayGame()
+    {
+        StartCoroutine(CO_PlayGame());
+    }
+
+    public IEnumerator CO_SelectCharacter()
+    {
+        GameManager.GetInstance.TransitionAnimation();
+        yield return new WaitForSeconds(1f); 
+        Clear();
+        ChooseCharacterManager.Create().AddTo(this);
+    }
+
+    public IEnumerator CO_PlayGame()
+    {
+        GameManager.GetInstance.TransitionAnimation();
+        yield return new WaitForSeconds(1f);
+        Clear();
         if (Camera.main != null) Destroy(Camera.main.gameObject);
         Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
         Instantiate(Resources.Load("Prefabs/Game/Player/Main Camera"), null);
         LocalDataManager.Load();
-        
+
         EventManager.Create();
         LevelManager.Create();
         GoldManager.Create();
         WeaponManager.Create();
-        GameManager.Create();
         AudioManager.Create();
         GameCanvas.Create();
 
@@ -31,14 +58,11 @@ public class Main : MonoBehaviorInstance<Main>
 
         EventManager.GetInstance.OnStartGame.OnEventRaise += GenerateNewLevel;
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise += GenerateNewLevel;
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LocalDataManager.Save;
+        EventManager.GetInstance.OnContinuewGame.OnEventRaise += SpawnPlayerIfNeed;
 
         LocalDataManager.soundsetting = 0;
         LocalDataManager.musicsetting = 0;
-
-        yield return new WaitForSeconds(1f);
-        if (respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
-        player = (PlayerScripts)PlayerScripts.Create();
-        player.transform.position = respawnPos.transform.position;
     }
 
     public void GenerateNewLevel()
@@ -56,5 +80,15 @@ public class Main : MonoBehaviorInstance<Main>
         respawnPos = GameObject.Find("RespawnPos").transform;
         player.transform.position = respawnPos.transform.position;
         EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise?.Invoke();
+    }
+
+    private void SpawnPlayerIfNeed()
+    { 
+        if(respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
+        if (GameObject.FindObjectOfType<PlayerScripts>() == null)
+        { 
+            player = (PlayerScripts)PlayerScripts.Create();
+            player.transform.position = respawnPos.transform.position;
+	    }
     }
 }

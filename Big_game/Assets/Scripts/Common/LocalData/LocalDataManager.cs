@@ -29,7 +29,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         currentGun2Index = PlayerPrefs.GetInt(KeyManager.gun2Index);
         playerNumber = PlayerPrefs.GetInt(KeyManager.playerNumer);
         currentLevel = PlayerPrefs.GetInt(KeyManager.level);
-
+        gold = PlayerPrefs.GetInt(KeyManager.gold);
 
         maxHealth = PlayerPrefs.GetFloat(KeyManager.hp);
         mana = PlayerPrefs.GetFloat(KeyManager.mana);
@@ -44,7 +44,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         musicsetting = PlayerPrefs.GetFloat(KeyManager.Music_Setting);
         soundsetting = PlayerPrefs.GetFloat(KeyManager.Sound_Setting);
 
-        // musicsetting = PlayerPrefs.
+        // musicsetting = PlayerPrefs
     }
 
     public static void Save()
@@ -53,6 +53,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.level, currentLevel);
+
         PlayerPrefs.SetFloat(KeyManager.damage, bonusDamage);
         PlayerPrefs.SetFloat(KeyManager.criticalRate, criticalRate);
         PlayerPrefs.SetFloat(KeyManager.fireRate, bonusFireRate);
@@ -63,10 +64,22 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         PlayerPrefs.SetFloat(KeyManager.hp, maxHealth);
         PlayerPrefs.SetFloat(KeyManager.mana, mana);
         PlayerPrefs.SetFloat(KeyManager.defence, defence);
+        
+        PlayerPrefs.Save();
+        Load();
+    }
+
+    public static void SaveGold()
+    {
+        PlayerPrefs.SetInt(KeyManager.gold, gold);
+        PlayerPrefs.Save();
+    }
+
+    public static void SaveSetting()
+    {
         PlayerPrefs.SetFloat(KeyManager.Music_Setting, musicsetting);
         PlayerPrefs.SetFloat(KeyManager.Sound_Setting, soundsetting);
         PlayerPrefs.Save();
-        Load();
     }
 }
 

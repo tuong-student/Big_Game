@@ -30,7 +30,6 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
-        LocalDataManager.Save();
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
     }
 
@@ -59,7 +58,6 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         if (level > levels.Count) level = levels.Count;
 
         LocalDataManager.currentLevel = level;
-        LocalDataManager.Save();
 
         foreach (var lv in activeLevels)
         {

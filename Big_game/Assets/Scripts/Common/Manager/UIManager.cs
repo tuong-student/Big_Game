@@ -10,9 +10,4 @@ public class UIManager : MonoBehaviorInstance<UIManager>
     {
         return Instantiate<UIManager>(Resources.Load<UIManager>("Prefabs/Manager/UIManager"), parent);
     }
-
-    public void RefreshGoldText()
-    {
-        GameCanvas.GetInstance.SetGoldText("Gold: " + GoldManager.GetInstance.gold);
-    }
 }
