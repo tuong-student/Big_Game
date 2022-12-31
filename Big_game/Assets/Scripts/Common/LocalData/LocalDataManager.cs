@@ -10,9 +10,9 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
     public static int currentGun1Index;
     public static int currentGun2Index;
     public static int playerNumber = 0;
-    public static int gold = 100;
+    public static int gold = 0;
     public static int currentLevel = 1;
-    public static float bonusDamage = 1f;
+    public static float bonusDamage = 0f;
     public static float bonusFireRate = 0;
     public static float bonusReloadSpeed = 0;
     public static float criticalRate = 0.5f;

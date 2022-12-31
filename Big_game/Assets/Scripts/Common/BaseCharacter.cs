@@ -21,7 +21,6 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public float stamina = 50f;
     public float walkSpeed = 0.5f;
     public float runSpeed = 0.8f;
-    //public float dashSpeed = 10f;
     public float dashForce = 30f;
     internal float currentSpeed;
 
