@@ -54,8 +54,11 @@ public class PlayerScripts : BaseCharacter
 
     private void Start()
     {
-        if(LocalDataManager.isSaveBefore == 1)    
-	        LoadFromSave();
+        LoadFromSave();
+        EventManager.GetInstance.OnNewGame.OnEventRaise += () =>
+        {
+            if (this) Destroy(this.gameObject, 1f);
+        };
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
         {
             isMoveable = true;
@@ -176,7 +179,7 @@ public class PlayerScripts : BaseCharacter
             case StatsType.movement:
                 this.runSpeed += upgrade.upgradeAmount;
                 this.walkSpeed += upgrade.upgradeAmount;
-                this.currentSpeed += upgrade.upgradeAmount;
+                this.currentSpeed = this.runSpeed;
                 break;
             case StatsType.critical:
                 this.criticalRate += upgrade.upgradeAmount;
@@ -225,5 +228,19 @@ public class PlayerScripts : BaseCharacter
         isDead = true;
         GameManager.GetInstance.isEndGame = true;
         EventManager.GetInstance.OnLoseGame.RaiseEvent();
+    }
+
+    private void Reset()
+    {
+        this.maxHealth = 100f;
+        this.mana = 50f;
+        this.defence = 0f;
+        this.walkSpeed = 0.5f;
+        this.runSpeed = 0.8f;
+        this.criticalRate = 0.5f;
+        this.bonusDamage = 0f;
+        this.reloadSpeed = 0;
+        this.fireRate = 0;
+
     }
 }

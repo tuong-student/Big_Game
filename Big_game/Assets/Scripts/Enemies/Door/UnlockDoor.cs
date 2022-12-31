@@ -8,14 +8,14 @@ public class UnlockDoor : MonoBehaviour
     private EnemyBatchHandler enemyBatchHandler;
     [SerializeField]
     private DoorController doorController;
-   private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor ==true)
         {
             // other.collider.enabled=false;
             doorController.OpenDoor();
         }
-   }
-   private void OnCollisionExit2D(Collision2D other) {
+    }
+    private void OnCollisionExit2D(Collision2D other) {
         Debug.Log("exit");
         if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor ==true)
         {

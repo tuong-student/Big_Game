@@ -33,13 +33,11 @@ public class MainMenuUI : MonoBehaviour
     }
     private void ContinueGame()
     {
-
         AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
     }
     private void NewGame()
     {
-        GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
         AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         newGame.NewGame();
     }

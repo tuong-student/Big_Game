@@ -35,6 +35,10 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
     public void ActiveMainMenuLevel()
     {
+        foreach (var lv in activeLevels)
+        { 
+            if(lv) lv.SetActive(false);
+	    }
         mainMenuDungeon.SetActive(true);
     }
 
