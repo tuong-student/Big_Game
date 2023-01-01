@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7055740827778100267
 Transform:
   m_ObjectHideFlags: 0
@@ -5561,7 +5561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &387428587735549567
 Transform:
   m_ObjectHideFlags: 0
@@ -5716,9 +5716,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodEff: {fileID: 0}
   health: 100
   mana: 100
+  damage: 1
+  defence: 0
   stamina: 50
   walkSpeed: 0.5
   runSpeed: 0.8
@@ -5762,6 +5763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScripts: {fileID: 6715641731601680243}
+  collider: {fileID: 8501675313230595011}
 --- !u!114 &2971400110636064631
 MonoBehaviour:
   m_ObjectHideFlags: 0
