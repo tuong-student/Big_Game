@@ -30,12 +30,15 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
-        LocalDataManager.Save();
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
     }
 
     public void ActiveMainMenuLevel()
     {
+        foreach (var lv in activeLevels)
+        { 
+            if(lv) lv.SetActive(false);
+	    }
         mainMenuDungeon.SetActive(true);
     }
 
@@ -59,7 +62,6 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         if (level > levels.Count) level = levels.Count;
 
         LocalDataManager.currentLevel = level;
-        LocalDataManager.Save();
 
         foreach (var lv in activeLevels)
         {

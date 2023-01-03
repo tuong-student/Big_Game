@@ -21,8 +21,8 @@ public class UpgradeButton : BaseButton
         if(upgrade != null)
         {
             this.upgrade = upgrade;
-            this.buttonText.text = upgrade.upgradeStats.ToString() + " + " + upgrade.upgradeAmount;
-            this.goldNeedText.text = upgrade.goldNeed.ToString("0.00");
+            this.buttonText.text = upgrade.upgradeStats.ToString() + "+" + upgrade.upgradeAmount;
+            this.goldNeedText.text = upgrade.goldNeed.ToString("0");
         }
     }
 

@@ -7,7 +7,7 @@ using NOOD;
 public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 {
     public Text goldText;
-    [SerializeField] GameObject mainMenu, inGameMenu, settingMenu;
+    [SerializeField] GameObject mainMenu, inGameMenu, settingMenu, chooseCharacterMenu;
     bool isPauseOn = false;
 
     public static GameCanvas Create(Transform parent = null)
@@ -17,7 +17,9 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 
     private void Start()
     {
-        ActiveMenu(Menu.Main);
+        EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+        ActiveInGameMenu();
+
         EventManager.GetInstance.OnStartGame.OnEventRaise += ActiveInGameMenu;
         EventManager.GetInstance.OnPauseGame.OnEventRaise += () => 
 	    {
@@ -37,6 +39,7 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
         {
             inGameMenu.SetActive(true);
         };
+
     }
 
     private void Update()
@@ -71,6 +74,11 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
         ActiveMenu(Menu.Setting);
     }
 
+    public void ActiveChooseCharacterMenu()
+    {
+        ActiveMenu(Menu.ChooseCharacter);
+    }
+
     public void ActiveMenu(Menu menu)
     { 
         switch(menu)
@@ -79,23 +87,35 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
                 mainMenu.SetActive(true);
                 inGameMenu.SetActive(false);
                 settingMenu.SetActive(false);
+                chooseCharacterMenu.SetActive(false);
                 break;
             case Menu.InGame:
                 mainMenu.SetActive(false);
                 inGameMenu.SetActive(true);
                 settingMenu.SetActive(false);
+                chooseCharacterMenu.SetActive(false);
                 break;
             case Menu.Setting:
                 mainMenu.SetActive(false);
                 inGameMenu.SetActive(false);
                 settingMenu.SetActive(true);
+                chooseCharacterMenu.SetActive(false);
+                break;
+            case Menu.ChooseCharacter:
+                mainMenu.SetActive(false);
+                inGameMenu.SetActive(false);
+                settingMenu.SetActive(false);
+                chooseCharacterMenu.SetActive(true);
                 break;
         }
     }
 
-    public void SetGoldText(string text)
+    public void DeactiveAllMenu()
     {
-        goldText.text = text;
+        mainMenu.SetActive(false);
+        inGameMenu.SetActive(false);
+        settingMenu.SetActive(false);
+        chooseCharacterMenu.SetActive(false);
     }
 }
 
@@ -104,5 +124,6 @@ public enum Menu
 { 
     Main,
     InGame,
-    Setting
+    Setting,
+    ChooseCharacter
 }

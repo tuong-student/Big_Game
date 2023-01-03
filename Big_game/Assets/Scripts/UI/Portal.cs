@@ -5,10 +5,18 @@ using NOOD;
 
 public class Portal : AbstractMonoBehaviour
 {
-    [SerializeField] Animator potalAnim;
+    [SerializeField] Animator portalAnim;
     [SerializeField] bool isMenuLevel;
 
     bool isOpen;
+
+    private void Start()
+    {
+        if(isMenuLevel)
+        {
+            OpenAnimation();            
+	    }
+    }
 
     private void Update()
     {
@@ -42,11 +50,11 @@ public class Portal : AbstractMonoBehaviour
 
     public void OpenAnimation()
     {
-        potalAnim.SetTrigger("Open");
+        portalAnim.SetTrigger("Open");
     }
 
     public void CloseAnimation()
     {
-        potalAnim.SetTrigger("Close");
+        portalAnim.SetTrigger("Close");
     }
 }

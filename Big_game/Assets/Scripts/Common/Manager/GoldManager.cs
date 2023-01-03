@@ -6,7 +6,6 @@ using NOOD;
 public class GoldManager : MonoBehaviorInstance<GoldManager>
 {
     public static GoldManager i;
-    public int gold;
 
     public static GoldManager Create(Transform parent = null)
     {
@@ -26,9 +25,8 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
         if(LocalDataManager.gold >= amount)
         {
             LocalDataManager.gold -= amount;
-            gold = LocalDataManager.gold;
-            UIManager.GetInstance.RefreshGoldText();
-            LocalDataManager.Save();
+            LocalDataManager.SaveGold();
+            InGameUI.GetInstance.ResetGoldText();
             return true;    
         }
         else
@@ -40,8 +38,7 @@ public class GoldManager : MonoBehaviorInstance<GoldManager>
     public void AddGold(int amount)
     {
         LocalDataManager.gold += amount;
-        gold += amount;
-        UIManager.GetInstance.RefreshGoldText();
-        LocalDataManager.Save();
+        LocalDataManager.SaveGold();
+        InGameUI.GetInstance.ResetGoldText();
     }
 }
