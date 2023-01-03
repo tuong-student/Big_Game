@@ -19,8 +19,9 @@ public class EnemyBatchHandler : MonoBehaviour
 
     private void Start() {
         foreach (Transform tr in GetComponentInChildren<Transform>()){
-            if(tr != this)
+            if(tr != this){
                 enemies.Add(tr.GetComponent<BaseEnemy>());
+            }
         }
 
         if(hasShooterEnemies)
@@ -62,7 +63,7 @@ public class EnemyBatchHandler : MonoBehaviour
             if(enemies.Count == 0){
                 
                 if(batchDoor){
-                    openDoor = false;
+                    openDoor = true;
                 }
             }
         }

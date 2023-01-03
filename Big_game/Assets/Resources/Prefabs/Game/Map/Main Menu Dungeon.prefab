@@ -10544,7 +10544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7166629792978631018
 Transform:
   m_ObjectHideFlags: 0
@@ -41118,10 +41118,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7940914995969777550, guid: 4d663cf3e242444c583beb93b4de082a, type: 3}
-      propertyPath: portalAnim
-      value: 
-      objectReference: {fileID: 4548391615427493222}
-    - target: {fileID: 7940914995969777550, guid: 4d663cf3e242444c583beb93b4de082a, type: 3}
       propertyPath: isMenuLevel
       value: 1
       objectReference: {fileID: 0}
@@ -41134,10 +41130,5 @@ PrefabInstance:
 --- !u!4 &5775719776662937030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6716652384408680854, guid: 4d663cf3e242444c583beb93b4de082a, type: 3}
-  m_PrefabInstance: {fileID: 941583588489749584}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &4548391615427493222 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3606837237749078326, guid: 4d663cf3e242444c583beb93b4de082a, type: 3}
   m_PrefabInstance: {fileID: 941583588489749584}
   m_PrefabAsset: {fileID: 0}

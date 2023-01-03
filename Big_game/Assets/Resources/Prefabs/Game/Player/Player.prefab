@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7055740827778100267
 Transform:
   m_ObjectHideFlags: 0
@@ -5561,7 +5561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &387428587735549567
 Transform:
   m_ObjectHideFlags: 0
@@ -5661,7 +5661,6 @@ GameObject:
   - component: {fileID: 6946583462553598074}
   - component: {fileID: 2971400110636064631}
   - component: {fileID: 8501675313230595011}
-  - component: {fileID: -1717594029232643741}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5717,13 +5716,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  mana: 50
-  bonusDamage: 1
-  criticalRate: 0.5
-  fireRate: 0
-  reloadSpeed: 0
+  health: 100
+  mana: 100
+  damage: 1
   defence: 0
   stamina: 50
   walkSpeed: 0.5
@@ -5738,7 +5733,7 @@ MonoBehaviour:
   player1View: {fileID: 6102769691291206813}
   player2View: {fileID: 1426449731092501425}
   player3View: {fileID: 8771111814686891754}
-  playerNum: 3
+  playerNum: 2
 --- !u!114 &6935578856058936187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5805,17 +5800,3 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0022617579, y: -0.0043136626}
   m_Size: {x: 0.0928849, y: 0.18051693}
   m_Direction: 0
---- !u!114 &-1717594029232643741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8908385170830048948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b763f3f39c62074b90283bf8c14b74b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyBatchHandler: {fileID: 0}
-  doorController: {fileID: 0}
