@@ -83,6 +83,9 @@ MonoBehaviour:
   - name: GateOpen
     clip: {fileID: 8300000, guid: dcd286d55b5fcb346a93972a645e6d0d, type: 3}
     soundtype: 10
+  - name: Win
+    clip: {fileID: 8300000, guid: 35136b3016e93a74887abad126fba2b3, type: 3}
+    soundtype: 11
   musicSource: {fileID: 1094215330472764626}
   sfxSource: {fileID: 3467114624209061749}
 --- !u!1 &3822488035949063383
