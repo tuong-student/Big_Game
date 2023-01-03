@@ -74,16 +74,19 @@ public class WinLooseUI : MonoBehaviour
 
     private void TryAgainFromLevel1()
     {
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         LoosePanelUnactivate();
         reset.TryAgain();
     }
     private void ExitGame()
     {
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         Application.Quit();
     }
     private void PlayAgainFromPickChar()
     {
-        if(loosePanel.alpha == 1)
+        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        if (loosePanel.alpha == 1)
         {
             LoosePanelUnactivate();
         }
