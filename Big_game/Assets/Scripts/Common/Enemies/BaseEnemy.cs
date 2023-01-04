@@ -73,7 +73,7 @@ public class BaseEnemy : MonoBehaviour
         }
     }
     protected virtual void DestroyEnemies(){
-        
+        GoldManager.GetInstance.AddGold(1); 
         Destroy(gameObject);
     }
     public bool IsAlive()
