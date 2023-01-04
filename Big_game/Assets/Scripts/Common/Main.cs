@@ -42,7 +42,6 @@ public class Main : MonoBehaviorInstance<Main>
         yield return new WaitForSeconds(1f);
         Clear();
         if (Camera.main != null) Destroy(Camera.main.gameObject);
-        Instantiate(Resources.Load("Prefabs/Manager/_ObjectPool"), null);
         mainCamera = Instantiate(Resources.Load<CameraFollow>("Prefabs/Game/Player/Main Camera"), null);
         LocalDataManager.LoadInit();
         if(LocalDataManager.isSaveBefore == 1)
