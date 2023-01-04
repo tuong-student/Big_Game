@@ -70,7 +70,7 @@ public class GunScripts : MonoBehaviour
     { 
         switch(gunData.name)
         {
-            case "Laser":
+            case "laser":
             case "spazer":
             case "flameThrower":
                 AudioManager.GetInstance.PlaySFX(sound.laserWeapon);
@@ -81,6 +81,8 @@ public class GunScripts : MonoBehaviour
             case "piston":
             case "mg":
             case "shotgun":
+            case "cannon":
+            case "rocket":
                 AudioManager.GetInstance.PlaySFX(sound.pistolWeapon);
                 break;
 	    }

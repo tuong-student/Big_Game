@@ -91,17 +91,6 @@ public class AudioManager : MonoBehaviorInstance<AudioManager>
     public void SFXVolume(float volume)
     {
         sfxSource.volume = volume;
-    }
-
-    //public enum sound
-    //{
-    //    laserWeapon,
-    //    matterWeapon,
-    //    pistolWeapon,
-    //    buttonClick,
-    //    pickUp,
-    //    lose,
-    //    hitEnemy,
-    //}    
+    }   
 
 }

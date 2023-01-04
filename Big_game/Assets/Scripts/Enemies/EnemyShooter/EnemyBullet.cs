@@ -20,7 +20,7 @@ public class EnemyBullet : MonoBehaviour
         anim = GetComponent<Animator>();
     }
     private void Start() {
-        Invoke("DeactivateBullet",deactivateTimer);    
+        NOOD.NoodyCustomCode.StartDelayFunction(DestroyBullet, deactivateTimer);
     }
     private void FixedUpdate() {
         if(isSlow)
@@ -29,7 +29,7 @@ public class EnemyBullet : MonoBehaviour
         if(canRotate)
             transform.Rotate(Vector3.forward*60f);
     }
-    void DeactivateBullet(){
+    void DestroyBullet(){
         // if(poolBullet)
         //     gameObject.SetActive(false);
         // else 
@@ -52,7 +52,6 @@ public class EnemyBullet : MonoBehaviour
             if(other.CompareTag("Blocking"))
                 myBody.velocity = Vector2.zero;
 
-            CancelInvoke("DeactivateBullet");
             anim.SetTrigger("Explode");
 
             if(other.CompareTag("Player"))
@@ -62,6 +61,7 @@ public class EnemyBullet : MonoBehaviour
                     other.GetComponent<BaseCharacter>().Damage(damage);
                 }
             }
+            this.gameObject.SetActive(false);
         }
     }
 

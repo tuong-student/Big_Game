@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class GroundGun : MonoBehaviour, IInteractable
 {
     [SerializeField] GunData data;
@@ -20,6 +19,12 @@ public class GroundGun : MonoBehaviour, IInteractable
             data = WeaponManager.GetInstance.GetRandomGunData();
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = data.gunImage;
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += DestroyThis;
+    }
+
+    public void DestroyThis()
+    {
+        if (this) Destroy(this.gameObject);
     }
 
     public void SetData(GunData data)

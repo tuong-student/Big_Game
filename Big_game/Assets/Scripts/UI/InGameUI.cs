@@ -26,6 +26,8 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
         SetMaxHealth(maxHealth);
         SetMaxMana(maxMana);
         ResetGoldText();
+
+        EventManager.GetInstance.OnContinuewGame.OnEventRaise += ResetGoldText;
     }
 
     public void Update()

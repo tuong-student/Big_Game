@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using NOOD;
 
-public class WinLooseUI : MonoBehaviour
+public class WinLooseUI : MonoBehaviorInstance<WinLooseUI>
 {
     [SerializeField] private CanvasGroup winPanel, loosePanel;
     [SerializeField] private Button tryAgainButton, quitButton, playAgainButton, restartGameButton;
@@ -14,17 +15,14 @@ public class WinLooseUI : MonoBehaviour
     {
         WinPanelUnactivate();
         LoosePanelUnactivate();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
+        EventManager.GetInstance.OnLoseGame.OnEventRaise += () =>
         {
-            WinPanelActivate();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
+            NoodyCustomCode.StartDelayFunction(LoosePanelActivate, 0.2f);
+        };
+        EventManager.GetInstance.OnWinGame.OnEventRaise += () =>
         {
-            LoosePanelActivate();
-        }
+            NoodyCustomCode.StartDelayFunction(WinPanelActivate, 0.2f);
+        };
     }
 
     private void OnEnable()
