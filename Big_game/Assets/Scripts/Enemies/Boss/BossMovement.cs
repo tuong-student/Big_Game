@@ -32,10 +32,14 @@ public class BossMovement : MonoBehaviour
     {
         speed = normalSpeed;
         GetRandMovementPos();
-        playerTarget = GameObject.FindWithTag("Player").transform;
     }
     private void Update()
     {
+        if(!playerTarget){
+            GameObject temp =  GameObject.FindGameObjectWithTag("Player");
+            if(!temp) return;
+            else playerTarget = temp.transform;
+        }
         if (!playerTarget)
             return;
 

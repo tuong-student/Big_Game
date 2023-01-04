@@ -59,14 +59,16 @@ public class EnemyShooterMovement : MonoBehaviour
         enemyShooterController = GetComponent<EnemyShooterController>();
         enemyHealth = GetComponent<BaseEnemy>();
     }   
-    private void Start() {
-        playerTransform = GameObject.FindWithTag("Player").transform;
-    }
     private void OnDisable() {
         if(!enemyHealth.IsAlive())
             enemyBatch.RemoveShooterEnemy(this);
     }
     private void Update() {
+        if(!playerTransform){
+            GameObject temp =  GameObject.FindGameObjectWithTag("Player");
+            if(!temp) return;
+            else playerTransform = temp.transform;
+        }
         if(!enemyHealth.IsAlive())
             return;
         if(!playerTransform)
