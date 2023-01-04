@@ -13,6 +13,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     public VoidEventChannelSO OnGenerateLevelComplete;
     public VoidEventChannelSO OnLoseGame;
     public VoidEventChannelSO OnWinGame;
+    public VoidEventChannelSO OnTryAgain;
 
     public static EventManager Create(Transform parent = null)
     {
@@ -27,5 +28,8 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         OnPauseGame.OnEventRaise = null;
         OnGenerateLevel.OnEventRaise = null;
         OnGenerateLevelComplete.OnEventRaise = null;
+        OnWinGame.OnEventRaise = null;
+        OnLoseGame.OnEventRaise = null;
+        OnTryAgain.OnEventRaise = null;
     }
 }

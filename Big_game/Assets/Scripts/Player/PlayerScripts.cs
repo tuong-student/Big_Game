@@ -75,6 +75,8 @@ public class PlayerScripts : BaseCharacter
         {
             isMoveable = true;
         };
+
+        InGameUI.GetInstance.SetHealth(maxHealth);
     }
 
     private void Update()
@@ -228,6 +230,7 @@ public class PlayerScripts : BaseCharacter
         isDead = true;
         GameManager.GetInstance.isEndGame = true;
         EventManager.GetInstance.OnLoseGame.RaiseEvent();
+        base.Die();
     }
 
     private void Reset()

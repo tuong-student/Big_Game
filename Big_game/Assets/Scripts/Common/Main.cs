@@ -66,6 +66,10 @@ public class Main : MonoBehaviorInstance<Main>
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LocalDataManager.Save;
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += SpawnPlayerIfNeed;
         EventManager.GetInstance.OnNewGame.OnEventRaise += NewGame;
+        EventManager.GetInstance.OnTryAgain.OnEventRaise += () =>
+        {
+            NoodyCustomCode.StartDelayFunction(SpawnPlayerIfNeed, 1.2f); 
+        };
 
         LocalDataManager.soundsetting = 1;
         LocalDataManager.musicsetting = 1;

@@ -30,8 +30,6 @@ public class Enemy : BaseEnemy
         base.Awake();
     }
     private void Start() {
-        playerTarget = GameObject.FindWithTag("Player").transform;
-        playerLastTrackPos = playerTarget.position;
         startingPos =  transform.position;
         lastFollowTime = Time.time;
         enemyBatch = transform.GetComponentInParent<EnemyBatchHandler>();
@@ -42,7 +40,11 @@ public class Enemy : BaseEnemy
     }
     private void Update() {
         if(!playerTarget)
-            return;
+        {
+            playerTarget = GameObject.FindWithTag("Player").transform;
+            if (playerTarget != null) playerLastTrackPos = playerTarget.position;
+            else return;
+	    }
         if(!IsAlive())
             return;
 

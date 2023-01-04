@@ -50,7 +50,8 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public virtual void Die()
     {
         InGameUI.GetInstance.SetHealth(0);
-        Destroy(this.gameObject, 10f);
+        EventManager.GetInstance.OnLoseGame.RaiseEvent();
+        Destroy(this.gameObject, 1f);
     }
 
     

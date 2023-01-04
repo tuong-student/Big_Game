@@ -22,6 +22,7 @@ public enum sound
     telePortal,
     gateClose,
     gateOpen,
+    win,
 }
 
 

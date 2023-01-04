@@ -7,14 +7,16 @@ public class Portal : AbstractMonoBehaviour
 {
     [SerializeField] Animator portalAnim;
     [SerializeField] bool isMenuLevel;
+    [SerializeField] Collider2D myCollider;
 
     bool isOpen;
 
     private void Start()
     {
+        myCollider = GetComponent<Collider2D>();
         if(isMenuLevel)
         {
-            OpenAnimation();            
+            Open();            
 	    }
     }
 
@@ -24,12 +26,12 @@ public class Portal : AbstractMonoBehaviour
         {
             if (isOpen)
             {
-                CloseAnimation();
+                Close();
                 isOpen = false;
             }
             else
             {
-                OpenAnimation();
+                Open();
                 isOpen = true;
             }
         }
@@ -40,21 +42,24 @@ public class Portal : AbstractMonoBehaviour
         if (collision.gameObject.tag.Equals("Player") && isMenuLevel == false)
         {
             LevelManager.GetInstance.NextLevel();
+            EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
         }
         if (collision.gameObject.tag.Equals("Player") && isMenuLevel)
         {
-            EventManager.GetInstance.OnStartGame.OnEventRaise?.Invoke();
-            EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
+            EventManager.GetInstance.OnStartGame.RaiseEvent();
+            EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
         }
     }
 
-    public void OpenAnimation()
+    public void Open()
     {
+        myCollider.isTrigger = true;
         portalAnim.SetTrigger("Open");
     }
 
-    public void CloseAnimation()
+    public void Close()
     {
+        myCollider.isTrigger = false;
         portalAnim.SetTrigger("Close");
     }
 }
