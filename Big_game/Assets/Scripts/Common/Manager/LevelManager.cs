@@ -25,17 +25,20 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         EventManager.GetInstance.OnStartGame.OnEventRaise += LoadCurrentLevel;
         EventManager.GetInstance.OnStartGame.OnEventRaise += DeactiveMainMenuLevel;
         EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LoadCurrentLevel;
+        EventManager.GetInstance.OnTryAgain.OnEventRaise += LoadCurrentLevel;
     }
 
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
-        LocalDataManager.Save();
-        EventManager.GetInstance.OnGenerateLevel.OnEventRaise?.Invoke();
     }
 
     public void ActiveMainMenuLevel()
     {
+        foreach (var lv in activeLevels)
+        { 
+            if(lv) lv.SetActive(false);
+	    }
         mainMenuDungeon.SetActive(true);
     }
 
@@ -59,11 +62,10 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         if (level > levels.Count) level = levels.Count;
 
         LocalDataManager.currentLevel = level;
-        LocalDataManager.Save();
 
         foreach (var lv in activeLevels)
         {
-            if (lv) Destroy(lv.gameObject);
+            if (lv) Destroy(lv);
         }
 
         activeLevels.Add(Instantiate(levels[level - 1]));
@@ -75,13 +77,13 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
         if(levelPortal != null)
         { 
             AudioManager.GetInstance.PlaySFX(sound.telePortal);
-            levelPortal.OpenAnimation();
+            levelPortal.Open();
 	    }
     }
 
     public void ClosePortal()
     {
         if(levelPortal != null)
-            levelPortal.CloseAnimation();
+            levelPortal.Close();
     }
 }

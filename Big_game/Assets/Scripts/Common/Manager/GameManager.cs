@@ -29,14 +29,11 @@ public class GameManager : MonoBehaviorInstance<GameManager>
             GameCanvas.GetInstance.CreateUpgradePanel();
         }
 
-        if (isEndGame && !isAnimation)
-        {
-            isAnimation = true;
-            NoodyCustomCode.StartDelayFunction(() =>
-            {
-                TransitionAnimation();
-            }, 0.5f);
-        }
+        //if (isEndGame && !isAnimation)
+        //{
+        //    isAnimation = true;
+        //    NoodyCustomCode.StartDelayFunction(TransitionAnimation, 0.5f);
+        //}
     }
 
     public void OpenSetting()

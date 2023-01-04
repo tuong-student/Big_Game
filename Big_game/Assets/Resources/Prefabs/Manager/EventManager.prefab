@@ -49,3 +49,6 @@ MonoBehaviour:
   OnPauseGame: {fileID: 11400000, guid: 24308ba51d14544c2ab5d3e11b4a7939, type: 2}
   OnGenerateLevel: {fileID: 11400000, guid: 8bfbaaaa6b884472692f5e492ad6886f, type: 2}
   OnGenerateLevelComplete: {fileID: 11400000, guid: 1d314786f036f4e5da254e6b2aa9f021, type: 2}
+  OnLoseGame: {fileID: 11400000, guid: 884ea5d19d2eb4c90a651fb67ca05901, type: 2}
+  OnWinGame: {fileID: 11400000, guid: 74cafc6df62254b1a8242ec42af9c087, type: 2}
+  OnTryAgain: {fileID: 11400000, guid: 4b8c909a6259d436397b8bb04b628ea4, type: 2}

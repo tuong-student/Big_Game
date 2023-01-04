@@ -66,7 +66,6 @@ public class BaseEnemy : MonoBehaviour
         GoldManager.GetInstance.AddGold(gold);
     }
     public void TakeDamage(float damageAmount)
-
     {        health -= damageAmount;
         if(health <= 0f)
         {

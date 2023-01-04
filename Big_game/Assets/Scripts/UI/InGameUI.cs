@@ -11,7 +11,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     [SerializeField] private Slider manaSlider;
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
-    [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText;
+    [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText, goldText;
     [SerializeField] private Image gun1, gun2;
     
     private bool isOn = false;
@@ -25,7 +25,9 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     {
         SetMaxHealth(maxHealth);
         SetMaxMana(maxMana);
-        SetStats();
+        ResetGoldText();
+
+        EventManager.GetInstance.OnContinuewGame.OnEventRaise += ResetGoldText;
     }
 
     public void Update()
@@ -38,19 +40,20 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
         //{
         //    TakeDamage(-20);
         //}
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    if (isOn)
-        //    {
-        //        MoveOut(statsMenuRect);
-        //        isOn = false;
-        //    }
-        //    else
-        //    {
-        //        MoveIn(statsMenuRect);
-        //        isOn = true;
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isOn)
+            {
+                MoveOut(statsMenuRect);
+                isOn = false;
+            }
+            else
+            {
+                SetStats();
+                MoveIn(statsMenuRect);
+                isOn = true;
+            }
+        }
         //if (Input.GetKeyDown(KeyCode.J))
         //{
         //    TakeMana(20);
@@ -60,13 +63,13 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void TakeDamage(float damage)
     {
-        if (LocalDataManager.health <= 0)
+        if (LocalDataManager.maxHealth <= 0)
         {
             SetHealth(0);
             return;
         }
 
-        SetHealth(LocalDataManager.health);
+        SetHealth(LocalDataManager.maxHealth);
     }
 
     public void SetMaxHealth(float health)
@@ -81,6 +84,11 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
         healthSlider.value = health;
     }
 
+    public void ResetGoldText()
+    {
+        goldText.text = "Gold: " + LocalDataManager.gold.ToString("0");
+    }
+    
     public void TakeMana(int mana)
     {
         currentMana -= mana;
@@ -102,10 +110,12 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void SetStats()
     {
-        fireRateText.text = "Fire Rate: "+LocalDataManager.fireRate;
+        fireRateText.text = 
+	    $"Fire Rate: {PlayerScripts.GetInstance.GetCurrentGunData().fireRate}+<color=#FF5353>{LocalDataManager.bonusFireRate}</color>";
         criticalRateText.text = "Crit Rate: " + LocalDataManager.criticalRate;
-        speedText.text = "Speed: " + LocalDataManager.speed;
-        damageText.text = "Damage: " + LocalDataManager.speed;
+        speedText.text = "Speed: " + LocalDataManager.runSpeed;
+        damageText.text = 
+	    $"Damage: {PlayerScripts.GetInstance.GetCurrentGunData().damage}+<color=#FF5353>{LocalDataManager.bonusDamage}</color>";
     }
 
 
@@ -119,11 +129,10 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     {
         float anchorPosX = -1300;
         Tween tweenContain = rect.DOLocalMoveX(anchorPosX, 0.05f).SetEase(Ease.InQuad);
-        tweenContain
-            .Play();
+        tweenContain.Play();
     }
 
-    public void changeGunSprites(Sprite mainGun, Sprite subGun)
+    public void ChangeGunSprites(Sprite mainGun, Sprite subGun)
     {
         gun1.sprite = mainGun;
         gun2.sprite = subGun;

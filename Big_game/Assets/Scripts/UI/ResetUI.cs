@@ -4,28 +4,38 @@ using UnityEngine;
 
 public class ResetUI : MonoBehaviour
 {
-    /*
-         public static float fireRate = 5;
-    public static float criticalRate = 5;
-    public static float speed = 5;
-    public static float damage = 1f;
-    public static float defence = 0f;
-
-    public static float health = 100;
-    public static float mana = 50;*/
-
     public void NewGame()
     {
-        LocalDataManager.fireRate = 5;
-        LocalDataManager.criticalRate = 5;
-        LocalDataManager.speed = 5;
-        LocalDataManager.damage = 1f;
-        LocalDataManager.defence = 0f;
-        LocalDataManager.health = 100;
-        LocalDataManager.mana = 50;
-        LocalDataManager.currentLevel = 1;
+        LocalDataManager.playerNumber = 0;
         LocalDataManager.gold = 0;
+        LocalDataManager.currentLevel = 1;
+        LocalDataManager.bonusDamage = 0f;
+        LocalDataManager.bonusFireRate = 0;
+        LocalDataManager.bonusReloadSpeed = 0;
+        LocalDataManager.criticalRate = 0.5f;
+        LocalDataManager.runSpeed = 0.8f;
+        LocalDataManager.walkSpeed = 0.5f;
+        LocalDataManager.defence = 0f;
+        LocalDataManager.maxHealth = 100;
+        LocalDataManager.mana = 50;
+        LocalDataManager.Save();
+        EventManager.GetInstance.OnNewGame.RaiseEvent();
+    }
 
-        //Main.GetInstance.GenerateNewLevel(); 
+    public void TryAgain()
+    {
+        LocalDataManager.gold = 0;
+        LocalDataManager.currentLevel = 1;
+        LocalDataManager.bonusDamage = 0f;
+        LocalDataManager.bonusFireRate = 0;
+        LocalDataManager.bonusReloadSpeed = 0;
+        LocalDataManager.criticalRate = 0.5f;
+        LocalDataManager.runSpeed = 0.8f;
+        LocalDataManager.walkSpeed = 0.5f;
+        LocalDataManager.defence = 0f;
+        LocalDataManager.maxHealth = 100;
+        LocalDataManager.mana = 50;
+        LocalDataManager.Save();
+        EventManager.GetInstance.OnTryAgain.RaiseEvent();
     }
 }

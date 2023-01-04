@@ -10,6 +10,9 @@ TagManager:
   - Boss
   - Door
   - Portal
+  - DetectZone
+  - GroundGun
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -50,14 +53,14 @@ TagManager:
   - name: Level
     uniqueID: 3587301573
     locked: 0
-  - name: Bullet
-    uniqueID: 3428988177
-    locked: 0
   - name: Enemy
     uniqueID: 1119029417
     locked: 0
   - name: Player
     uniqueID: 389058879
+    locked: 0
+  - name: Bullet
+    uniqueID: 3428988177
     locked: 0
   - name: UI
     uniqueID: 83828587

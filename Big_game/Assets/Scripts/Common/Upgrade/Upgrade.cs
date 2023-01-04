@@ -29,7 +29,21 @@ public static class UpgradeMaster
         r = UnityEngine.Random.Range(1, 5);
 
         upgrade.upgradeStats = randomStats;
-        upgrade.upgradeAmount = r;
+        switch (randomStats)
+        {
+            case StatsType.attack:
+            case StatsType.defense:
+            case StatsType.maxHealth:
+            case StatsType.mana:
+                upgrade.upgradeAmount = r;
+                break;
+            case StatsType.movement:
+            case StatsType.reloadSpeed:
+            case StatsType.fireRate:
+            case StatsType.critical:
+                upgrade.upgradeAmount = r * 0.1f;
+                break;
+	    }
         upgrade.goldNeed = (r * 2);
 
         return upgrade;
@@ -64,6 +78,9 @@ public enum StatsType
     attack,
     defense,
     mana,
-    health,
-    movement
+    maxHealth,
+    movement,
+    fireRate,
+    critical,
+    reloadSpeed
 }
