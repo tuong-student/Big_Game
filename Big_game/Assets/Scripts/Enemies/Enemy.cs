@@ -41,9 +41,14 @@ public class Enemy : BaseEnemy
     private void Update() {
         if(!playerTarget)
         {
-            playerTarget = GameObject.FindWithTag("Player").transform;
-            if (playerTarget != null) playerLastTrackPos = playerTarget.position;
+            GameObject temp = GameObject.FindGameObjectWithTag("Player");
+            if(temp)
+            {
+                playerTarget = GameObject.FindWithTag("Player").transform;
+            }
             else return;
+            playerLastTrackPos = playerTarget.position;
+        
 	    }
         if(!IsAlive())
             return;
@@ -80,6 +85,8 @@ public class Enemy : BaseEnemy
     }
     //
     void ChasePlayer(){
+        if(!playerTarget) return;
+
         if(Time.time - lastFollowTime > turningTimeDelay) //! (1)
         {
             playerLastTrackPos = playerTarget.position; //! (2)

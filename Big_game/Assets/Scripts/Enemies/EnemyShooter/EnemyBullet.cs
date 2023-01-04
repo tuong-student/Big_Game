@@ -47,9 +47,9 @@ public class EnemyBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Blocking")||
-            other.CompareTag("Player"))
+            other.CompareTag("Player") || other.CompareTag("Door"))
         {
-            if(other.CompareTag("Blocking"))
+            if(other.CompareTag("Blocking") || other.CompareTag("Door"))
                 myBody.velocity = Vector2.zero;
 
             anim.SetTrigger("Explode");
