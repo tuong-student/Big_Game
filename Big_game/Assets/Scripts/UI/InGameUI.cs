@@ -12,7 +12,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
     [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText, goldText;
-    [SerializeField] private Image gun1, gun2;
+    [SerializeField] private Image gun1, gun2, playerImage;
     
     private bool isOn = false;
 
@@ -122,5 +122,10 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     {
         gun1.sprite = mainGun;
         gun2.sprite = subGun;
+    }
+
+    public void ChangePlayerSprite(Sprite playerSprite)
+    {
+        playerImage.sprite = playerSprite;
     }
 }

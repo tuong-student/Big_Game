@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerScripts : BaseCharacter
 {
     #region Component
+    public Sprite[] playerSprites;
     public PlayerMovement playerMovement;
     public PlayerOncollision playerOncollision;
     public PlayerAnimation playerAnimation;
@@ -15,7 +16,7 @@ public class PlayerScripts : BaseCharacter
     [SerializeField] GameObject player1View, player2View, player3View;
     #endregion
 
-    public float playerNum = 1; //Index of the player sprite (0 -> 2)
+    public int playerNum = 1; //Index of the player sprite (0 -> 2)
 
     #region Bool
     private bool isMoveable = true;
@@ -50,6 +51,7 @@ public class PlayerScripts : BaseCharacter
                 player3View.SetActive(true);
                 break;
         }
+        InGameUI.GetInstance.ChangePlayerSprite(playerSprites[playerNum - 1]);
     }
 
     private void Start()
