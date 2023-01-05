@@ -19,4 +19,4 @@ MonoBehaviour:
   fireRate: 2
   bulletForce: 8
   range: 1
-  backForce: 5
+  backForce: 0.2
