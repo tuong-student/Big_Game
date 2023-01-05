@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7055740827778100267
 Transform:
   m_ObjectHideFlags: 0
@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1192042838457669099
 Transform:
   m_ObjectHideFlags: 0
@@ -643,7 +643,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 12
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5718,9 +5718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
-  maxMana: 54
+  maxMana: 50
   currentMana: 50
-  bonusDamage: 4
+  bonusDamage: 0
   criticalRate: 0.5
   fireRate: 0
   reloadSpeed: 0
@@ -5743,7 +5743,7 @@ MonoBehaviour:
   player1View: {fileID: 6102769691291206813}
   player2View: {fileID: 1426449731092501425}
   player3View: {fileID: 8771111814686891754}
-  playerNum: 0
+  playerNum: 2
 --- !u!114 &6935578856058936187
 MonoBehaviour:
   m_ObjectHideFlags: 0

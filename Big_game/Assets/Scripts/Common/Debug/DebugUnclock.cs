@@ -27,7 +27,6 @@ public class DebugUnclock : MonoBehaviorInstance<DebugUnclock>
         if (debugCount >= maxDebugCount) 
 	    {
             isDebug = !isDebug;
-            PlayerScripts.GetInstance.isCheat = isDebug;
             CameraShake.GetInstance.Shake();
             debugCount = 0;
             Debug.Log("Debug Mode: " + isDebug);
