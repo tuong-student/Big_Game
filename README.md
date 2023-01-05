@@ -23,6 +23,9 @@
     - Player num is the numerical order of the sprite, 1 is player view 1, 2 is player view 2...
     - PlayerAnimation: fadeTime is the speed of disappearance when player dead.
 
+# How to enter Debug Mode
+ - Press T 4 times to enter or exit Debug Mode
+
 # Debug Mode
  - What you can do:
   - H: Minus 30 health
