@@ -12,7 +12,8 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     #region Stats
     public float maxHealth = 100f;
     public float currentHealth = 100f;
-    public float mana = 100f;
+    public float maxMana = 50f;
+    public float currentMana = 50f;
     public float bonusDamage = 1f;
     public float criticalRate = 0f;
     public float fireRate = 0f;
@@ -29,6 +30,10 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     internal bool isDead = false;
     #endregion
 
+    #region Bool
+    public bool isCheat = false;
+    #endregion
+
     public virtual void OnEnable()
     {
         if (Instance == null) Instance = this;
@@ -41,10 +46,35 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 
     public void Damage(float damageAmount)
     {
-        currentHealth -= damageAmount;
-        InGameUI.GetInstance.SetHealth(currentHealth);
+        MinusHealth(damageAmount);
         CameraShake.GetInstance.Shake();
         //if (bloodEff) bloodEff.Play();
+    }
+
+    public void AddHealth(float amount)
+    {
+        this.currentHealth += amount;
+        InGameUI.GetInstance.SetHealth(currentHealth);
+    }
+
+    public void MinusHealth(float amount)
+    {
+        if (isCheat) return;
+        this.currentHealth -= amount;
+        InGameUI.GetInstance.SetHealth(currentHealth);
+    }
+
+    public void AddMana(float amount)
+    {
+        this.currentMana += amount;
+        InGameUI.GetInstance.SetMana(currentMana);
+    }
+
+    public void MinusMana(float amount)
+    {
+        if (isCheat) return;
+        this.currentMana -= amount;
+        InGameUI.GetInstance.SetMana(currentMana);
     }
 
     public virtual void Die()

@@ -34,18 +34,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!playerScripts.IsMoveable) return;
+        if (!playerScripts.IsMoveable)
+        {
+            this.myBody.velocity = Vector3.zero;
+            isStop = true;
+            return; 
+	    }
         if (playerScripts.isDead) return;
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-
         movement = new Vector3(moveX, moveY);
+
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) isDashPress = true;
 
         Move(movement);
-
-
     }
 
     private void OnDisable()
@@ -54,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashPress == true && isDashing == false) Dash();
+        if (isDashPress == true && isDashing == false) Dash(10f);
     }
 
     private void Move(Vector3 movement)
@@ -69,13 +73,17 @@ public class PlayerMovement : MonoBehaviour
             isStop = false;
     }
 
-    private void Dash()
+    private void Dash(float manaAmount)
     {
         //playerScripts.dashEff.Play();
         if (movement == Vector3.zero) movement = new Vector3(1, 0);
-        myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
-        myBody.drag = 2;
-        isDashing = true;
+        if(playerScripts.currentMana >= manaAmount) 
+	    { 
+            myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
+            myBody.drag = 2;
+            isDashing = true;
+            playerScripts.MinusMana(manaAmount);
+	    }
 
         StartCoroutine(ResetNormal());
         IEnumerator ResetNormal()

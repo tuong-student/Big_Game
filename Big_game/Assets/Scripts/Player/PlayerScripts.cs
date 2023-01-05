@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerScripts : BaseCharacter
 {
     #region Component
+    public Sprite[] playerSprites;
     public PlayerMovement playerMovement;
     public PlayerOncollision playerOncollision;
     public PlayerAnimation playerAnimation;
@@ -15,7 +16,7 @@ public class PlayerScripts : BaseCharacter
     [SerializeField] GameObject player1View, player2View, player3View;
     #endregion
 
-    public float playerNum = 1; //Index of the player sprite (0 -> 2)
+    public int playerNum = 1; //Index of the player sprite (0 -> 2)
 
     #region Bool
     private bool isMoveable = true;
@@ -25,7 +26,7 @@ public class PlayerScripts : BaseCharacter
     public static PlayerScripts Create(Transform parent = null)
     {
         //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
-        PlayerScripts player = Instantiate(Resources.Load<GameObject>("Prefabs/Game/Player/Player"), parent).GetComponentInChildren<PlayerScripts>();
+        PlayerScripts player = Instantiate<PlayerScripts>(Resources.Load<PlayerScripts>("Prefabs/Game/Player/Player"), parent);
         return player;
     }
 
@@ -50,6 +51,8 @@ public class PlayerScripts : BaseCharacter
                 player3View.SetActive(true);
                 break;
         }
+
+        NOOD.NoodyCustomCode.StartDelayFunction(() => { InGameUI.GetInstance.ChangePlayerSprite(playerSprites[playerNum - 1]); }, 0.05f);
     }
 
     private void Start()
@@ -63,7 +66,7 @@ public class PlayerScripts : BaseCharacter
         {
             isMoveable = true;
         };
-        EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
+        EventManager.GetInstance.OnTurnOnUI.OnEventRaise += () =>
         {
             isMoveable = false;
         };
@@ -77,15 +80,12 @@ public class PlayerScripts : BaseCharacter
         };
 
         InGameUI.GetInstance.SetHealth(maxHealth);
+        InGameUI.GetInstance.SetMana(maxMana);
     }
 
     private void Update()
     {
         if (!isMoveable) return;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Damage(30);
-        }
         if (currentHealth <= 0 && isDead == false) Die();
         GetInput();
     }
@@ -115,7 +115,7 @@ public class PlayerScripts : BaseCharacter
         bonusDamage = LocalDataManager.bonusDamage;
         defence = LocalDataManager.defence;
         maxHealth = LocalDataManager.maxHealth;
-        mana = LocalDataManager.mana;
+        maxMana = LocalDataManager.maxMana;
         runSpeed = LocalDataManager.runSpeed;
         walkSpeed = LocalDataManager.walkSpeed;
         currentSpeed = runSpeed;
@@ -151,6 +151,7 @@ public class PlayerScripts : BaseCharacter
         playerOncollision = GetComponent<PlayerOncollision>();
     }
 
+
     public bool Buy(int amountOfGold, Upgrade upgrade)
     {
         if (GoldManager.GetInstance.MinusGold(amountOfGold))
@@ -173,10 +174,12 @@ public class PlayerScripts : BaseCharacter
                 this.defence += upgrade.upgradeAmount;
                 break;
             case StatsType.mana:
-                this.mana += upgrade.upgradeAmount;
+                this.maxMana += upgrade.upgradeAmount;
+                InGameUI.GetInstance.SetMaxMana(maxMana);
                 break;
             case StatsType.maxHealth:
                 this.maxHealth += upgrade.upgradeAmount;
+                InGameUI.GetInstance.SetMaxHealth(maxHealth);
                 break;
             case StatsType.movement:
                 this.runSpeed += upgrade.upgradeAmount;
@@ -195,7 +198,7 @@ public class PlayerScripts : BaseCharacter
         }
         LocalDataManager.bonusDamage = bonusDamage;
         LocalDataManager.defence = defence;
-        LocalDataManager.mana = mana;
+        LocalDataManager.maxMana = maxMana;
         LocalDataManager.maxHealth = currentHealth;
         LocalDataManager.runSpeed = runSpeed;
         LocalDataManager.walkSpeed = walkSpeed;
@@ -236,7 +239,7 @@ public class PlayerScripts : BaseCharacter
     private void Reset()
     {
         this.maxHealth = 100f;
-        this.mana = 50f;
+        this.maxMana = 50f;
         this.defence = 0f;
         this.walkSpeed = 0.5f;
         this.runSpeed = 0.8f;

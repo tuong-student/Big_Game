@@ -12,7 +12,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     [SerializeField] private CanvasGroup statsMenuCvg;
     [SerializeField] private RectTransform statsMenuRect;
     [SerializeField] private Text fireRateText, criticalRateText, speedText, damageText, goldText;
-    [SerializeField] private Image gun1, gun2;
+    [SerializeField] private Image gun1, gun2, playerImage;
     
     private bool isOn = false;
 
@@ -23,8 +23,8 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void Start()
     {
-        SetMaxHealth(maxHealth);
-        SetMaxMana(maxMana);
+        SetMaxHealth(LocalDataManager.maxHealth);
+        SetMaxMana(LocalDataManager.maxMana);
         ResetGoldText();
 
         EventManager.GetInstance.OnContinuewGame.OnEventRaise += ResetGoldText;
@@ -32,14 +32,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    TakeDamage(20);
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    TakeDamage(-20);
-        //}
+       
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (isOn)
@@ -54,10 +47,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
                 isOn = true;
             }
         }
-        //if (Input.GetKeyDown(KeyCode.J))
-        //{
-        //    TakeMana(20);
-        //}
+
 
     }
 
@@ -74,9 +64,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void SetMaxHealth(float health)
     {
-        //LocalDataManager.health = maxHealth;
         healthSlider.maxValue = health;
-        healthSlider.value = health;
     }
 
     public void SetHealth(float health)
@@ -98,9 +86,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void SetMaxMana(float mana)
     {
-        currentMana = maxMana;
         manaSlider.maxValue = mana;
-        manaSlider.value = mana;
     }
 
     public void SetMana(float mana)
@@ -136,5 +122,10 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
     {
         gun1.sprite = mainGun;
         gun2.sprite = subGun;
+    }
+
+    public void ChangePlayerSprite(Sprite playerSprite)
+    {
+        playerImage.sprite = playerSprite;
     }
 }

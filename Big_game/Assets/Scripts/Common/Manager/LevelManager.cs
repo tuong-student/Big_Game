@@ -36,8 +36,8 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     public void ActiveMainMenuLevel()
     {
         foreach (var lv in activeLevels)
-        { 
-            if(lv) lv.SetActive(false);
+        {
+            if (lv) Destroy(lv);
 	    }
         mainMenuDungeon.SetActive(true);
     }
@@ -70,6 +70,7 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
 
         activeLevels.Add(Instantiate(levels[level - 1]));
         levelPortal = FindObjectOfType<Portal>();
+        EventManager.GetInstance.OnGenerateLevelComplete.RaiseEvent();
     }
 
     public void OpenPortal()

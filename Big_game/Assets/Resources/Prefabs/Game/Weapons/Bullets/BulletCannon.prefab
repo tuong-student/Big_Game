@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12499bf02a464dbd883b6ba7a755ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whenCollisionEnter: 1
+  whenCollisionEnter: 0
   afterSecond: 1
   second: 0.5
 --- !u!50 &5236076824514390518
@@ -152,4 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   backForce: 10
-  type: 0
+  ExplodeType: 0

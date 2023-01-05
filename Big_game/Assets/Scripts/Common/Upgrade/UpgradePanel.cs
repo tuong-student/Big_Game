@@ -33,6 +33,7 @@ public class UpgradePanel : MonoBehaviour
 
     public void Dispose()
     {
+        EventManager.GetInstance.OnContinuewGame.RaiseEvent();
         Destroy(this.gameObject);
     }
 

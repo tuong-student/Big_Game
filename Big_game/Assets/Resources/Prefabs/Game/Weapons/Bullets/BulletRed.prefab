@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12499bf02a464dbd883b6ba7a755ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whenCollisionEnter: 1
+  whenCollisionEnter: 0
   afterSecond: 1
   second: 2
 --- !u!50 &5412236485696417344

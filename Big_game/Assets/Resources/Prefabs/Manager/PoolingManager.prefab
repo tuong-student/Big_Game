@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPool: {fileID: 3556666943420597385, guid: e6e6ad82309954d41a69979a2b110447, type: 3}
-  poolSize: 10
+  poolSize: 50
 --- !u!1 &8799893474336566630
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPool: {fileID: 5460606525638499473, guid: 3e665a1b7f93b42e290d0fb2bea4d3cf, type: 3}
-  poolSize: 10
+  poolSize: 50

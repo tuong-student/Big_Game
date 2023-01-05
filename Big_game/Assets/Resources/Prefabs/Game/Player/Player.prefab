@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayer: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: -7871596639887916719, guid: 3fbbab8172755334b9cc6bf7e7553bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -256,7 +256,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Time: 0.2
   m_Parameters:
@@ -424,8 +424,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayer: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 5dfcae8411c2d844faae6e901a31dc5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -529,8 +529,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingLayer: 3
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 370a2470b3b3a2f4fad9feb0e5b888a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -642,8 +642,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
-  m_SortingOrder: 2
+  m_SortingLayer: 3
+  m_SortingOrder: 12
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5517,7 +5517,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -5614,8 +5614,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 389058879
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayer: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: -7921115631410097235, guid: a4ce45dea53a82e4d8ed7caf284f5c99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5716,15 +5716,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  mana: 100
-  damage: 1
+  maxHealth: 100
+  currentHealth: 100
+  maxMana: 50
+  currentMana: 50
+  bonusDamage: 0
+  criticalRate: 0.5
+  fireRate: 0
+  reloadSpeed: 0
   defence: 0
   stamina: 50
   walkSpeed: 0.5
   runSpeed: 0.8
   dashForce: 15
   dashTime: 0.5
+  isCheat: 0
+  playerSprites:
+  - {fileID: 21300000, guid: 5dfcae8411c2d844faae6e901a31dc5f, type: 3}
+  - {fileID: 21300000, guid: 5de1393f24f4bc541b933443051d9cc7, type: 3}
+  - {fileID: 21300000, guid: 18677b05fd470e14093f4d336f8b4862, type: 3}
   playerMovement: {fileID: 6935578856058936187}
   playerOncollision: {fileID: 6946583462553598074}
   playerAnimation: {fileID: 2971400110636064631}
