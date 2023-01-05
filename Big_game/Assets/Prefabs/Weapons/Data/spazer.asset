@@ -15,8 +15,8 @@ MonoBehaviour:
   gunImage: {fileID: 21300000, guid: 370a2470b3b3a2f4fad9feb0e5b888a9, type: 3}
   bulletPrefab: {fileID: 8699066151942490547, guid: d834e90800f3a4c9e892ebec6263b667, type: 3}
   animationIndex: 0
-  damage: 100
+  damage: 8
   fireRate: 5
   bulletForce: 10
   range: 1
-  backForce: 10
+  backForce: 5
