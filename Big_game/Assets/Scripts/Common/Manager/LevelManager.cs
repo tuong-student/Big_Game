@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviorInstance<LevelManager>
     public void NextLevel()
     {
         LocalDataManager.currentLevel++;
+        NoodyCustomCode.StartDelayFunction(() => { GameCanvas.GetInstance.CreateUpgradePanel(); }, 1.8f);
     }
 
     public void ActiveMainMenuLevel()

@@ -63,6 +63,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.gun1Index, currentGun1Index);
         PlayerPrefs.SetInt(KeyManager.level, currentLevel);
+        PlayerPrefs.SetInt(KeyManager.gold, gold);
 
         PlayerPrefs.SetFloat(KeyManager.damage, bonusDamage);
         PlayerPrefs.SetFloat(KeyManager.criticalRate, criticalRate);
