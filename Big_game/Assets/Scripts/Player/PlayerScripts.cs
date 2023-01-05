@@ -26,7 +26,7 @@ public class PlayerScripts : BaseCharacter
     public static PlayerScripts Create(Transform parent = null)
     {
         //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
-        PlayerScripts player = Instantiate(Resources.Load<GameObject>("Prefabs/Game/Player/Player"), parent).GetComponentInChildren<PlayerScripts>();
+        PlayerScripts player = Instantiate<PlayerScripts>(Resources.Load<PlayerScripts>("Prefabs/Game/Player/Player"), parent);
         return player;
     }
 
@@ -51,7 +51,8 @@ public class PlayerScripts : BaseCharacter
                 player3View.SetActive(true);
                 break;
         }
-        InGameUI.GetInstance.ChangePlayerSprite(playerSprites[playerNum - 1]);
+
+        NOOD.NoodyCustomCode.StartDelayFunction(() => { InGameUI.GetInstance.ChangePlayerSprite(playerSprites[playerNum - 1]); }, 0.05f);
     }
 
     private void Start()

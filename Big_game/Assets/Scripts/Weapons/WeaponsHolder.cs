@@ -35,6 +35,7 @@ public class WeaponsHolder : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerScripts.GetInstance == null) return;
         if (PlayerScripts.GetInstance.isDead) return;
         LookAtMouse();
     }
