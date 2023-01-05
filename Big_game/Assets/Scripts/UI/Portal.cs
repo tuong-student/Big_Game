@@ -7,6 +7,7 @@ public class Portal : AbstractMonoBehaviour
 {
     [SerializeField] Animator portalAnim;
     [SerializeField] bool isMenuLevel;
+    [SerializeField] bool isLastLevel;
     [SerializeField] Collider2D myCollider;
 
     bool isOpen;
@@ -39,16 +40,23 @@ public class Portal : AbstractMonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player") && isMenuLevel == false)
-        {
-            LevelManager.GetInstance.NextLevel();
-            EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
-        }
-        if (collision.gameObject.tag.Equals("Player") && isMenuLevel)
-        {
-            EventManager.GetInstance.OnStartGame.RaiseEvent();
-            EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
-        }
+        if(collision.gameObject.CompareTag("Player"))
+        { 
+            if(isMenuLevel)
+            {
+                EventManager.GetInstance.OnStartGame.RaiseEvent();
+                EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
+            }
+            else if(isLastLevel)
+            {
+                EventManager.GetInstance.OnWinGame.RaiseEvent();
+	        }
+            else
+            {
+                LevelManager.GetInstance.NextLevel();
+                EventManager.GetInstance.OnGenerateLevel.RaiseEvent();
+            }
+	    }
     }
 
     public void Open()
