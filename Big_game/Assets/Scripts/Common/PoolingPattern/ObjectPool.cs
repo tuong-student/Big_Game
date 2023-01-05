@@ -16,11 +16,23 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         if (i == null) i = this;
+        if(parentTranform == null)
+        {
+            GameObject parent = GameObject.Find("_ObjectPool");
+            if (parent == null)
+            {
+                parentTranform = Instantiate(new GameObject("_ObjectPool")).transform;
+            }
+            else
+            {
+                parentTranform = parent.transform;
+            }
+        }
     }
 
     public GameObject GetPoolObject()
     {
-        CreateParentObjectIfNeed();
+        //CreateParentObjectIfNeed();
 
         GameObject spawnObj = null;
 
