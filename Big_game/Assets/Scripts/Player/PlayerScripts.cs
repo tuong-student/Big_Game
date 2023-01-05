@@ -82,10 +82,6 @@ public class PlayerScripts : BaseCharacter
     private void Update()
     {
         if (!isMoveable) return;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Damage(30);
-        }
         if (currentHealth <= 0 && isDead == false) Die();
         GetInput();
     }

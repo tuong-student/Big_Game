@@ -12,6 +12,10 @@ public class WeaponsHolder : MonoBehaviour
     [HideInInspector] public bool isShootPress;
     private float nextShootTime;
 
+    #region Bool
+    bool isCheat = false;
+    #endregion
+
     private void Start()
     {
         if(gun2Index == 0)
@@ -24,6 +28,9 @@ public class WeaponsHolder : MonoBehaviour
         gun2Data = GetGunData(gun2Index);
         currentGun.SetData(GetGunData(gun1Index)); 
 	    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+
+        EventManager.GetInstance.OnCheatEnable.OnEventRaise += () => { isCheat = true; };
+        EventManager.GetInstance.OnCheatDisable.OnEventRaise += () => { isCheat = false; };
     }
 
     private void Update()
@@ -111,7 +118,11 @@ public class WeaponsHolder : MonoBehaviour
         if (currentGun.gunData == WeaponManager.GetInstance.shotgunData)
             currentGun.Fire(true);
         else currentGun.Fire(false);
-        nextShootTime += 1 / currentGun.gunData.fireRate;
+
+        if(isCheat)
+            nextShootTime += 1 / 3;
+        else       
+	        nextShootTime += 1 / currentGun.gunData.fireRate;
     }
 
     void LookAtMouse()

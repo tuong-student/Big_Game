@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NOOD;
+using NOOD.NoodCamera;
 
-public class DebugUnclock : MonoBehaviour
+public class DebugUnclock : MonoBehaviorInstance<DebugUnclock>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool isDebug = false;
+    int debugCount, maxDebugCount = 4;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(Input.anyKeyDown)
+        {
+            if(Input.GetKeyDown(KeyCode.T))
+            { 
+                debugCount++;
+                Debug.Log("DebugCount: " + debugCount);
+	        }
+            else
+            {
+                debugCount = 0;
+	        }
+	    }
+
+        if (debugCount >= maxDebugCount) 
+	    {
+            isDebug = !isDebug;
+            PlayerScripts.GetInstance.isCheat = isDebug;
+            CameraShake.GetInstance.Shake();
+            debugCount = 0;
+            Debug.Log("Debug Mode: " + isDebug);
+	    }
     }
 }

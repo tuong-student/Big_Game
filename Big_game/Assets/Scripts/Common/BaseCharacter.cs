@@ -30,6 +30,10 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     internal bool isDead = false;
     #endregion
 
+    #region Bool
+    public bool isCheat = false;
+    #endregion
+
     public virtual void OnEnable()
     {
         if (Instance == null) Instance = this;
@@ -55,6 +59,7 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 
     public void MinusHealth(float amount)
     {
+        if (isCheat) return;
         this.currentHealth -= amount;
         InGameUI.GetInstance.SetHealth(currentHealth);
     }
@@ -67,6 +72,7 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
 
     public void MinusMana(float amount)
     {
+        if (isCheat) return;
         this.currentMana -= amount;
         InGameUI.GetInstance.SetMana(currentMana);
     }

@@ -32,14 +32,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    TakeDamage(20);
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    TakeDamage(-20);
-        //}
+       
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (isOn)
@@ -54,10 +47,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
                 isOn = true;
             }
         }
-        //if (Input.GetKeyDown(KeyCode.J))
-        //{
-        //    TakeMana(20);
-        //}
+
 
     }
 

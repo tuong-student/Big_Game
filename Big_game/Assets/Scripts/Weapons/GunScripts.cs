@@ -8,6 +8,7 @@ public class GunScripts : MonoBehaviour
     public SpriteRenderer sr;
     public Animator anim;
     [SerializeField] Transform shootPoint;
+    bool isCheat = false;
 
     #region
     ObjectPool bulletPooling;
@@ -21,6 +22,8 @@ public class GunScripts : MonoBehaviour
 
     private void Start()
     {
+        EventManager.GetInstance.OnCheatEnable.OnEventRaise += () => { isCheat = true; };
+        EventManager.GetInstance.OnCheatDisable.OnEventRaise += () => { isCheat = false; };
     }
 
     public void SetData(GunData data)
@@ -92,6 +95,9 @@ public class GunScripts : MonoBehaviour
     {
         BulletScript bulletScript = bullet.GetComponent<BulletScript>();
         // In the future damage will be randomed base on critical rate
-        bulletScript.damage = damage;
+        if (isCheat)
+            bulletScript.damage = 999;
+        else
+            bulletScript.damage = damage;
     }
 }

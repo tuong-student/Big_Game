@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     public VoidEventChannelSO OnWinGame;
     public VoidEventChannelSO OnTryAgain;
     public VoidEventChannelSO OnTurnOnUI;
+    public VoidEventChannelSO OnCheatEnable;
+    public VoidEventChannelSO OnCheatDisable;
 
     public static EventManager Create(Transform parent = null)
     {
@@ -37,5 +39,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         OnLoseGame.OnEventRaise = null;
         OnTryAgain.OnEventRaise = null;
         OnTurnOnUI.OnEventRaise = null;
+        OnCheatEnable.OnEventRaise = null;
+        OnCheatDisable.OnEventRaise = null;
     }
 }
