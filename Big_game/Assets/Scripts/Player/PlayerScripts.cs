@@ -63,7 +63,7 @@ public class PlayerScripts : BaseCharacter
         {
             isMoveable = true;
         };
-        EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
+        EventManager.GetInstance.OnTurnOnUI.OnEventRaise += () =>
         {
             isMoveable = false;
         };
@@ -115,7 +115,7 @@ public class PlayerScripts : BaseCharacter
         bonusDamage = LocalDataManager.bonusDamage;
         defence = LocalDataManager.defence;
         maxHealth = LocalDataManager.maxHealth;
-        mana = LocalDataManager.mana;
+        maxMana = LocalDataManager.maxMana;
         runSpeed = LocalDataManager.runSpeed;
         walkSpeed = LocalDataManager.walkSpeed;
         currentSpeed = runSpeed;
@@ -151,6 +151,7 @@ public class PlayerScripts : BaseCharacter
         playerOncollision = GetComponent<PlayerOncollision>();
     }
 
+
     public bool Buy(int amountOfGold, Upgrade upgrade)
     {
         if (GoldManager.GetInstance.MinusGold(amountOfGold))
@@ -173,7 +174,7 @@ public class PlayerScripts : BaseCharacter
                 this.defence += upgrade.upgradeAmount;
                 break;
             case StatsType.mana:
-                this.mana += upgrade.upgradeAmount;
+                this.maxMana += upgrade.upgradeAmount;
                 break;
             case StatsType.maxHealth:
                 this.maxHealth += upgrade.upgradeAmount;
@@ -195,7 +196,7 @@ public class PlayerScripts : BaseCharacter
         }
         LocalDataManager.bonusDamage = bonusDamage;
         LocalDataManager.defence = defence;
-        LocalDataManager.mana = mana;
+        LocalDataManager.maxMana = maxMana;
         LocalDataManager.maxHealth = currentHealth;
         LocalDataManager.runSpeed = runSpeed;
         LocalDataManager.walkSpeed = walkSpeed;
@@ -236,7 +237,7 @@ public class PlayerScripts : BaseCharacter
     private void Reset()
     {
         this.maxHealth = 100f;
-        this.mana = 50f;
+        this.maxMana = 50f;
         this.defence = 0f;
         this.walkSpeed = 0.5f;
         this.runSpeed = 0.8f;

@@ -52,3 +52,4 @@ MonoBehaviour:
   OnLoseGame: {fileID: 11400000, guid: 884ea5d19d2eb4c90a651fb67ca05901, type: 2}
   OnWinGame: {fileID: 11400000, guid: 74cafc6df62254b1a8242ec42af9c087, type: 2}
   OnTryAgain: {fileID: 11400000, guid: 4b8c909a6259d436397b8bb04b628ea4, type: 2}
+  OnTurnOnUI: {fileID: 11400000, guid: b6b73bf294a7e43b4bff44e2b304547f, type: 2}

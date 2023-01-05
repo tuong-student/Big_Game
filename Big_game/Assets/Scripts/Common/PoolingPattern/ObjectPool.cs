@@ -53,10 +53,15 @@ public class ObjectPool : MonoBehaviour
     {
         if(parentTranform == null)
         {
-            if(parentTranform == null)
+            GameObject parent = GameObject.Find("_ObjectPool");
+            if(parent == null)
             {
                 parentTranform = Instantiate(new GameObject("_ObjectPool")).transform;
             }
+            else
+            {
+                parentTranform = parent.transform;
+	        }
         }
     }
 }

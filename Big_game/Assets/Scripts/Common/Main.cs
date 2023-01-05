@@ -49,7 +49,7 @@ public class Main : MonoBehaviorInstance<Main>
             LocalDataManager.Load();
 	    }
 
-        EventManager.Create();
+        DontDestroyOnLoad(EventManager.Create().gameObject);
         LevelManager.Create();
         GoldManager.Create();
         WeaponManager.Create();
@@ -113,7 +113,6 @@ public class Main : MonoBehaviorInstance<Main>
         UIManager.Create().AddTo(this);
         respawnPos = GameObject.Find("RespawnPos").transform;
         player.transform.position = respawnPos.transform.position;
-        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise?.Invoke();
     }
 
     private void SpawnPlayerIfNeed()

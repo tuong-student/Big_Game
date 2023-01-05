@@ -38,6 +38,7 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
         EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () =>
         {
             inGameMenu.SetActive(true);
+            NoodyCustomCode.StartDelayFunction(() => { CreateUpgradePanel(); }, 0.8f);
         };
         EventManager.GetInstance.OnWinGame.OnEventRaise += ActivePopupMenu;
         EventManager.GetInstance.OnLoseGame.OnEventRaise += ActivePopupMenu;
@@ -57,6 +58,7 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 
     public UpgradePanel CreateUpgradePanel()
     {
+        EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
         if (GameObject.FindObjectOfType<UpgradePanel>() != null) return null;
         return Instantiate<UpgradePanel>(Resources.Load<UpgradePanel>("Prefabs/Game/Upgrade/UpgradePanel"), this.transform);
     }
@@ -68,11 +70,13 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 
     public void ActivePauseMenu()
     {
+        EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
         ActiveMenu(Menu.Main);
     }
 
     public void ActiveSettingMenu()
     {
+        EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
         ActiveMenu(Menu.Setting);
     }
 
@@ -83,6 +87,7 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
 
     public void ActivePopupMenu()
     {
+        EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
         ActiveMenu(Menu.Popup);
     }
 

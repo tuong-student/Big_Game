@@ -21,8 +21,11 @@ public class PlayerOncollision : MonoBehaviour
 
     private void Start()
     {
-        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () => { collider.enabled = false; };
-        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () => { collider.enabled = true; };
+        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () => { if(collider) collider.enabled = false; };
+        EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () => 
+	    {
+            NOOD.NoodyCustomCode.StartDelayFunction(() => { if(collider) collider.enabled = true; }, 1.2f); 
+	    };
     }
 
     private void Update()

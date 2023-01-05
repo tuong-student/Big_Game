@@ -17,7 +17,7 @@ public class ResetUI : MonoBehaviour
         LocalDataManager.walkSpeed = 0.5f;
         LocalDataManager.defence = 0f;
         LocalDataManager.maxHealth = 100;
-        LocalDataManager.mana = 50;
+        LocalDataManager.maxMana = 50;
         LocalDataManager.Save();
         EventManager.GetInstance.OnNewGame.RaiseEvent();
     }
@@ -34,7 +34,7 @@ public class ResetUI : MonoBehaviour
         LocalDataManager.walkSpeed = 0.5f;
         LocalDataManager.defence = 0f;
         LocalDataManager.maxHealth = 100;
-        LocalDataManager.mana = 50;
+        LocalDataManager.maxMana = 50;
         LocalDataManager.Save();
         EventManager.GetInstance.OnTryAgain.RaiseEvent();
     }

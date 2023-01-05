@@ -21,7 +21,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
     public static float defence = 0f;
 
     public static float maxHealth = 100;
-    public static float mana = 50;
+    public static float maxMana = 50;
     public static float musicsetting = 1;
     public static float soundsetting = 1;
    
@@ -40,7 +40,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         gold = PlayerPrefs.GetInt(KeyManager.gold);
 
         maxHealth = PlayerPrefs.GetFloat(KeyManager.hp);
-        mana = PlayerPrefs.GetFloat(KeyManager.mana);
+        maxMana = PlayerPrefs.GetFloat(KeyManager.mana);
         bonusDamage = PlayerPrefs.GetFloat(KeyManager.damage);
         criticalRate = PlayerPrefs.GetFloat(KeyManager.criticalRate);
         bonusFireRate = PlayerPrefs.GetFloat(KeyManager.fireRate);
@@ -72,7 +72,7 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
         PlayerPrefs.SetFloat(KeyManager.reloadSpeed, bonusReloadSpeed);
 
         PlayerPrefs.SetFloat(KeyManager.hp, maxHealth);
-        PlayerPrefs.SetFloat(KeyManager.mana, mana);
+        PlayerPrefs.SetFloat(KeyManager.mana, maxMana);
         PlayerPrefs.SetFloat(KeyManager.defence, defence);
         
         PlayerPrefs.Save();
