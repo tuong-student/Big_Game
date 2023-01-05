@@ -22,10 +22,18 @@ public class DebugAction : MonoBehaviour
             {
                 PlayerScripts.GetInstance.Damage(30f);
             }
+            if(Input.GetKeyDown(KeyCode.G))
+            {
+                PlayerScripts.GetInstance.AddHealth(30f);
+	        }
             if(Input.GetKeyDown(KeyCode.M))
             {
                 PlayerScripts.GetInstance.MinusMana(10f);
 	        }
+            if(Input.GetKeyDown(KeyCode.N))
+            {
+                PlayerScripts.GetInstance.AddMana(10f);
+		    }
 
             if (Input.GetKeyDown(KeyCode.Return) && !isCheat)
             {
