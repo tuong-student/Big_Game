@@ -34,18 +34,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!playerScripts.IsMoveable) return;
+        if (!playerScripts.IsMoveable)
+        {
+            this.myBody.velocity = Vector3.zero;
+            isStop = true;
+            return; 
+	    }
         if (playerScripts.isDead) return;
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-
         movement = new Vector3(moveX, moveY);
+
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) isDashPress = true;
 
         Move(movement);
-
-
     }
 
     private void OnDisable()

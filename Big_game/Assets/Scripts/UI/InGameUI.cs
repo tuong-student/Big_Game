@@ -64,9 +64,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void SetMaxHealth(float health)
     {
-        //LocalDataManager.health = maxHealth;
         healthSlider.maxValue = health;
-        healthSlider.value = health;
     }
 
     public void SetHealth(float health)
@@ -88,9 +86,7 @@ public class InGameUI : MonoBehaviorInstance<InGameUI>
 
     public void SetMaxMana(float mana)
     {
-        currentMana = maxMana;
         manaSlider.maxValue = mana;
-        manaSlider.value = mana;
     }
 
     public void SetMana(float mana)

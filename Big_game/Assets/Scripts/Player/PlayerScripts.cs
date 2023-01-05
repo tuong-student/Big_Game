@@ -77,6 +77,7 @@ public class PlayerScripts : BaseCharacter
         };
 
         InGameUI.GetInstance.SetHealth(maxHealth);
+        InGameUI.GetInstance.SetMana(maxMana);
     }
 
     private void Update()
@@ -171,9 +172,11 @@ public class PlayerScripts : BaseCharacter
                 break;
             case StatsType.mana:
                 this.maxMana += upgrade.upgradeAmount;
+                InGameUI.GetInstance.SetMaxMana(maxMana);
                 break;
             case StatsType.maxHealth:
                 this.maxHealth += upgrade.upgradeAmount;
+                InGameUI.GetInstance.SetMaxHealth(maxHealth);
                 break;
             case StatsType.movement:
                 this.runSpeed += upgrade.upgradeAmount;
