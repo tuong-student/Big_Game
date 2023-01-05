@@ -38,7 +38,6 @@ public class GameCanvas : MonoBehaviorInstance<GameCanvas>
         EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += () =>
         {
             inGameMenu.SetActive(true);
-            NoodyCustomCode.StartDelayFunction(() => { CreateUpgradePanel(); }, 0.8f);
         };
         EventManager.GetInstance.OnWinGame.OnEventRaise += ActivePopupMenu;
         EventManager.GetInstance.OnLoseGame.OnEventRaise += ActivePopupMenu;

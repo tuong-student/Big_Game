@@ -18,6 +18,7 @@ public class ResetUI : MonoBehaviour
         LocalDataManager.defence = 0f;
         LocalDataManager.maxHealth = 100;
         LocalDataManager.maxMana = 50;
+        LocalDataManager.gold = 0;
         LocalDataManager.Save();
         EventManager.GetInstance.OnNewGame.RaiseEvent();
     }

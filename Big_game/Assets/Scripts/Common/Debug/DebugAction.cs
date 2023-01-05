@@ -39,6 +39,7 @@ public class DebugAction : MonoBehaviour
             {
                 isCheat = true;
                 EventManager.GetInstance.OnCheatEnable.RaiseEvent();
+                PlayerScripts.GetInstance.isCheat = true;
                 Debug.Log("Cheat Mode: " + isCheat);
                 return;
 	        }
@@ -47,6 +48,7 @@ public class DebugAction : MonoBehaviour
             {
                 isCheat = false;
                 EventManager.GetInstance.OnCheatDisable.RaiseEvent();
+                PlayerScripts.GetInstance.isCheat = false;
                 Debug.Log("Cheat Mode: " + isCheat);
             }
         }
