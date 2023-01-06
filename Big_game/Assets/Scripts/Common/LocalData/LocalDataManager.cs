@@ -7,8 +7,8 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
 {
     public static int isSaveBefore = 0;
 
-    public static int currentGun1Index;
-    public static int currentGun2Index;
+    public static int currentGun1Index = 1;
+    public static int currentGun2Index = 1;
     public static int playerNumber = 0;
     public static int gold = 0;
     public static int currentLevel = 1;
@@ -32,7 +32,6 @@ public class LocalDataManager : MonoBehaviorInstance<LocalDataManager>
     
     public static void Load()
     {
-
         currentGun1Index = PlayerPrefs.GetInt(KeyManager.gun1Index);
         currentGun2Index = PlayerPrefs.GetInt(KeyManager.gun2Index);
         playerNumber = PlayerPrefs.GetInt(KeyManager.playerNumer);

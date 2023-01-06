@@ -54,19 +54,21 @@ public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     public void AddHealth(float amount)
     {
         this.currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
         InGameUI.GetInstance.SetHealth(currentHealth);
     }
 
     public void MinusHealth(float amount)
     {
         if (isCheat) return;
-        this.currentHealth -= amount;
+        this.currentHealth -= (amount - defence);
         InGameUI.GetInstance.SetHealth(currentHealth);
     }
 
     public void AddMana(float amount)
     {
         this.currentMana += amount;
+        if (currentMana > maxMana) currentMana = maxMana;
         InGameUI.GetInstance.SetMana(currentMana);
     }
 

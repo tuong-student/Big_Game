@@ -98,6 +98,6 @@ public class GunScripts : MonoBehaviour
         if (isCheat)
             bulletScript.damage = 999;
         else
-            bulletScript.damage = damage;
+            bulletScript.damage = damage + PlayerScripts.GetInstance.bonusDamage;
     }
 }

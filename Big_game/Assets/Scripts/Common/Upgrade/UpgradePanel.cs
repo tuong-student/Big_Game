@@ -14,11 +14,14 @@ public class UpgradePanel : MonoBehaviour
 
     void CreateBtn()
     {
+        Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
+        Upgrade newUpgrade2 = new Upgrade();
         for (int i = 0; i < 3; i++)
         {
+            //newUpgrade2 = newUpgrade;
+            newUpgrade = UpgradeMaster.RandomUpgrade();
             UpgradeButton newBtn = Instantiate<UpgradeButton>(buttonRef, this.transform);
             newBtn.gameObject.SetActive(true);
-            Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
             newBtn.SetBtn(newUpgrade, () =>
             {
                 if (PlayerScripts.GetInstance.Buy(newUpgrade.goldNeed, newUpgrade))

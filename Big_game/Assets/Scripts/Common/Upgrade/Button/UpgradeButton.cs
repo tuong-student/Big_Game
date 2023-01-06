@@ -8,7 +8,6 @@ using DG.Tweening;
 public class UpgradeButton : BaseButton
 {
     [SerializeField] Text buttonText, goldNeedText;
-    Upgrade upgrade;
 
     public static UpgradeButton Create(Transform parent)
     {
@@ -20,7 +19,7 @@ public class UpgradeButton : BaseButton
         action = newAction;
         if(upgrade != null)
         {
-            this.upgrade = upgrade;
+            Debug.Log(upgrade.upgradeStats);
             this.buttonText.text = upgrade.upgradeStats.ToString() + "+" + upgrade.upgradeAmount;
             this.goldNeedText.text = upgrade.goldNeed.ToString("0");
         }

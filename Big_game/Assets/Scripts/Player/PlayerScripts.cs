@@ -165,6 +165,7 @@ public class PlayerScripts : BaseCharacter
 
     void ApplyUpgrade(Upgrade upgrade)
     {
+        Debug.Log(upgrade.upgradeStats);
         switch (upgrade.upgradeStats)
         {
             case StatsType.attack:
@@ -205,6 +206,8 @@ public class PlayerScripts : BaseCharacter
         LocalDataManager.criticalRate = criticalRate;
         LocalDataManager.bonusFireRate = fireRate;
         LocalDataManager.bonusReloadSpeed = reloadSpeed;
+
+        InGameUI.GetInstance.SetStats();
     }
 
     public void PickUpGun(GroundGun groundGun)

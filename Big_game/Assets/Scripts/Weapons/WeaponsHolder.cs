@@ -18,6 +18,17 @@ public class WeaponsHolder : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(LocalDataManager.currentGun1Index);
+        Debug.Log(LocalDataManager.currentGun2Index);
+        Debug.Log(gun1Index);
+        Debug.Log(gun2Index);
+        gun1Index = LocalDataManager.currentGun1Index;
+        gun2Index = LocalDataManager.currentGun2Index;
+        if (gun1Index == 0)
+        {
+            gun1Index = 1;
+            gun2Index = gun1Index;
+	    }
         if(gun2Index == 0)
         {
             gun2Index = gun1Index;
@@ -64,6 +75,7 @@ public class WeaponsHolder : MonoBehaviour
                 InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
                 break;
         }
+        InGameUI.GetInstance.SetStats();
     }
 
     public bool SetNewGun(GunData data)
@@ -105,7 +117,8 @@ public class WeaponsHolder : MonoBehaviour
 
         //Set new data
         this.currentGun.SetData(data);
-
+        LocalDataManager.currentGun1Index = gun1Index;
+        LocalDataManager.currentGun2Index = gun2Index;
     }
 
     public GunData GetCurrentGunData()
@@ -123,7 +136,7 @@ public class WeaponsHolder : MonoBehaviour
         if(isCheat)
             nextShootTime += 1 / 3;
         else       
-	        nextShootTime += 1 / currentGun.gunData.fireRate;
+	        nextShootTime += 1 / currentGun.gunData.fireRate + PlayerScripts.GetInstance.fireRate;
     }
 
     void LookAtMouse()

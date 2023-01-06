@@ -38,8 +38,8 @@ public static class UpgradeMaster
                 upgrade.upgradeAmount = r;
                 break;
             case StatsType.movement:
-            case StatsType.reloadSpeed:
             case StatsType.fireRate:
+            case StatsType.reloadSpeed:
             case StatsType.critical:
                 upgrade.upgradeAmount = r * 0.1f;
                 break;
@@ -55,7 +55,7 @@ public static class UpgradeMaster
         Upgrade upgrade = new Upgrade();
 
         int r = UnityEngine.Random.Range(0, statsTypeList.Length);
-        StatsType randomStats = exception;
+        StatsType randomStats = (StatsType)statsTypeList.GetValue(r);
         while (randomStats == exception)
         {
             r = UnityEngine.Random.Range(0, statsTypeList.Length);
@@ -65,7 +65,21 @@ public static class UpgradeMaster
         r = UnityEngine.Random.Range(1, 5);
 
         upgrade.upgradeStats = randomStats;
-        upgrade.upgradeAmount = r;
+        switch (randomStats)
+        {
+            case StatsType.attack:
+            case StatsType.defense:
+            case StatsType.maxHealth:
+            case StatsType.mana:
+                upgrade.upgradeAmount = r;
+                break;
+            case StatsType.movement:
+            case StatsType.fireRate:
+	        case StatsType.reloadSpeed:
+            case StatsType.critical:
+                upgrade.upgradeAmount = r * 0.1f;
+                break;
+        }
         upgrade.goldNeed = (r * 2);
 
 
@@ -81,6 +95,6 @@ public enum StatsType
     maxHealth,
     movement,
     fireRate,
-    critical,
-    reloadSpeed
+    reloadSpeed,
+    critical
 }
