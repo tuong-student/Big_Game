@@ -6270,8 +6270,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 407.39, y: -140}
-  m_SizeDelta: {x: 814.774, y: 934.964}
+  m_AnchoredPosition: {x: 407.39, y: -137}
+  m_SizeDelta: {x: 814.774, y: 950}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &85930958144031985
 CanvasRenderer:
@@ -6303,7 +6303,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 17a0276f3d5aa6d4dbd4f23db3310401, type: 3}
-    m_FontSize: 65
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -6314,8 +6314,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "  Nguyen Thanh Tuong\n\n  Nguyen Khang Duy\n\n  Bui Thi Thao Thao\n\nfor
-    playing\n\n\n"
+  m_Text: "  Nguyen Thanh Tuong\n\n  Nguyen Khang Duy\n\n  Bui Thi Thao Thao\n\n 
+    Nguyen Thanh Tuong\n\n  Nguyen Khang Duy\n\n  Bui Thi Thao Thao\n\nfor playing\n\n\n"
 --- !u!1 &7312518548825662455
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,7 +7003,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -407, y: -140}
-  m_SizeDelta: {x: 814, y: 934.964}
+  m_SizeDelta: {x: 814, y: 950}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6336478989801905198
 CanvasRenderer:
@@ -7035,10 +7035,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 17a0276f3d5aa6d4dbd4f23db3310401, type: 3}
-    m_FontSize: 65
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 80
     m_Alignment: 2
     m_AlignByGeometry: 0
@@ -7046,7 +7046,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Game Systems \n\nLevel Design \n\nUI Programming\n\nThank \n\n\n"
+  m_Text: "Game Systems \n\nLevel Design \n\nUI Design/Prgrame\n\nPlayer Programe\n\nEnemies
+    Programe\n\nSound Design/Programe\n\nThanks \n\n\n"
 --- !u!1 &8857563033325470845
 GameObject:
   m_ObjectHideFlags: 0
