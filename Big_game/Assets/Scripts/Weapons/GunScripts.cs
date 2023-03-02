@@ -10,7 +10,6 @@ namespace Game.Player
         public SpriteRenderer sr;
         public Animator anim;
         [SerializeField] Transform shootPoint;
-        bool isCheat = false;
 
         #region
         ObjectPool bulletPooling;
@@ -100,10 +99,8 @@ namespace Game.Player
         {
             BulletScript bulletScript = bullet.GetComponent<BulletScript>();
             // In the future damage will be randomed base on critical rate
-            if (isCheat)
-                bulletScript.damage = 999;
-            else
-                bulletScript.damage = damage + PlayerScripts.GetInstance.bonusDamage;
+            
+            bulletScript.damage = damage + PlayerScripts.GetInstance.playerDamage;
         }
     }
 }

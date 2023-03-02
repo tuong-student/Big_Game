@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Player;
 
 namespace Game.UI
 {
     public class Store : MonoBehaviour, IInteractable
     {
-        bool isBuyable;
+        private bool isBuyable;
         
-        public void Interact()
+        public void Interact(PlayerScripts player)
         {
             Debug.Log("Store Interact");
             GameCanvas.GetInstance.CreateUpgradePanel();

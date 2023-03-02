@@ -72,6 +72,8 @@ namespace Game.Player
 
         private void Move(Vector2 movement)
         {
+            if (!playerScripts.IsMoveable) return;
+            this.movement = movement;
             this.myBody.velocity = movement * playerScripts.currentSpeed;
             if (movement == Vector2.zero)
             {
@@ -89,7 +91,8 @@ namespace Game.Player
 
         private void Dash()
         {
-            if(isDashing == false)
+            if (!playerScripts.IsMoveable) return;
+            if (isDashing == false)
             {
                 float manaAmount = 10f;
                 //playerScripts.dashEff.Play();

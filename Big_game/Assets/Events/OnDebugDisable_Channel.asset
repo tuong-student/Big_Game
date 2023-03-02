@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 845ece723cb1c44dbb3edb1627f22d1f, type: 3}
-  m_Name: OnCheatDisable_Channel
+  m_Name: OnDebugDisable_Channel
   m_EditorClassIdentifier: 

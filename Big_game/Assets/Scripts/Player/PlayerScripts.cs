@@ -17,8 +17,9 @@ namespace Game.Player
         public PlayerAnimation playerAnimation;
         public ParticleSystem dashEff;
 
-        [SerializeField] WeaponsHolder weaponsHolder;
-        [SerializeField] GameObject player1View, player2View, player3View;
+        [SerializeField] private WeaponsHolder weaponsHolder;
+        [SerializeField] private GameObject player1View, player2View, player3View;
+        private IInteractable groundObject = null;
         #endregion
 
         public int playerNum = 1; // Index of the player sprite (0 -> 2)
@@ -45,11 +46,16 @@ namespace Game.Player
 
         private void Start()
         {
-            GameInput.OnPlayerShoot += () =>
-            {
-                Debug.Log("Shoot");
-            };
+            GameInput.OnPlayerInteract += InteractWithObject;
 
+            EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
+            {
+                isMoveable = false;
+            };
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
+            {
+                isMoveable = true;
+            };
             EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
             {
                 ResetPosition();
@@ -58,8 +64,13 @@ namespace Game.Player
 
         private void Update()
         {
-            if (!isMoveable) return;
             if (currentHealth <= 0 && isDead == false) Die();
+            if (!isMoveable) return;
+        }
+
+        private void OnDisable()
+        {
+            GameInput.OnPlayerInteract -= InteractWithObject;
         }
 
         void Save()
@@ -199,22 +210,41 @@ namespace Game.Player
             //InGameUI.GetInstance.SetStats();
         }
 
+        public void SetGroundObject(IInteractable interactable)
+        {
+            this.groundObject = interactable;
+        }
+
+        public IInteractable GetGroundObject()
+        {
+            return this.groundObject;
+        }
+
+        private void InteractWithObject()
+        {
+            if(groundObject != null)
+            {
+                groundObject.Interact(this);
+            }
+        }
+
         public void PickUpGun(GroundGun groundGun)
         {
             if (groundGun)
             {
                 if (weaponsHolder.SetNewGun(groundGun.GetData()))
                 {
-                    Destroy(groundGun.gameObject);
+                    // after set gun complete destroy groundGun object
+                    groundGun.DestroySelf();
                 }
                 else
                 {
-                    //Pick up new gun and drop current gun
+                    // Pick up new gun and drop current gun
                     GunData temp = weaponsHolder.GetCurrentGunData();
                     weaponsHolder.ChangeNewGun(groundGun.GetData());
                     groundGun.SetData(temp);
                 }
-                AudioManager.GetInstance.PlaySFX(sound.pickUp);
+                //AudioManager.GetInstance.PlaySFX(sound.pickUp);
             }
         }
 

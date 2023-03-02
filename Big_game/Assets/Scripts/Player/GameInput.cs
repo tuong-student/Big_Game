@@ -8,10 +8,12 @@ public class GameInput : MonoBehaviour
 {
     public static Action<Vector2> OnPlayerMove;
     public static Action<Vector3> OnMouseMove;
+    public static Action<int> OnPlayerChangeGun;
     public static Action OnPlayerDash;
     public static Action OnPlayerWatchStats;
     public static Action OnPlayerShoot;
     public static Action OnPlayerPause;
+    public static Action OnPlayerInteract;
 
     private GameInputSytem gameInputSystem;
 
@@ -32,15 +34,24 @@ public class GameInput : MonoBehaviour
         {
             OnPlayerDash?.Invoke();
         };
+        gameInputSystem.Player.ChangGun1.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerChangeGun?.Invoke(1);
+        };
+        gameInputSystem.Player.ChangGun2.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerChangeGun?.Invoke(2);
+        };
+        gameInputSystem.Player.Interact.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerInteract?.Invoke();
+        };
     }
 
     private void Update()
     {
         Vector2 playerInput = gameInputSystem.Player.Movement.ReadValue<Vector2>();
-        if (playerInput != Vector2.zero)
-        {
-            OnPlayerMove?.Invoke(playerInput);
-        }
+        OnPlayerMove?.Invoke(playerInput);
 
         Vector2 mousePos = gameInputSystem.Player.MousePosition.ReadValue<Vector2>();
         OnMouseMove?.Invoke(mousePos);
@@ -59,5 +70,6 @@ public class GameInput : MonoBehaviour
         OnPlayerWatchStats = null;
         OnPlayerShoot = null;
         OnPlayerPause = null;
+        OnPlayerChangeGun = null;
     }
 }

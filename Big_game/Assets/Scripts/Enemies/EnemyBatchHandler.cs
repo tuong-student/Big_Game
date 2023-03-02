@@ -52,12 +52,8 @@ namespace Game.System.Enemy
                 enemy.HasPlayerTarget = false;
         }
 
-        public void CheckUnlockDoor(){
-            if (this.transform.childCount <= 0) openDoor = true;
-        }
-
-        public void SetOpenDoor(bool _openDoor){
-            openDoor = _openDoor;
+        public bool CheckUnlockDoor(){
+            return this.transform.childCount == 0;
         }
     }
 }

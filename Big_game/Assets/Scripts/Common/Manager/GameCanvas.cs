@@ -9,8 +9,7 @@ namespace Game.UI
     public class GameCanvas : MonoBehaviorInstance<GameCanvas>
     {
         public Text goldText;
-        [SerializeField] GameObject mainMenu, inGameMenu, settingMenu, chooseCharacterMenu, popupMenu;
-        bool isPauseOn = false;
+        [SerializeField] GameObject mainMenu, inGameMenu, settingMenu, chooseCharacterMenu, winLoseMenu, debugMenu;
 
         public static GameCanvas Create(Transform parent = null)
         {
@@ -26,12 +25,10 @@ namespace Game.UI
             EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
             {
                 ActivePauseMenu();
-                isPauseOn = true;
             };
             EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
             {
                 ActiveInGameMenu();
-                isPauseOn = false;
             };
             EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () =>
             {
@@ -41,20 +38,16 @@ namespace Game.UI
             {
                 inGameMenu.SetActive(true);
             };
-            EventManager.GetInstance.OnWinGame.OnEventRaise += ActivePopupMenu;
-            EventManager.GetInstance.OnLoseGame.OnEventRaise += ActivePopupMenu;
+            EventManager.GetInstance.OnWinGame.OnEventRaise += ActiveWinLoseMenu;
+            EventManager.GetInstance.OnLoseGame.OnEventRaise += ActiveWinLoseMenu;
 
+            EventManager.GetInstance.OnDebugEnable.OnEventRaise += ActiveDebugMenu;
+            EventManager.GetInstance.OnDebugDisable.OnEventRaise += HideDebugMenu;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (!isPauseOn)
-                    EventManager.GetInstance.OnPauseGame.OnEventRaise?.Invoke();
-                else 
-		            EventManager.GetInstance.OnContinuewGame.OnEventRaise?.Invoke();
-            }
+
         }
 
         public UpgradePanel CreateUpgradePanel()
@@ -86,11 +79,22 @@ namespace Game.UI
             ActiveMenu(Menu.ChooseCharacter);
         }
 
-        public void ActivePopupMenu()
+        public void ActiveWinLoseMenu()
         {
             EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
-            ActiveMenu(Menu.Popup);
+            ActiveMenu(Menu.WinLose);
         }
+
+        public void ActiveDebugMenu()
+        {
+            debugMenu.gameObject.SetActive(true);
+        }
+
+        public void HideDebugMenu()
+        {
+            debugMenu.gameObject.SetActive(false);
+        }
+
 
         public void ActiveMenu(Menu menu)
         { 
@@ -101,35 +105,35 @@ namespace Game.UI
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    //popupMenu.SetActive(false);
+                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.InGame:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(true);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    //popupMenu.SetActive(false);
+                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.Setting:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(true);
                     chooseCharacterMenu.SetActive(false);
-                    //popupMenu.SetActive(false);
+                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.ChooseCharacter:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(true);
-                    //popupMenu.SetActive(false);
+                    winLoseMenu.SetActive(false);
                     break;
-                case Menu.Popup:
+                case Menu.WinLose:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    //popupMenu.SetActive(true);
+                    winLoseMenu.SetActive(true);
                     break;
             }
         }
@@ -150,6 +154,6 @@ namespace Game.UI
         InGame,
         Setting,
         ChooseCharacter,
-        Popup
+        WinLose
     }
 }

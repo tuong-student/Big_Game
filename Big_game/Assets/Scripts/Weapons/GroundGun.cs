@@ -40,9 +40,14 @@ namespace Game.Player
             return this.data;
         }
 
-        public void Interact()
+        public void Interact(PlayerScripts player)
         {
-        
+            player.PickUpGun(this);
+        }
+
+        public void DestroySelf()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -37,6 +37,7 @@ namespace Game.Player
 
         private void Start()
         {
+            GameInput.OnPlayerChangeGun += ChangeGun;
         }
 
         private void Update()
@@ -54,6 +55,7 @@ namespace Game.Player
         {
             GameInput.OnMouseMove -= LookAtMouse;
             GameInput.OnPlayerShoot -= Fire;
+            GameInput.OnPlayerChangeGun -= ChangeGun;
         }
 
         private void Save()
@@ -156,6 +158,7 @@ namespace Game.Player
 
         void Fire()
         {
+            if (!PlayerScripts.GetInstance.IsMoveable) return;
             float fireRate = PlayerScripts.GetInstance.fireRate + GetCurrentGunData().fireRate;
             if(Time.time >= nextShootTime)
             {
@@ -166,6 +169,7 @@ namespace Game.Player
 
         void LookAtMouse(Vector3 mousePos)
         {
+            if (!PlayerScripts.GetInstance.IsMoveable) return;
             Vector3 mouseInWorldPos = NOOD.NoodyCustomCode.ScreenPointToWorldPoint(mousePos);
             NOOD.NoodyCustomCode.LookToPoint2D(this.transform, mouseInWorldPos);
         }

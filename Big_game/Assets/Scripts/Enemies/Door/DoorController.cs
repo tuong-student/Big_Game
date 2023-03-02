@@ -31,7 +31,7 @@ namespace Game.System
 
         private void OnCollisionEnter2D(Collision2D other) {
             if (isFirstDoor == true) return;
-            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.openDoor == true)
+            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.CheckUnlockDoor())
             {
                 OpenDoor();
             }
@@ -39,10 +39,7 @@ namespace Game.System
 
         private void OnTriggerExit2D(Collider2D other) {
             if (isFirstDoor == true) return;
-            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.openDoor == false)
-            {
-                CloseDoor();
-            }
+            CloseDoor();
         } 
     }
 }

@@ -53,6 +53,6 @@ MonoBehaviour:
   OnWinGame: {fileID: 11400000, guid: 74cafc6df62254b1a8242ec42af9c087, type: 2}
   OnTryAgain: {fileID: 11400000, guid: 4b8c909a6259d436397b8bb04b628ea4, type: 2}
   OnTurnOnUI: {fileID: 11400000, guid: b6b73bf294a7e43b4bff44e2b304547f, type: 2}
-  OnCheatEnable: {fileID: 11400000, guid: ce98d5f16fac6432d92eae348d26af34, type: 2}
-  OnCheatDisable: {fileID: 11400000, guid: e70a14cf65d98481397f74a1f0989c44, type: 2}
+  OnDebugEnable: {fileID: 11400000, guid: ce98d5f16fac6432d92eae348d26af34, type: 2}
+  OnDebugDisable: {fileID: 11400000, guid: e70a14cf65d98481397f74a1f0989c44, type: 2}
   OnGenerateLevelComplete: {fileID: 11400000, guid: 9d895024a1f8d41ebaa368ef698efb2b, type: 2}

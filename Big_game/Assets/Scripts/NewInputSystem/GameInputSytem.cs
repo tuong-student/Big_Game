@@ -80,6 +80,33 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangGun1"",
+                    ""type"": ""Button"",
+                    ""id"": ""94788b46-e57e-464e-a35e-9844798f2ed6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangGun2"",
+                    ""type"": ""Button"",
+                    ""id"": ""41ead913-e74a-46d5-a1bc-00a69c14f570"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""cedaf93a-5bbb-42f4-89d6-eca05cc34226"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +285,39 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c52af38-c2f3-441c-a3b2-b9205ca838a1"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangGun1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfe44bfc-a13a-464e-8de0-56a8cc0b792f"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangGun2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f660769f-1b54-4ed7-bc20-11c67aadaf2a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +332,9 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_ChangGun1 = m_Player.FindAction("ChangGun1", throwIfNotFound: true);
+        m_Player_ChangGun2 = m_Player.FindAction("ChangGun2", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +400,9 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_ChangGun1;
+    private readonly InputAction m_Player_ChangGun2;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @GameInputSytem m_Wrapper;
@@ -347,6 +413,9 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @ChangGun1 => m_Wrapper.m_Player_ChangGun1;
+        public InputAction @ChangGun2 => m_Wrapper.m_Player_ChangGun2;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -374,6 +443,15 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @ChangGun1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun1;
+                @ChangGun1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun1;
+                @ChangGun1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun1;
+                @ChangGun2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun2;
+                @ChangGun2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun2;
+                @ChangGun2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangGun2;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -396,6 +474,15 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @ChangGun1.started += instance.OnChangGun1;
+                @ChangGun1.performed += instance.OnChangGun1;
+                @ChangGun1.canceled += instance.OnChangGun1;
+                @ChangGun2.started += instance.OnChangGun2;
+                @ChangGun2.performed += instance.OnChangGun2;
+                @ChangGun2.canceled += instance.OnChangGun2;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -408,5 +495,8 @@ public partial class @GameInputSytem : IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnChangGun1(InputAction.CallbackContext context);
+        void OnChangGun2(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

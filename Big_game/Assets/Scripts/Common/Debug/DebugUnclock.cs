@@ -4,32 +4,42 @@ using UnityEngine;
 using NOOD;
 using NOOD.NoodCamera;
 
-public class DebugUnclock : MonoBehaviorInstance<DebugUnclock>
+namespace Game.DebugMenu
 {
-    public bool isDebug = false;
-    int debugCount, maxDebugCount = 4;
-
-    private void Update()
+    public class DebugUnclock : MonoBehaviorInstance<DebugUnclock>
     {
-        if(Input.anyKeyDown)
-        {
-            if(Input.GetKeyDown(KeyCode.T))
-            { 
-                debugCount++;
-                Debug.Log("DebugCount: " + debugCount);
-	        }
-            else
-            {
-                debugCount = 0;
-	        }
-	    }
+        public bool isDebug = false;
+        int debugCount, maxDebugCount = 4;
 
-        if (debugCount >= maxDebugCount) 
-	    {
-            isDebug = !isDebug;
-            CameraShake.GetInstance.Shake();
-            debugCount = 0;
-            Debug.Log("Debug Mode: " + isDebug);
-	    }
+        private void Update()
+        {
+            if(Input.anyKeyDown)
+            {
+                if(Input.GetKeyDown(KeyCode.T))
+                { 
+                    debugCount++;
+	            }
+                else
+                {
+                    debugCount = 0;
+	            }
+	        }
+
+            if (debugCount >= maxDebugCount) 
+	        {
+                debugCount = 0;
+                isDebug = true;
+                CameraShake.GetInstance.Shake();
+                EventManager.GetInstance.OnDebugEnable.RaiseEvent();
+                
+                Debug.Log("Debug Mode: " + isDebug);
+	        }
+        }
+
+        public void CloseDebugMenu()
+        {
+            isDebug = false;
+            EventManager.GetInstance.OnDebugDisable.RaiseEvent();
+        }
     }
 }

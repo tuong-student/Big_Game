@@ -11,7 +11,6 @@ namespace Game.Player
     {
         [SerializeField] PlayerScripts playerScripts;
         [SerializeField] Collider2D m_collider;
-        bool isInteractPress = false;
         bool isInteractable = false;
 
         private void Awake()
@@ -48,10 +47,7 @@ namespace Game.Player
             if (interactable != null)
             {
                 isInteractable = true;
-	        }
-            if (collision.gameObject.CompareTag("Finish"))
-            {
-                LevelManager.GetInstance.OpenPortal();
+                playerScripts.SetGroundObject(interactable);
             }
 
             if (collision.GetComponent<Portal>())
@@ -64,27 +60,19 @@ namespace Game.Player
         {
             if (!playerScripts.IsMoveable) return;
             IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
-            if (interactable != null && isInteractPress)
+            if (interactable != null)
             {
-                GroundGun temp = collision.gameObject.GetComponent<GroundGun>();
-                if (temp != null)
-                {
-                    playerScripts.PickUpGun(temp);
-                }
-                else
-                {
-                    interactable.Interact();
-                }
-                isInteractPress = false;
+                playerScripts.SetGroundObject(interactable);
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
             IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
-            if (interactable != null && isInteractable)
+            if (interactable != null)
             {
                 isInteractable = false;
+                playerScripts.SetGroundObject(null);
 	        }
         }
     }

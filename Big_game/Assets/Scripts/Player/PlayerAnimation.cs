@@ -48,7 +48,8 @@ namespace Game.Player
 
         private void Update()
         {
-            //stand = playerScripts.playerMovement.isStop;
+            if (!playerScripts.IsMoveable) return;
+            stand = playerScripts.playerMovement.isStop;
             anim.SetBool("Up", up);
             anim.SetBool("Down", down);
             anim.SetBool("Stand", stand);
@@ -62,6 +63,7 @@ namespace Game.Player
 
         public void AnimationBaseOnMouse(Vector3 mousePos)
         {
+            if (!playerScripts.IsMoveable) return;
             mouseDirection = NOOD.NoodyCustomCode.LookDirection2D(this.transform.position, NOOD.NoodyCustomCode.ScreenPointToWorldPoint(mousePos));
             if (mouseDirection == Vector3.zero)
             {

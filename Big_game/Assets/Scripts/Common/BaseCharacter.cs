@@ -17,7 +17,7 @@ namespace Game.Base
         public float currentHealth = 100f;
         public float maxMana = 50f;
         public float currentMana = 50f;
-        public float bonusDamage = 1f;
+        public float playerDamage = 1f;
         public float criticalRate = 0f;
         public float fireRate = 0f;
         public float defence = 0f;
@@ -33,7 +33,7 @@ namespace Game.Base
         #endregion
 
         #region Bool
-        public bool isCheat = false;
+
         #endregion
 
         public virtual void OnEnable()
@@ -57,14 +57,13 @@ namespace Game.Base
         {
             this.currentHealth += amount;
             if (currentHealth > maxHealth) currentHealth = maxHealth;
-           // InGameUI.GetInstance.SetHealth(currentHealth);
+            InGameUI.GetInstance.SetHealth(currentHealth);
         }
 
         public void MinusHealth(float amount)
         {
-            if (isCheat) return;
             this.currentHealth -= (amount - defence);
-//            InGameUI.GetInstance.SetHealth(currentHealth);
+            InGameUI.GetInstance.SetHealth(currentHealth);
         }
 
         public void AddMana(float amount)
@@ -76,7 +75,6 @@ namespace Game.Base
 
         public void MinusMana(float amount)
         {
-            if (isCheat) return;
             this.currentMana -= amount;
             //InGameUI.GetInstance.SetMana(currentMana);
         }

@@ -16,16 +16,30 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     public VoidEventChannelSO OnWinGame;
     public VoidEventChannelSO OnTryAgain;
     public VoidEventChannelSO OnTurnOnUI;
-    public VoidEventChannelSO OnCheatEnable;
-    public VoidEventChannelSO OnCheatDisable;
+    public VoidEventChannelSO OnDebugEnable;
+    public VoidEventChannelSO OnDebugDisable;
 
     public VoidIntEventChannelSO OnGenerateLevelComplete;
+
+    private bool isPause = false;
 
     public static EventManager Create(Transform parent = null)
     {
         EventManager temp = GameObject.FindObjectOfType<EventManager>();
         if (temp != null) return temp; 
         return Instantiate<EventManager>(Resources.Load<EventManager>("Prefabs/Manager/EventManager"), parent);
+    }
+
+    private void Start()
+    {
+        GameInput.OnPlayerPause += () =>
+        {
+            isPause = !isPause;
+            if (isPause)
+                OnPauseGame.RaiseEvent();
+            else
+                OnContinuewGame.RaiseEvent();
+        };
     }
 
     private void OnDisable()
@@ -40,7 +54,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         OnLoseGame.OnEventRaise = null;
         OnTryAgain.OnEventRaise = null;
         OnTurnOnUI.OnEventRaise = null;
-        OnCheatEnable.OnEventRaise = null;
-        OnCheatDisable.OnEventRaise = null;
+        OnDebugEnable.OnEventRaise = null;
+        OnDebugDisable.OnEventRaise = null;
     }
 }
