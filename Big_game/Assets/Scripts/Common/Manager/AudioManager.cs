@@ -51,37 +51,37 @@ public class AudioManager : MonoBehaviorInstance<AudioManager>
 
     public void ToggleMusic()
     {
-        if(LocalDataManager.musicsetting == 0)
-        {
-            musicSource.volume = 0;
-            Debug.Log(LocalDataManager.musicsetting);
+        //if(LocalDataManager.musicsetting == 0)
+        //{
+        //    musicSource.volume = 0;
+        //    Debug.Log(LocalDataManager.musicsetting);
 
-        }
-        else
-        {
-            musicSource.volume = 1;
-            PlayMusic("Theme");
-            musicSource.loop = true;
-            Debug.Log(LocalDataManager.musicsetting);
+        //}
+        //else
+        //{
+        //    musicSource.volume = 1;
+        //    PlayMusic("Theme");
+        //    musicSource.loop = true;
+        //    Debug.Log(LocalDataManager.musicsetting);
 
-        }
+        //}
 
     }
 
     public void ToggleSFX()
     {
-        if (LocalDataManager.soundsetting == 0)
-        {
-            sfxSource.volume = 0;
-            Debug.Log(LocalDataManager.soundsetting);
+        //if (LocalDataManager.soundsetting == 0)
+        //{
+        //    sfxSource.volume = 0;
+        //    Debug.Log(LocalDataManager.soundsetting);
 
-        }
-        else
-        {
-            sfxSource.volume = 1;
-            Debug.Log(LocalDataManager.soundsetting);
+        //}
+        //else
+        //{
+        //    sfxSource.volume = 1;
+        //    Debug.Log(LocalDataManager.soundsetting);
 
-        }
+        //}
     }
 
     public void MusicVolume (float volume)

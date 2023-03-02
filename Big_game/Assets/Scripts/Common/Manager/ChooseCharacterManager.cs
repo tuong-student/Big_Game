@@ -4,25 +4,28 @@ using UnityEngine;
 using NOOD;
 using UnityEngine.UI;
 
-public class ChooseCharacterManager : MonoBehaviorInstance<ChooseCharacterManager>
+namespace Game.Manager
 {
-    public static ChooseCharacterManager Create(Transform parent = null)
+    public class ChooseCharacterManager : MonoBehaviorInstance<ChooseCharacterManager>
     {
-        return Instantiate<ChooseCharacterManager>(Resources.Load<ChooseCharacterManager>("Prefabs/Manager/ChooseCharacterManager.prefab"), parent);
-    }
-
-    [SerializeField] Button ConfirmBtn;
-
-    private void Start()
-    {
-        ConfirmBtn.onClick.AddListener(() =>
+        public static ChooseCharacterManager Create(Transform parent = null)
         {
-            Main.GetInstance.PlayGame();
-        });
-    }
+            return Instantiate<ChooseCharacterManager>(Resources.Load<ChooseCharacterManager>("Prefabs/Manager/ChooseCharacterManager.prefab"), parent);
+        }
 
-    private void OnDisable()
-    {
-        ConfirmBtn.onClick.RemoveAllListeners();
+        [SerializeField] Button ConfirmBtn;
+
+        private void Start()
+        {
+            ConfirmBtn.onClick.AddListener(() =>
+            {
+                Main.GetInstance.PlayGame();
+            });
+        }
+
+        private void OnDisable()
+        {
+            ConfirmBtn.onClick.RemoveAllListeners();
+        }
     }
 }

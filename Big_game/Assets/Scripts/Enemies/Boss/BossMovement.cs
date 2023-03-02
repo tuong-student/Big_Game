@@ -1,141 +1,155 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
+using Game.System.Enemy;
 
-public class BossMovement : MonoBehaviour
+namespace Game.Enemy
 {
-    [SerializeField]
-    private float normalSpeed = 0.5f, chasingSpeed = 1f;
-    private float speed;
-    [SerializeField]
-    private Transform[] movementPos;
-    private Vector3 targetPos;
-    private Vector3 myScale;
-    private bool isDetected;
-    private Transform playerTarget;
-    private bool chasePlayer;
-    [SerializeField]
-    private float damageAmount = 10f;
-    private BaseEnemy bossHealth;
-    [SerializeField]
-    private float shootTimeDelay = 2f;
-    private float shootTimer;
-    private EnemyShooterController enemyShooterController;
-
-    private void Awake()
+    public class BossMovement : MonoBehaviour
     {
-        bossHealth = GetComponent<BaseEnemy>();
-        enemyShooterController = GetComponent<EnemyShooterController>();
-    }
+        [SerializeField] private Transform[] movementPos;
+        [SerializeField] private float normalSpeed = 0.5f, chasingSpeed = 1f;
+        [SerializeField] private float damageAmount = 10f;
+        [SerializeField] private float shootTimeDelay = 2f;
 
-    private void Start()
-    {
-        speed = normalSpeed;
-        GetRandMovementPos();
-    }
-    private void Update()
-    {
-        if(!playerTarget){
-            GameObject temp =  GameObject.FindGameObjectWithTag("Player");
-            if(!temp) return;
-            else playerTarget = temp.transform;
-        }
-        if (!playerTarget)
-            return;
+        private Vector3 myScale;
+        private Vector3 targetPos;
+        private Transform playerTarget;
 
-        if (!bossHealth.IsAlive())
-            return;
+        private BaseEnemy bossHealth;
+        private EnemyShooterController enemyShooterController;
 
-        HandleFacing();
-        HandleShooting();
-    }
-    private void FixedUpdate()
-    {
-        if (!playerTarget)
-            return;
+        private float speed;
+        private float shootTimer;
+        private bool isDetected;
+        private bool chasePlayer;
 
-        if (!bossHealth.IsAlive())
-            return;
-
-        HandleMovement();
-    }
-    void GetRandMovementPos()
-    {
-        int randIndex = Random.Range(0, movementPos.Length);
-        while (targetPos == movementPos[randIndex].position)
+        private void Awake()
         {
-            randIndex = Random.Range(0, movementPos.Length);
+            bossHealth = GetComponent<BaseEnemy>();
+            enemyShooterController = GetComponent<EnemyShooterController>();
         }
-        targetPos = movementPos[randIndex].position;
-    }
-    void HandleMovement()
-    {
-        transform.position = Vector3.MoveTowards(transform.position,
-            targetPos, speed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+
+        private void Start()
         {
-            if (isDetected)
+            speed = normalSpeed;
+            GetRandMovementPos();
+        }
+
+        private void Update()
+        {
+            if(!playerTarget){
+                GameObject temp =  GameObject.FindGameObjectWithTag("Player");
+                if(!temp) return;
+                else playerTarget = temp.transform;
+            }
+            if (!playerTarget)
+                return;
+
+            if (!bossHealth.IsAlive())
+                return;
+
+            HandleFacing();
+            HandleShooting();
+        }
+
+        private void FixedUpdate()
+        {
+            if (!playerTarget)
+                return;
+
+            if (!bossHealth.IsAlive())
+                return;
+
+            HandleMovement();
+        }
+
+        private void GetRandMovementPos()
+        {
+            int randIndex = Random.Range(0, movementPos.Length);
+
+            while (targetPos == movementPos[randIndex].position)
             {
-                if (Random.Range(0, 10) > 5)
+                randIndex = Random.Range(0, movementPos.Length);
+            }
+
+            targetPos = movementPos[randIndex].position;
+        }
+
+        private void HandleMovement()
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+            {
+                if (isDetected)
                 {
-                    targetPos = playerTarget.position;
-                    chasePlayer = true;
-                }
-                else
-                {
-                    if (!chasePlayer)
+                    if (Random.Range(0, 10) > 5)
                     {
-                        GetRandMovementPos();
+                        targetPos = playerTarget.position;
+                        chasePlayer = true;
+                    }
+                    else
+                    {
+                        if (!chasePlayer)
+                        {
+                            GetRandMovementPos();
+                        }
                     }
                 }
             }
         }
-    }
-    void HandleFacing()
-    {
-        myScale = transform.localScale;
-        if (targetPos.x > transform.position.x)
-            myScale.x = Mathf.Abs(myScale.x);
-        else if (targetPos.x < transform.position.x)
-            myScale.x = -Mathf.Abs(myScale.x);
-        transform.localScale = myScale;
-    }
-    void SetSpeedState(bool detected)
-    {
-        if (detected)
-            speed = chasingSpeed;
-        else
-            speed = normalSpeed;
-    }
-    public void PlayerDetected(bool detected)
-    {
-        isDetected = detected;
-        SetSpeedState(detected);
-        if (!isDetected)
+
+        private void HandleFacing()
         {
-            chasePlayer = false;
-            GetRandMovementPos();
+            myScale = transform.localScale;
+            if (targetPos.x > transform.position.x)
+                myScale.x = Mathf.Abs(myScale.x);
+            else if (targetPos.x < transform.position.x)
+                myScale.x = -Mathf.Abs(myScale.x);
+            transform.localScale = myScale;
         }
-    }
-    void HandleShooting()
-    {
-        if (isDetected)
+
+        private void SetSpeedState(bool detected)
         {
-            if (Time.time > shootTimer)
+            if (detected)
+                speed = chasingSpeed;
+            else
+                speed = normalSpeed;
+        }
+
+        public void PlayerDetected(bool detected)
+        {
+            isDetected = detected;
+            SetSpeedState(detected);
+            if (!isDetected)
             {
-                shootTimer = Time.time + shootTimeDelay;
-                Vector2 direction = (playerTarget.position - transform.position).normalized;
-                enemyShooterController.ShootOnRandom(direction, transform.position);
+                chasePlayer = false;
+                GetRandMovementPos();
             }
         }
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+
+        private void HandleShooting()
         {
-            chasePlayer = false;
-            GetRandMovementPos();
-            other.GetComponent<BaseCharacter>().Damage(damageAmount);
+            if (isDetected)
+            {
+                if (Time.time > shootTimer)
+                {
+                    shootTimer = Time.time + shootTimeDelay;
+                    Vector2 direction = (playerTarget.position - transform.position).normalized;
+                    enemyShooterController.ShootOnRandom(direction, transform.position);
+                }
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                chasePlayer = false;
+                GetRandMovementPos();
+                other.GetComponent<BaseCharacter>().Damage(damageAmount);
+            }
         }
     }
 }

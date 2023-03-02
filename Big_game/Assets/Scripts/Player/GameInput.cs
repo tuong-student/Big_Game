@@ -1,0 +1,63 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class GameInput : MonoBehaviour
+{
+    public static Action<Vector2> OnPlayerMove;
+    public static Action<Vector3> OnMouseMove;
+    public static Action OnPlayerDash;
+    public static Action OnPlayerWatchStats;
+    public static Action OnPlayerShoot;
+    public static Action OnPlayerPause;
+
+    private GameInputSytem gameInputSystem;
+
+    private void Awake()
+    {
+        gameInputSystem = new GameInputSytem();
+        gameInputSystem.Player.Enable();
+
+        gameInputSystem.Player.Watch_stats.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerWatchStats?.Invoke();
+        };
+        gameInputSystem.Player.Pause.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerPause?.Invoke();
+        };
+        gameInputSystem.Player.Dash.performed += (InputAction.CallbackContext callback) =>
+        {
+            OnPlayerDash?.Invoke();
+        };
+    }
+
+    private void Update()
+    {
+        Vector2 playerInput = gameInputSystem.Player.Movement.ReadValue<Vector2>();
+        if (playerInput != Vector2.zero)
+        {
+            OnPlayerMove?.Invoke(playerInput);
+        }
+
+        Vector2 mousePos = gameInputSystem.Player.MousePosition.ReadValue<Vector2>();
+        OnMouseMove?.Invoke(mousePos);
+
+        if(gameInputSystem.Player.Shoot.phase == InputActionPhase.Performed)
+        {
+            OnPlayerShoot?.Invoke();
+        }
+    }
+
+    private void OnDisable()
+    {
+        OnPlayerMove = null;
+        OnPlayerDash = null;
+        OnMouseMove = null;
+        OnPlayerWatchStats = null;
+        OnPlayerShoot = null;
+        OnPlayerPause = null;
+    }
+}

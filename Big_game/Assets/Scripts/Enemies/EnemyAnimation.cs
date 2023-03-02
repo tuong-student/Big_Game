@@ -1,29 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
 
-public class EnemyAnimation : MonoBehaviour
+namespace Game.Enemy
 {
-    private Animator anim;
-    private BaseEnemy enemyMovement;
-    private void Awake() {
-        anim = GetComponent<Animator>();
-        enemyMovement =GetComponent<BaseEnemy>();
-    }
-
-    // Update is called once per frame
-    void Update()
+    public class EnemyAnimation : MonoBehaviour
     {
-        EnemyMovementAnimation();
-    }
+        [SerializeField] private Animator anim;
+        [SerializeField] private BaseEnemy baseEnemy;
 
-    void EnemyMovementAnimation(){
-        if(enemyMovement.GetMoveDelta().magnitude > 0f){
-            anim.SetBool("Walk",true);
-        }else
-            anim.SetBool("Walk",false);
-    }
-    public void DeathAnimation(){
-        anim.SetTrigger("Death"); 
+        // Update is called once per frame
+        void Update()
+        {
+            EnemyMovementAnimation();
+        }
+
+        void EnemyMovementAnimation(){
+            if(baseEnemy.GetMoveDelta().magnitude > 0f){
+                anim.SetBool("Walk",true);
+            }else
+                anim.SetBool("Walk",false);
+        }
+        public void DeathAnimation(){
+            anim.SetTrigger("Death");
+            NOOD.NoodyCustomCode.StartDelayFunction(baseEnemy.DestroySelf, anim.GetCurrentAnimatorStateInfo(0).length);
+        }
     }
 }

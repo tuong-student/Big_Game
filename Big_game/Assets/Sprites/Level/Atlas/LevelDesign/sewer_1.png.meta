@@ -855,7 +855,7 @@ TextureImporter:
       213: 21300566
     second: sewer_1_283
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -872,9 +872,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -884,8 +887,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -906,9 +909,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -948,6 +957,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -6935,9 +6956,293 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      sewer_1_120: 21300240
+      sewer_1_148: 21300296
+      sewer_1_42: 21300084
+      sewer_1_107: 21300214
+      sewer_1_64: 21300128
+      sewer_1_198: 21300396
+      sewer_1_276: 21300552
+      sewer_1_61: 21300122
+      sewer_1_69: 21300138
+      sewer_1_167: 21300334
+      sewer_1_222: 21300444
+      sewer_1_204: 21300408
+      sewer_1_135: 21300270
+      sewer_1_0: 21300000
+      sewer_1_113: 21300226
+      sewer_1_259: 21300518
+      sewer_1_18: 21300036
+      sewer_1_109: 21300218
+      sewer_1_65: 21300130
+      sewer_1_4: 21300008
+      sewer_1_278: 21300556
+      sewer_1_230: 21300460
+      sewer_1_263: 21300526
+      sewer_1_226: 21300452
+      sewer_1_9: 21300018
+      sewer_1_71: 21300142
+      sewer_1_20: 21300040
+      sewer_1_244: 21300488
+      sewer_1_67: 21300134
+      sewer_1_41: 21300082
+      sewer_1_262: 21300524
+      sewer_1_29: 21300058
+      sewer_1_194: 21300388
+      sewer_1_66: 21300132
+      sewer_1_19: 21300038
+      sewer_1_154: 21300308
+      sewer_1_124: 21300248
+      sewer_1_279: 21300558
+      sewer_1_55: 21300110
+      sewer_1_146: 21300292
+      sewer_1_224: 21300448
+      sewer_1_228: 21300456
+      sewer_1_17: 21300034
+      sewer_1_121: 21300242
+      sewer_1_8: 21300016
+      sewer_1_37: 21300074
+      sewer_1_201: 21300402
+      sewer_1_141: 21300282
+      sewer_1_13: 21300026
+      sewer_1_30: 21300060
+      sewer_1_181: 21300362
+      sewer_1_43: 21300086
+      sewer_1_170: 21300340
+      sewer_1_229: 21300458
+      sewer_1_216: 21300432
+      sewer_1_277: 21300554
+      sewer_1_72: 21300144
+      sewer_1_236: 21300472
+      sewer_1_233: 21300466
+      sewer_1_232: 21300464
+      sewer_1_51: 21300102
+      sewer_1_73: 21300146
+      sewer_1_266: 21300532
+      sewer_1_156: 21300312
+      sewer_1_3: 21300006
+      sewer_1_227: 21300454
+      sewer_1_283: 21300566
+      sewer_1_169: 21300338
+      sewer_1_108: 21300216
+      sewer_1_106: 21300212
+      sewer_1_143: 21300286
+      sewer_1_200: 21300400
+      sewer_1_218: 21300436
+      sewer_1_86: 21300172
+      sewer_1_112: 21300224
+      sewer_1_48: 21300096
+      sewer_1_111: 21300222
+      sewer_1_175: 21300350
+      sewer_1_209: 21300418
+      sewer_1_136: 21300272
+      sewer_1_119: 21300238
+      sewer_1_161: 21300322
+      sewer_1_268: 21300536
+      sewer_1_163: 21300326
+      sewer_1_49: 21300098
+      sewer_1_206: 21300412
+      sewer_1_269: 21300538
+      sewer_1_199: 21300398
+      sewer_1_129: 21300258
+      sewer_1_81: 21300162
+      sewer_1_125: 21300250
+      sewer_1_213: 21300426
+      sewer_1_180: 21300360
+      sewer_1_168: 21300336
+      sewer_1_241: 21300482
+      sewer_1_275: 21300550
+      sewer_1_50: 21300100
+      sewer_1_195: 21300390
+      sewer_1_208: 21300416
+      sewer_1_179: 21300358
+      sewer_1_280: 21300560
+      sewer_1_196: 21300392
+      sewer_1_46: 21300092
+      sewer_1_28: 21300056
+      sewer_1_254: 21300508
+      sewer_1_165: 21300330
+      sewer_1_271: 21300542
+      sewer_1_128: 21300256
+      sewer_1_54: 21300108
+      sewer_1_234: 21300468
+      sewer_1_83: 21300166
+      sewer_1_132: 21300264
+      sewer_1_178: 21300356
+      sewer_1_140: 21300280
+      sewer_1_89: 21300178
+      sewer_1_258: 21300516
+      sewer_1_27: 21300054
+      sewer_1_88: 21300176
+      sewer_1_127: 21300254
+      sewer_1_261: 21300522
+      sewer_1_237: 21300474
+      sewer_1_16: 21300032
+      sewer_1_104: 21300208
+      sewer_1_193: 21300386
+      sewer_1_239: 21300478
+      sewer_1_80: 21300160
+      sewer_1_87: 21300174
+      sewer_1_56: 21300112
+      sewer_1_84: 21300168
+      sewer_1_133: 21300266
+      sewer_1_207: 21300414
+      sewer_1_267: 21300534
+      sewer_1_57: 21300114
+      sewer_1_186: 21300372
+      sewer_1_214: 21300428
+      sewer_1_242: 21300484
+      sewer_1_215: 21300430
+      sewer_1_79: 21300158
+      sewer_1_142: 21300284
+      sewer_1_240: 21300480
+      sewer_1_123: 21300246
+      sewer_1_253: 21300506
+      sewer_1_77: 21300154
+      sewer_1_92: 21300184
+      sewer_1_273: 21300546
+      sewer_1_52: 21300104
+      sewer_1_217: 21300434
+      sewer_1_188: 21300376
+      sewer_1_203: 21300406
+      sewer_1_34: 21300068
+      sewer_1_40: 21300080
+      sewer_1_31: 21300062
+      sewer_1_243: 21300486
+      sewer_1_82: 21300164
+      sewer_1_47: 21300094
+      sewer_1_197: 21300394
+      sewer_1_255: 21300510
+      sewer_1_93: 21300186
+      sewer_1_74: 21300148
+      sewer_1_78: 21300156
+      sewer_1_282: 21300564
+      sewer_1_23: 21300046
+      sewer_1_14: 21300028
+      sewer_1_101: 21300202
+      sewer_1_100: 21300200
+      sewer_1_173: 21300346
+      sewer_1_12: 21300024
+      sewer_1_221: 21300442
+      sewer_1_257: 21300514
+      sewer_1_190: 21300380
+      sewer_1_152: 21300304
+      sewer_1_76: 21300152
+      sewer_1_246: 21300492
+      sewer_1_151: 21300302
+      sewer_1_45: 21300090
+      sewer_1_157: 21300314
+      sewer_1_63: 21300126
+      sewer_1_122: 21300244
+      sewer_1_210: 21300420
+      sewer_1_126: 21300252
+      sewer_1_153: 21300306
+      sewer_1_202: 21300404
+      sewer_1_94: 21300188
+      sewer_1_205: 21300410
+      sewer_1_70: 21300140
+      sewer_1_225: 21300450
+      sewer_1_265: 21300530
+      sewer_1_270: 21300540
+      sewer_1_26: 21300052
+      sewer_1_138: 21300276
+      sewer_1_6: 21300012
+      sewer_1_39: 21300078
+      sewer_1_99: 21300198
+      sewer_1_149: 21300298
+      sewer_1_97: 21300194
+      sewer_1_7: 21300014
+      sewer_1_62: 21300124
+      sewer_1_147: 21300294
+      sewer_1_160: 21300320
+      sewer_1_182: 21300364
+      sewer_1_250: 21300500
+      sewer_1_130: 21300260
+      sewer_1_35: 21300070
+      sewer_1_24: 21300048
+      sewer_1_155: 21300310
+      sewer_1_252: 21300504
+      sewer_1_22: 21300044
+      sewer_1_183: 21300366
+      sewer_1_75: 21300150
+      sewer_1_118: 21300236
+      sewer_1_264: 21300528
+      sewer_1_32: 21300064
+      sewer_1_176: 21300352
+      sewer_1_166: 21300332
+      sewer_1_172: 21300344
+      sewer_1_134: 21300268
+      sewer_1_174: 21300348
+      sewer_1_159: 21300318
+      sewer_1_2: 21300004
+      sewer_1_36: 21300072
+      sewer_1_238: 21300476
+      sewer_1_249: 21300498
+      sewer_1_272: 21300544
+      sewer_1_58: 21300116
+      sewer_1_245: 21300490
+      sewer_1_115: 21300230
+      sewer_1_191: 21300382
+      sewer_1_219: 21300438
+      sewer_1_1: 21300002
+      sewer_1_247: 21300494
+      sewer_1_96: 21300192
+      sewer_1_33: 21300066
+      sewer_1_223: 21300446
+      sewer_1_189: 21300378
+      sewer_1_137: 21300274
+      sewer_1_256: 21300512
+      sewer_1_150: 21300300
+      sewer_1_95: 21300190
+      sewer_1_102: 21300204
+      sewer_1_220: 21300440
+      sewer_1_248: 21300496
+      sewer_1_5: 21300010
+      sewer_1_145: 21300290
+      sewer_1_211: 21300422
+      sewer_1_235: 21300470
+      sewer_1_251: 21300502
+      sewer_1_91: 21300182
+      sewer_1_158: 21300316
+      sewer_1_185: 21300370
+      sewer_1_187: 21300374
+      sewer_1_260: 21300520
+      sewer_1_103: 21300206
+      sewer_1_21: 21300042
+      sewer_1_117: 21300234
+      sewer_1_59: 21300118
+      sewer_1_90: 21300180
+      sewer_1_139: 21300278
+      sewer_1_68: 21300136
+      sewer_1_53: 21300106
+      sewer_1_25: 21300050
+      sewer_1_10: 21300020
+      sewer_1_171: 21300342
+      sewer_1_98: 21300196
+      sewer_1_110: 21300220
+      sewer_1_192: 21300384
+      sewer_1_144: 21300288
+      sewer_1_38: 21300076
+      sewer_1_281: 21300562
+      sewer_1_60: 21300120
+      sewer_1_162: 21300324
+      sewer_1_231: 21300462
+      sewer_1_85: 21300170
+      sewer_1_105: 21300210
+      sewer_1_116: 21300232
+      sewer_1_212: 21300424
+      sewer_1_15: 21300030
+      sewer_1_131: 21300262
+      sewer_1_11: 21300022
+      sewer_1_114: 21300228
+      sewer_1_164: 21300328
+      sewer_1_44: 21300088
+      sewer_1_184: 21300368
+      sewer_1_177: 21300354
+      sewer_1_274: 21300548
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

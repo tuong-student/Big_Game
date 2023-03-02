@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Player;
 
-public class ItemMana : BaseItem
+namespace Game.Item
 {
-    public float manaAmount = 1f;
-
-    public override void PerformAction()
+    public class ItemMana : BaseItem
     {
-        if(PlayerScripts.GetInstance.currentMana < PlayerScripts.GetInstance.maxMana)
-        { 
-            PlayerScripts.GetInstance.AddMana(manaAmount);
-            Destroy(this.gameObject);
-	    }
+        public float manaAmount = 1f;
+
+        //public override void PerformAction()
+        //{
+        //    if(PlayerScripts.GetInstance.currentMana < PlayerScripts.GetInstance.maxMana)
+        //    { 
+        //        PlayerScripts.GetInstance.AddMana(manaAmount);
+        //        Destroy(this.gameObject);
+	       // }
+        //}
     }
 }

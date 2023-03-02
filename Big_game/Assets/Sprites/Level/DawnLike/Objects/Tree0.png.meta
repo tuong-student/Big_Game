@@ -1107,7 +1107,7 @@ TextureImporter:
       213: 21300734
     second: Tree0_367
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -1124,9 +1124,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1136,8 +1139,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -1158,9 +1161,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1200,6 +1209,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -5654,9 +5675,220 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Tree0_85: 21300170
+      Tree0_291: 21300582
+      Tree0_238: 21300476
+      Tree0_292: 21300584
+      Tree0_57: 21300114
+      Tree0_303: 21300606
+      Tree0_209: 21300418
+      Tree0_113: 21300226
+      Tree0_176: 21300352
+      Tree0_117: 21300234
+      Tree0_19: 21300038
+      Tree0_37: 21300074
+      Tree0_27: 21300054
+      Tree0_30: 21300060
+      Tree0_202: 21300404
+      Tree0_246: 21300492
+      Tree0_58: 21300116
+      Tree0_137: 21300274
+      Tree0_279: 21300558
+      Tree0_194: 21300388
+      Tree0_236: 21300472
+      Tree0_22: 21300044
+      Tree0_81: 21300162
+      Tree0_156: 21300312
+      Tree0_43: 21300086
+      Tree0_180: 21300360
+      Tree0_169: 21300338
+      Tree0_164: 21300328
+      Tree0_192: 21300384
+      Tree0_94: 21300188
+      Tree0_151: 21300302
+      Tree0_165: 21300330
+      Tree0_197: 21300394
+      Tree0_102: 21300204
+      Tree0_161: 21300322
+      Tree0_77: 21300154
+      Tree0_54: 21300108
+      Tree0_24: 21300048
+      Tree0_33: 21300066
+      Tree0_171: 21300342
+      Tree0_116: 21300232
+      Tree0_190: 21300380
+      Tree0_239: 21300478
+      Tree0_259: 21300518
+      Tree0_138: 21300276
+      Tree0_16: 21300032
+      Tree0_23: 21300046
+      Tree0_31: 21300062
+      Tree0_237: 21300474
+      Tree0_41: 21300082
+      Tree0_219: 21300438
+      Tree0_220: 21300440
+      Tree0_293: 21300586
+      Tree0_44: 21300088
+      Tree0_172: 21300344
+      Tree0_243: 21300486
+      Tree0_184: 21300368
+      Tree0_126: 21300252
+      Tree0_159: 21300318
+      Tree0_17: 21300034
+      Tree0_144: 21300288
+      Tree0_179: 21300358
+      Tree0_174: 21300348
+      Tree0_289: 21300578
+      Tree0_106: 21300212
+      Tree0_155: 21300310
+      Tree0_282: 21300564
+      Tree0_193: 21300386
+      Tree0_227: 21300454
+      Tree0_313: 21300626
+      Tree0_278: 21300556
+      Tree0_181: 21300362
+      Tree0_224: 21300448
+      Tree0_300: 21300600
+      Tree0_270: 21300540
+      Tree0_153: 21300306
+      Tree0_95: 21300190
+      Tree0_112: 21300224
+      Tree0_83: 21300166
+      Tree0_170: 21300340
+      Tree0_214: 21300428
+      Tree0_67: 21300134
+      Tree0_36: 21300072
+      Tree0_136: 21300272
+      Tree0_213: 21300426
+      Tree0_229: 21300458
+      Tree0_175: 21300350
+      Tree0_188: 21300376
+      Tree0_38: 21300076
+      Tree0_234: 21300468
+      Tree0_215: 21300430
+      Tree0_20: 21300040
+      Tree0_217: 21300434
+      Tree0_147: 21300294
+      Tree0_150: 21300300
+      Tree0_125: 21300250
+      Tree0_186: 21300372
+      Tree0_201: 21300402
+      Tree0_222: 21300444
+      Tree0_59: 21300118
+      Tree0_189: 21300378
+      Tree0_198: 21300396
+      Tree0_210: 21300420
+      Tree0_211: 21300422
+      Tree0_249: 21300498
+      Tree0_80: 21300160
+      Tree0_124: 21300248
+      Tree0_281: 21300562
+      Tree0_301: 21300602
+      Tree0_167: 21300334
+      Tree0_168: 21300336
+      Tree0_173: 21300346
+      Tree0_104: 21300208
+      Tree0_149: 21300298
+      Tree0_78: 21300156
+      Tree0_103: 21300206
+      Tree0_39: 21300078
+      Tree0_261: 21300522
+      Tree0_235: 21300470
+      Tree0_208: 21300416
+      Tree0_158: 21300316
+      Tree0_290: 21300580
+      Tree0_68: 21300136
+      Tree0_216: 21300432
+      Tree0_268: 21300536
+      Tree0_21: 21300042
+      Tree0_114: 21300228
+      Tree0_260: 21300520
+      Tree0_228: 21300456
+      Tree0_18: 21300036
+      Tree0_162: 21300324
+      Tree0_218: 21300436
+      Tree0_221: 21300442
+      Tree0_247: 21300494
+      Tree0_148: 21300296
+      Tree0_258: 21300516
+      Tree0_187: 21300374
+      Tree0_232: 21300464
+      Tree0_166: 21300332
+      Tree0_271: 21300542
+      Tree0_283: 21300566
+      Tree0_29: 21300058
+      Tree0_93: 21300186
+      Tree0_56: 21300112
+      Tree0_65: 21300130
+      Tree0_182: 21300364
+      Tree0_66: 21300132
+      Tree0_163: 21300326
+      Tree0_32: 21300064
+      Tree0_45: 21300090
+      Tree0_225: 21300450
+      Tree0_75: 21300150
+      Tree0_223: 21300446
+      Tree0_191: 21300382
+      Tree0_42: 21300084
+      Tree0_183: 21300366
+      Tree0_92: 21300184
+      Tree0_51: 21300102
+      Tree0_280: 21300560
+      Tree0_178: 21300356
+      Tree0_35: 21300070
+      Tree0_26: 21300052
+      Tree0_55: 21300110
+      Tree0_199: 21300398
+      Tree0_84: 21300168
+      Tree0_204: 21300408
+      Tree0_160: 21300320
+      Tree0_47: 21300094
+      Tree0_233: 21300466
+      Tree0_105: 21300210
+      Tree0_203: 21300406
+      Tree0_267: 21300534
+      Tree0_76: 21300152
+      Tree0_127: 21300254
+      Tree0_302: 21300604
+      Tree0_82: 21300164
+      Tree0_251: 21300502
+      Tree0_299: 21300598
+      Tree0_96: 21300192
+      Tree0_177: 21300354
+      Tree0_250: 21300500
+      Tree0_257: 21300514
+      Tree0_134: 21300268
+      Tree0_28: 21300056
+      Tree0_40: 21300080
+      Tree0_152: 21300304
+      Tree0_196: 21300392
+      Tree0_79: 21300158
+      Tree0_200: 21300400
+      Tree0_231: 21300462
+      Tree0_146: 21300292
+      Tree0_128: 21300256
+      Tree0_226: 21300452
+      Tree0_135: 21300270
+      Tree0_154: 21300308
+      Tree0_25: 21300050
+      Tree0_34: 21300068
+      Tree0_46: 21300092
+      Tree0_185: 21300370
+      Tree0_206: 21300412
+      Tree0_157: 21300314
+      Tree0_269: 21300538
+      Tree0_69: 21300138
+      Tree0_195: 21300390
+      Tree0_248: 21300496
+      Tree0_212: 21300424
+      Tree0_230: 21300460
+      Tree0_115: 21300230
+      Tree0_207: 21300414
+      Tree0_145: 21300290
+      Tree0_205: 21300410
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

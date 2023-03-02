@@ -1,37 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.System.Enemy;
 
-public class DoorController : MonoBehaviour
+namespace Game.System
 {
-  private BoxCollider2D myColider;
-  private SpriteRenderer sr;
-  [SerializeField]
-  private EnemyBatchHandler enemyBatchHandler;
-  private void Awake() {
-    myColider = GetComponent<BoxCollider2D>();
-    sr = GetComponent<SpriteRenderer>();
-  } 
-  public void OpenDoor(){
-    myColider.isTrigger = true;
-    sr.enabled = false;
-  }
-
-  public void CloseDoor(){
-    myColider.isTrigger = false;
-    sr.enabled = true;
-  }
-  private void OnCollisionEnter2D(Collision2D other) {
-    if(other.gameObject.CompareTag("Player")&&enemyBatchHandler.openDoor ==true)
+    public class DoorController : MonoBehaviour
     {
-      OpenDoor();
-    }
-  }
-  private void OnTriggerExit2D(Collider2D other) {
+        [SerializeField] private bool isFirstDoor;
+        private BoxCollider2D myColider;
+        private SpriteRenderer sr;
+        [SerializeField] private EnemyBatchHandler enemyBatchHandler;
 
-    if(other.gameObject.CompareTag("Player")&&enemyBatchHandler.openDoor ==true){
-        CloseDoor();
-    }
-  } 
+        private void Awake() {
+            myColider = GetComponent<BoxCollider2D>();
+            sr = GetComponent<SpriteRenderer>();
+            if (isFirstDoor)
+                OpenDoor();
+        }
 
+        public void OpenDoor(){
+            myColider.isTrigger = true;
+            sr.enabled = false;
+        }
+
+        public void CloseDoor(){
+            myColider.isTrigger = false;
+            sr.enabled = true;
+        }
+
+        private void OnCollisionEnter2D(Collision2D other) {
+            if (isFirstDoor == true) return;
+            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.openDoor == true)
+            {
+                OpenDoor();
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other) {
+            if (isFirstDoor == true) return;
+            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.openDoor == false)
+            {
+                CloseDoor();
+            }
+        } 
+    }
 }

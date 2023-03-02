@@ -8,6 +8,6 @@ public class CharacterImage : MonoBehaviour
 
     public void ChangeCharacterNumber()
     {
-        LocalDataManager.playerNumber = characterNumber;
+        //LocalDataManager.playerNumber = characterNumber;
     }
 }

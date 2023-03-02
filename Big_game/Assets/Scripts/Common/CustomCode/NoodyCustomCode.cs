@@ -57,6 +57,13 @@ namespace NOOD
             return (targetPosition - FromPosition).normalized;
         }
 
+        public static Vector2 LookDirection2D(Vector3 FromPosition, Vector3 targetPosition)
+        {
+            FromPosition.z = 0;
+            targetPosition.z = 0;
+            return (targetPosition - FromPosition).normalized;
+        }
+
         public static Vector3 GetPointAroundAPosition2D(Vector3 centerPosition, float degrees, float radius)
         {
             var radians = degrees * Mathf.Deg2Rad;

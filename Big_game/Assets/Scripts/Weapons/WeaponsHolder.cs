@@ -1,146 +1,173 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.UI;
+using Game.Save;
 
-public class WeaponsHolder : MonoBehaviour
+namespace Game.Player
 {
-    [SerializeField] GunScripts currentGun;
-    [SerializeField] [Range(1, 9)] int gun1Index, gun2Index;
-
-    private GunData gun1Data, gun2Data;
-
-    [HideInInspector] public bool isShootPress;
-    private float nextShootTime;
-
-    #region Bool
-    bool isCheat = false;
-    #endregion
-
-    private void Start()
+    public class WeaponsHolder : MonoBehaviour
     {
-        Debug.Log(LocalDataManager.currentGun1Index);
-        Debug.Log(LocalDataManager.currentGun2Index);
-        Debug.Log(gun1Index);
-        Debug.Log(gun2Index);
-        gun1Index = LocalDataManager.currentGun1Index;
-        gun2Index = LocalDataManager.currentGun2Index;
-        if (gun1Index == 0)
+        [SerializeField] GunScripts currentGun;
+        [SerializeField] [Range(1, 9)] int gun1Index, gun2Index;
+
+        [HideInInspector] public bool isShootPress;
+        private float nextShootTime;
+
+        private GunData gun1Data, gun2Data;
+        private SaveModels.WeaponModel weaponModel;
+
+        #region Bool
+        bool isCheat = false;
+        #endregion
+
+        private void Awake()
         {
-            gun1Index = 1;
-            gun2Index = gun1Index;
-	    }
-        if(gun2Index == 0)
+            LoadFromSave();
+            
+            currentGun.SetData(gun1Data);
+            nextShootTime = Time.time;
+        }
+
+        private void OnEnable()
         {
-            gun2Index = gun1Index;
-	    }
-        gun1Index -= 1;
-        gun2Index -= 1;
-        gun1Data = GetGunData(gun1Index);
-        gun2Data = GetGunData(gun2Index);
-        currentGun.SetData(GetGunData(gun1Index)); 
-	    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+            GameInput.OnMouseMove += LookAtMouse;
+            GameInput.OnPlayerShoot += Fire;
+        }
 
-        EventManager.GetInstance.OnCheatEnable.OnEventRaise += () => { isCheat = true; };
-        EventManager.GetInstance.OnCheatDisable.OnEventRaise += () => { isCheat = false; };
-    }
-
-    private void Update()
-    {
-        if (PlayerScripts.GetInstance == null) return;
-        if (PlayerScripts.GetInstance.isDead) return;
-        LookAtMouse();
-    }
-
-    private void LateUpdate()
-    {
-        if (isShootPress && Time.time >= nextShootTime)
-            Fire();
-    }
-
-    GunData GetGunData(int index)
-    {
-        return WeaponManager.GetInstance.GetGunData(index);
-    }
-
-    public void ChangeGun(int index)
-    {
-        switch (index)
+        private void Start()
         {
-            case 1:
-                currentGun.SetData(gun1Data);
+        }
+
+        private void Update()
+        {
+            //if (PlayerScripts.GetInstance == null) return;
+            //if (PlayerScripts.GetInstance.isDead) return;
+        }
+
+        private void LateUpdate()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            GameInput.OnMouseMove -= LookAtMouse;
+            GameInput.OnPlayerShoot -= Fire;
+        }
+
+        private void Save()
+        {
+            weaponModel.gun1Index = this.gun1Index;
+            weaponModel.gun2Index = this.gun2Index;
+
+            SaveJson.SaveToJson(weaponModel, SaveModels.SaveFile.WeaponSave.ToString());
+        }
+
+        private void LoadFromSave()
+        {
+            weaponModel = LoadJson<SaveModels.WeaponModel>.LoadFromJson(SaveModels.SaveFile.WeaponSave.ToString());
+            if(weaponModel == null)
+            {
+                weaponModel = new SaveModels.WeaponModel();
+                weaponModel.gun1Index = this.gun1Index;
+                weaponModel.gun2Index = this.gun2Index;
+                Save();
+            }
+            else
+            {
+                this.gun1Index = weaponModel.gun1Index;
+                this.gun2Index = weaponModel.gun2Index;
+
+                gun1Data = WeaponManager.GetInstance.GetGunData(gun1Index);
+                gun2Data = WeaponManager.GetInstance.GetGunData(gun2Index);
+            }
+        }
+
+        GunData GetGunData(int index)
+        {
+                //WeaponManager.GetInstance.GetGunData(index);
+            return null;
+        }
+
+        public void ChangeGun(int index)
+        {
+            switch (index)
+            {
+                case 1:
+                    currentGun.SetData(gun1Data);
+                    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+                    break;
+                case 2:
+                    currentGun.SetData(gun2Data);
+                    InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
+                    break;
+            }
+            InGameUI.GetInstance.SetStats();
+        }
+
+        public bool SetNewGun(GunData data)
+        {
+            if (IsEnoughGun())
+            {
+                return false;
+            }
+            else
+            {
+                gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
+                gun2Data = data;
                 InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
-                break;
-            case 2:
-                currentGun.SetData(gun2Data);
-                InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
-                break;
+                return true;
+            }
         }
-        InGameUI.GetInstance.SetStats();
-    }
 
-    public bool SetNewGun(GunData data)
-    {
-        if (IsEnoughGun())
+        public bool IsEnoughGun()
         {
-            return false;
+            if (gun2Index != gun1Index) return true;
+            else return false;
         }
-        else
+
+        public void ChangeNewGun(GunData data)
         {
-            gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
-            gun2Data = data;
-            InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
-            return true;
+            //Set gunIndex
+            //if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
+            //{
+            //    gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
+            //    gun1Data = data;
+            //    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+            //}
+            //else
+            //{
+            //    gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
+            //    gun2Data = data;
+            //    InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
+            //}
+
+            ////Set new data
+            //this.currentGun.SetData(data);
+            //LocalDataManager.currentGun1Index = gun1Index;
+            //LocalDataManager.currentGun2Index = gun2Index;
         }
-    }
 
-    public bool IsEnoughGun()
-    {
-        if (gun2Index != gun1Index) return true;
-        else return false;
-    }
-
-    public void ChangeNewGun(GunData data)
-    {
-        //Set gunIndex
-        if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
+        public GunData GetCurrentGunData()
         {
-            gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
-            gun1Data = data;
-            InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
+            return this.currentGun.gunData;
         }
-        else
+
+        void Fire()
         {
-            gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
-            gun2Data = data;
-            InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
+            float fireRate = PlayerScripts.GetInstance.fireRate + GetCurrentGunData().fireRate;
+            if(Time.time >= nextShootTime)
+            {
+                currentGun.Fire();
+                nextShootTime = Time.time + 1 / fireRate;
+            }
         }
 
-        //Set new data
-        this.currentGun.SetData(data);
-        LocalDataManager.currentGun1Index = gun1Index;
-        LocalDataManager.currentGun2Index = gun2Index;
-    }
-
-    public GunData GetCurrentGunData()
-    {
-        return this.currentGun.gunData;
-    }
-
-    void Fire()
-    {
-        nextShootTime = Time.time;
-        if (currentGun.gunData == WeaponManager.GetInstance.shotgunData)
-            currentGun.Fire(true);
-        else currentGun.Fire(false);
-
-        if(isCheat)
-            nextShootTime += 1 / 3;
-        else       
-	        nextShootTime += 1 / currentGun.gunData.fireRate + PlayerScripts.GetInstance.fireRate;
-    }
-
-    void LookAtMouse()
-    {
-        NOOD.NoodyCustomCode.LookToMouse2D(this.transform);
+        void LookAtMouse(Vector3 mousePos)
+        {
+            Vector3 mouseInWorldPos = NOOD.NoodyCustomCode.ScreenPointToWorldPoint(mousePos);
+            NOOD.NoodyCustomCode.LookToPoint2D(this.transform, mouseInWorldPos);
+        }
     }
 }

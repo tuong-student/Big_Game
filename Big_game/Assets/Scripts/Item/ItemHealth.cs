@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Game.Player;
 
-public class ItemHealth : BaseItem 
+namespace Game.Item
 {
-    public float healthAmount = 1f;
-
-    public override void PerformAction() 
+    public class ItemHealth : BaseItem 
     {
-        if(PlayerScripts.GetInstance.currentHealth > 0 || PlayerScripts.GetInstance.currentHealth < PlayerScripts.GetInstance.maxHealth)
-        { 
-            PlayerScripts.GetInstance.AddHealth(healthAmount);
-            Destroy(this.gameObject);
-	    }
+        public float healthAmount = 1f;
+
+        public override void PerformAction() 
+        {
+         //   if(PlayerScripts.GetInstance.currentHealth > 0 || PlayerScripts.GetInstance.currentHealth < PlayerScripts.GetInstance.maxHealth)
+         //   { 
+         //       PlayerScripts.GetInstance.AddHealth(healthAmount);
+         //       Destroy(this.gameObject);
+	        //}
+        }
     }
 }

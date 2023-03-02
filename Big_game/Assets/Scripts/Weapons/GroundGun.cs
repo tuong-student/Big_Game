@@ -2,44 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundGun : MonoBehaviour, IInteractable
+namespace Game.Player
 {
-    [SerializeField] GunData data;
-    SpriteRenderer sr;
-    PlayerScripts player;
-
-    public static GroundGun Create(Transform parent = null)
+    public class GroundGun : MonoBehaviour, IInteractable
     {
-        return Instantiate<GroundGun>(Resources.Load<GroundGun>("Prefabs/Game/Weapons/groundGun"), parent);
-    }
+        [SerializeField] GunData data;
+        SpriteRenderer sr;
+        PlayerScripts player;
 
-    private void Start()
-    {
-        if(data == null)
-            data = WeaponManager.GetInstance.GetRandomGunData();
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = data.gunImage;
-        EventManager.GetInstance.OnGenerateLevel.OnEventRaise += DestroyThis;
-    }
+        public static Game.Player.GroundGun Create(Transform parent = null)
+        {
+            return Instantiate<GroundGun>(Resources.Load<GroundGun>("Prefabs/Game/Weapons/groundGun"), parent);
+        }
 
-    public void DestroyThis()
-    {
-        if (this) Destroy(this.gameObject);
-    }
+        private void Start()
+        {
+            if(data == null)
+                data = WeaponManager.GetInstance.GetRandomGunData();
+            sr = GetComponent<SpriteRenderer>();
+            sr.sprite = data.gunImage;
+            EventManager.GetInstance.OnGenerateLevel.OnEventRaise += DestroyThis;
+        }
 
-    public void SetData(GunData data)
-    {
-        this.data = data;
-        sr.sprite = data.gunImage;
-    }
+        public void DestroyThis()
+        {
+            if (this) Destroy(this.gameObject);
+        }
 
-    public GunData GetData()
-    {
-        return this.data;
-    }
+        public void SetData(GunData data)
+        {
+            this.data = data;
+            sr.sprite = data.gunImage;
+        }
 
-    public void Interact()
-    {
+        public GunData GetData()
+        {
+            return this.data;
+        }
+
+        public void Interact()
+        {
         
+        }
     }
 }

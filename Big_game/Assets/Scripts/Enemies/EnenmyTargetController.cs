@@ -1,39 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Enemy;
 
-public enum EnemyTargetType{
-    EnableEnemyTarget,
-    DisableEnemyTarget
-}
-
-public class EnenmyTargetController : MonoBehaviour
+namespace Game.System.Enemy
 {
-    [SerializeField]
-    private EnemyTargetType enemyTargetType;
-    [SerializeField]
-    private EnemyBatchHandler enemyBatch;
-    [SerializeField]
-    private BossMovement boss;
-    [SerializeField]
-    private bool bossZone;
+    public enum EnemyTargetType{
+        EnableEnemyTarget,
+        DisableEnemyTarget
+    }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(bossZone){
-            if(other.CompareTag("Player"))
-            {
-                if(enemyTargetType == EnemyTargetType.EnableEnemyTarget && boss)
-                    boss.PlayerDetected(true);
-                else if(enemyTargetType == EnemyTargetType.DisableEnemyTarget && boss) 
-                    boss.PlayerDetected(false);
-            }
-        }else{
-            if(other.CompareTag("Player"))
-            {
-                if(enemyTargetType == EnemyTargetType.EnableEnemyTarget)
-                    enemyBatch.EnablePlayerTarget();
-                else
-                    enemyBatch.DisabledPlayerTarget();
+    public class EnenmyTargetController : MonoBehaviour
+    {
+        [SerializeField]
+        private EnemyTargetType enemyTargetType;
+        [SerializeField]
+        private EnemyBatchHandler enemyBatch;
+        [SerializeField]
+        private BossMovement boss;
+        [SerializeField]
+        private bool bossZone;
+
+        private void OnTriggerEnter2D(Collider2D other) {
+            if(bossZone){
+                if(other.CompareTag("Player"))
+                {
+                    if(enemyTargetType == EnemyTargetType.EnableEnemyTarget && boss)
+                        boss.PlayerDetected(true);
+                    else if(enemyTargetType == EnemyTargetType.DisableEnemyTarget && boss) 
+                        boss.PlayerDetected(false);
+                }
+            }else{
+                if(other.CompareTag("Player"))
+                {
+                    if(enemyTargetType == EnemyTargetType.EnableEnemyTarget)
+                        enemyBatch.EnablePlayerTarget();
+                    else
+                        enemyBatch.DisabledPlayerTarget();
+                }
             }
         }
     }

@@ -12,13 +12,14 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     public VoidEventChannelSO OnContinuewGame;
     public VoidEventChannelSO OnPauseGame;
     public VoidEventChannelSO OnGenerateLevel;
-    public VoidEventChannelSO OnGenerateLevelComplete;
     public VoidEventChannelSO OnLoseGame;
     public VoidEventChannelSO OnWinGame;
     public VoidEventChannelSO OnTryAgain;
     public VoidEventChannelSO OnTurnOnUI;
     public VoidEventChannelSO OnCheatEnable;
     public VoidEventChannelSO OnCheatDisable;
+
+    public VoidIntEventChannelSO OnGenerateLevelComplete;
 
     public static EventManager Create(Transform parent = null)
     {

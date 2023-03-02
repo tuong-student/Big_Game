@@ -1,76 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
+using Game.Enemy;
 
-public class EnemyBatchHandler : MonoBehaviour
+namespace Game.System.Enemy
 {
-    [SerializeField]
-    private bool hasShooterEnemies;
-    [SerializeField]
-    private Transform shooterEnemyHolder;
-    [SerializeField]
-    private List<EnemyShooterMovement> shooterEnemies;
+    public class EnemyBatchHandler : MonoBehaviour
+    {
+        private readonly string PLAYER_TAG = "Player";
 
-    [SerializeField]
-    private List<BaseEnemy> enemies = new List<BaseEnemy>();  
-    [SerializeField]
-    private GameObject batchDoor;
-    public bool openDoor = false;
+        private EnemyShooter[] shooterEnemies;
+        private BaseEnemy[] enemies;  
 
-    private void Start() {
-        foreach (Transform tr in GetComponentInChildren<Transform>()){
-            if(tr != this){
-                enemies.Add(tr.GetComponent<BaseEnemy>());
-            }
+        [SerializeField] private bool hasShooterEnemies;
+
+        public bool openDoor = false;
+
+        private void Start(){ 
+            enemies = GetComponentsInChildren<BaseEnemy>();
+
+            shooterEnemies = GetComponentsInChildren<EnemyShooter>();
+
+            if (shooterEnemies.Length > 0) hasShooterEnemies = true;
+            else hasShooterEnemies = false;
         }
 
-        if(hasShooterEnemies)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            foreach(Transform tr in shooterEnemyHolder.GetComponentInChildren<Transform>()){
-                    shooterEnemies.Add(tr.GetComponent<EnemyShooterMovement>());
-            }
-        }
-    }
-    public void EnablePlayerTarget(){
-        foreach (BaseEnemy enemy in enemies)
-            enemy.HasPlayerTarget = true;
-    }
-    public void DisabledPlayerTarget(){
-        foreach (BaseEnemy enemy in enemies)
-            enemy.HasPlayerTarget = false;
-    }
-    public void RemoveEnemy(BaseEnemy enemy){
-        if(gameObject != null)
-        enemies.Remove(enemy);
-        CheckUnlockDoor();
-    }
-    public void RemoveShooterEnemy(EnemyShooterMovement shooterEnemy){
-        if(shooterEnemies != null)
-            shooterEnemies.Remove(shooterEnemy);
-        CheckUnlockDoor();
-    }
-    void CheckUnlockDoor(){
-        if(hasShooterEnemies)
-        {
-            if(enemies.Count == 0 && shooterEnemies.Count == 0)
+            if (collision.gameObject.CompareTag(PLAYER_TAG))
             {
-                if(batchDoor){
-                    openDoor = true;
-                }
+                EnablePlayerTarget();
             }
         }
-        else{
-            if(enemies.Count == 0){
-                
-                if(batchDoor){
-                    openDoor = true;
-                }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag(PLAYER_TAG))
+            {
+                DisabledPlayerTarget();
             }
+        }
+
+        public void EnablePlayerTarget(){
+            foreach (BaseEnemy enemy in enemies)
+                enemy.HasPlayerTarget = true;
+        }
+
+        public void DisabledPlayerTarget(){
+            foreach (BaseEnemy enemy in enemies)
+                enemy.HasPlayerTarget = false;
+        }
+
+        public void CheckUnlockDoor(){
+            if (this.transform.childCount <= 0) openDoor = true;
+        }
+
+        public void SetOpenDoor(bool _openDoor){
+            openDoor = _openDoor;
         }
     }
-   public bool SetOpenDoor(bool _openDoor){
-        openDoor = _openDoor;
-        return openDoor;
-   } 
 }
-

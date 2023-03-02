@@ -1,57 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
 
-public class BulletScript : MonoBehaviour
+namespace Game.Player
 {
-    [HideInInspector] public float damage = 1;
-    [HideInInspector] public float backForce = 10f;
-    public ExplodeType ExplodeType;
-    bool isBlock;
-
-    private void OnEnable()
+    public class BulletScript : MonoBehaviour
     {
-        isBlock = false;
-    }
+        private readonly List<string> EFFECT_TAGS = new List<string> { "Enemy", "Blocking", "Door", "Boss" };
 
-    public void SetRange(float range)
-    {
-        GetComponent<SetObjectDeactive>().second = range;
-    }
+        [HideInInspector] public float damage = 1;
+        [HideInInspector] public float backForce = 10f;
+        public ExplodeType ExplodeType;
+        private bool isBlock;
 
-    public void SetBackForce(float backForce)
-    {
-        this.backForce = backForce;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss") || collision.gameObject.CompareTag("Blocking") || collision.gameObject.CompareTag("Door"))
+        private void OnEnable()
         {
+            isBlock = false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (EFFECT_TAGS.Contains(collision.gameObject.tag))
+            {
+                if(collision.TryGetComponent(out BaseEnemy enemy))
+                {
+                    DamageToEnemy(enemy);
+                }
+
+                this.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (isBlock == true) return;
+
+            // Create explode;
             GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(ExplodeType);
             PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
             GameObject explode = PoolingManager.GetInstance.GetExplode();
             explode.transform.position = this.transform.position;
             explode.GetComponent<ParticleSystem>().Play();
+        }
 
-            BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
-            if (enemy != null && enemy.IsAlive()) 
-		    { 
-                AudioManager.GetInstance.PlaySFX(sound.hitEnemy);
+        public void SetRange(float range)
+        {
+            GetComponent<SetObjectDeactive>().second = range;
+        }
+
+        public void SetBackForce(float backForce)
+        {
+            this.backForce = backForce;
+        }
+
+        private void DamageToEnemy(BaseEnemy enemy)
+        {
+            if (enemy != null && enemy.IsAlive())
+            {
+                //AudioManager.GetInstance.PlaySFX(sound.hitEnemy);
                 enemy.TakeDamage(damage);
                 enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
-		    }
-            this.gameObject.SetActive(false);
+            }
         }
-    }
 
-    private void OnDisable()
-    {
-        if (isBlock == true) return;
-        GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(ExplodeType);
-        PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
-        GameObject explode = PoolingManager.GetInstance.GetExplode();
-        explode.transform.position = this.transform.position;
-        explode.GetComponent<ParticleSystem>().Play();
     }
 }

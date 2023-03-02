@@ -14,18 +14,18 @@ public class ChoosenCharacter : MonoBehaviour
 
     private void Start()
     {
-        if (anim)
-            SetBoolTrue(LocalDataManager.playerNumber.ToString());
+        //if (anim)
+        //    SetBoolTrue(LocalDataManager.playerNumber.ToString());
     }
 
     public void ChangePlayer()
     {
-        if (animIndex != LocalDataManager.playerNumber)
-        {
-            anim.SetTrigger("Change");
-            animIndex = LocalDataManager.playerNumber;
-            SetBoolTrue(animIndex.ToString());
-        }
+        //if (animIndex != LocalDataManager.playerNumber)
+        //{
+        //    anim.SetTrigger("Change");
+        //    animIndex = LocalDataManager.playerNumber;
+        //    SetBoolTrue(animIndex.ToString());
+        //}
     }
 
     public void SetBoolTrue(string name)

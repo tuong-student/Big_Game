@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Base;
 
-public class BossHolder : MonoBehaviour
+namespace Game.System.Enemy
 {
-    [SerializeField] BaseEnemy boss;
-    [SerializeField] Portal door;
-
-    private void Update()
+    public class BossHolder : MonoBehaviour
     {
-        if(!boss.IsAlive())
+        [SerializeField] BaseEnemy boss;
+        [SerializeField] Portal door;
+
+        private void Update()
         {
-            door.Open();
+            if(!boss.IsAlive())
+            {
+                door.Open();
+            }
+            else
+            {
+                door.Close();
+	        }
         }
-        else
-        {
-            door.Close();
-	    }
     }
 }

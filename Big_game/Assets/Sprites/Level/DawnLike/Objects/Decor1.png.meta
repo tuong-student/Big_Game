@@ -441,7 +441,7 @@ TextureImporter:
       213: 21300290
     second: water_flow_01
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -458,9 +458,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -470,8 +473,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -492,9 +495,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -534,6 +543,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -3623,9 +3644,155 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Decor1_55: 21300110
+      Decor1_97: 21300194
+      Decor1_102: 21300204
+      Decor1_113: 21300226
+      Decor1_92: 21300184
+      Decor1_15: 21300030
+      Decor1_51: 21300102
+      Decor1_44: 21300088
+      Decor1_23: 21300046
+      Decor1_58: 21300116
+      Decor1_47: 21300094
+      Decor1_125: 21300250
+      Decor1_54: 21300108
+      Decor1_39: 21300078
+      Decor1_53: 21300106
+      Decor1_25: 21300050
+      Decor1_65: 21300130
+      Decor1_46: 21300092
+      Decor1_12: 21300024
+      Decor1_108: 21300216
+      Decor1_77: 21300154
+      Decor1_0: 21300000
+      Decor1_104: 21300208
+      Decor1_42: 21300084
+      Decor1_118: 21300236
+      Decor1_59: 21300118
+      Decor1_78: 21300156
+      Decor1_2: 21300004
+      Decor1_16: 21300032
+      Decor1_122: 21300244
+      Decor1_61: 21300122
+      Decor1_28: 21300056
+      Decor1_90: 21300180
+      Decor1_21: 21300042
+      Decor1_66: 21300132
+      Decor1_107: 21300214
+      Decor1_75: 21300150
+      Decor1_139: 21300278
+      Decor1_103: 21300206
+      Decor1_84: 21300168
+      Decor1_13: 21300026
+      Decor1_116: 21300232
+      Decor1_30: 21300060
+      Decor1_82: 21300164
+      Decor1_99: 21300198
+      Decor1_85: 21300170
+      Decor1_131: 21300262
+      Decor1_1: 21300002
+      Decor1_98: 21300196
+      Decor1_19: 21300038
+      Decor1_112: 21300224
+      Decor1_121: 21300242
+      Decor1_129: 21300258
+      Decor1_18: 21300036
+      Decor1_140: 21300280
+      Decor1_67: 21300134
+      Decor1_24: 21300048
+      Decor1_105: 21300210
+      Decor1_115: 21300230
+      Decor1_123: 21300246
+      Decor1_52: 21300104
+      Decor1_130: 21300260
+      Decor1_80: 21300160
+      Decor1_94: 21300188
+      Decor1_120: 21300240
+      Decor1_109: 21300218
+      Decor1_6: 21300012
+      Decor1_79: 21300158
+      Decor1_5: 21300010
+      Decor1_17: 21300034
+      Decor1_95: 21300190
+      Decor1_9: 21300018
+      Decor1_81: 21300162
+      Decor1_135: 21300270
+      Decor1_76: 21300152
+      Decor1_45: 21300090
+      Decor1_93: 21300186
+      Decor1_36: 21300072
+      Decor1_114: 21300228
+      Decor1_56: 21300112
+      Decor1_138: 21300276
+      Decor1_72: 21300144
+      Decor1_38: 21300076
+      Decor1_34: 21300068
+      Decor1_62: 21300124
+      Decor1_3: 21300006
+      Decor1_48: 21300096
+      Decor1_100: 21300200
+      Decor1_127: 21300254
+      Decor1_35: 21300070
+      Decor1_20: 21300040
+      Decor1_33: 21300066
+      Decor1_126: 21300252
+      Decor1_142: 21300284
+      Decor1_27: 21300054
+      Decor1_106: 21300212
+      Decor1_43: 21300086
+      Decor1_29: 21300058
+      Decor1_68: 21300136
+      Decor1_41: 21300082
+      Decor1_40: 21300080
+      Decor1_119: 21300238
+      Decor1_87: 21300174
+      Decor1_8: 21300016
+      Decor1_132: 21300264
+      Decor1_137: 21300274
+      Decor1_83: 21300166
+      Decor1_143: 21300286
+      Decor1_71: 21300142
+      Decor1_14: 21300028
+      Decor1_60: 21300120
+      Decor1_50: 21300100
+      Decor1_63: 21300126
+      Decor1_91: 21300182
+      Decor1_69: 21300138
+      Decor1_101: 21300202
+      Decor1_110: 21300220
+      Decor1_141: 21300282
+      Decor1_4: 21300008
+      Decor1_144: 21300288
+      Decor1_10: 21300020
+      Decor1_37: 21300074
+      Decor1_73: 21300146
+      Decor1_31: 21300062
+      water_flow_01: 21300290
+      Decor1_111: 21300222
+      Decor1_134: 21300268
+      Decor1_22: 21300044
+      Decor1_124: 21300248
+      Decor1_136: 21300272
+      Decor1_74: 21300148
+      Decor1_128: 21300256
+      Decor1_64: 21300128
+      Decor1_57: 21300114
+      Decor1_11: 21300022
+      Decor1_49: 21300098
+      Decor1_86: 21300172
+      Decor1_26: 21300052
+      Decor1_89: 21300178
+      Decor1_88: 21300176
+      Decor1_133: 21300266
+      Decor1_117: 21300234
+      Decor1_96: 21300192
+      Decor1_7: 21300014
+      Decor1_32: 21300064
+      Decor1_70: 21300140
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

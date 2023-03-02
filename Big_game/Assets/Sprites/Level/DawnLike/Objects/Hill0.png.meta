@@ -627,7 +627,7 @@ TextureImporter:
       213: 21300414
     second: Hill0_207
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -644,9 +644,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -656,8 +659,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -678,9 +681,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -720,6 +729,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2360,9 +2381,86 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Hill0_14: 21300028
+      Hill0_67: 21300134
+      Hill0_25: 21300050
+      Hill0_12: 21300024
+      Hill0_81: 21300162
+      Hill0_119: 21300238
+      Hill0_30: 21300060
+      Hill0_79: 21300158
+      Hill0_95: 21300190
+      Hill0_13: 21300026
+      Hill0_1: 21300002
+      Hill0_27: 21300054
+      Hill0_38: 21300076
+      Hill0_140: 21300280
+      Hill0_191: 21300382
+      Hill0_17: 21300034
+      Hill0_83: 21300166
+      Hill0_28: 21300056
+      Hill0_159: 21300318
+      Hill0_0: 21300000
+      Hill0_179: 21300358
+      Hill0_73: 21300146
+      Hill0_163: 21300326
+      Hill0_77: 21300154
+      Hill0_61: 21300122
+      Hill0_129: 21300258
+      Hill0_104: 21300208
+      Hill0_82: 21300164
+      Hill0_47: 21300094
+      Hill0_43: 21300086
+      Hill0_94: 21300188
+      Hill0_46: 21300092
+      Hill0_92: 21300184
+      Hill0_65: 21300130
+      Hill0_59: 21300118
+      Hill0_56: 21300112
+      Hill0_72: 21300144
+      Hill0_15: 21300030
+      Hill0_18: 21300036
+      Hill0_66: 21300132
+      Hill0_41: 21300082
+      Hill0_93: 21300186
+      Hill0_57: 21300114
+      Hill0_3: 21300006
+      Hill0_60: 21300120
+      Hill0_40: 21300080
+      Hill0_130: 21300260
+      Hill0_139: 21300278
+      Hill0_128: 21300256
+      Hill0_29: 21300058
+      Hill0_71: 21300142
+      Hill0_52: 21300104
+      Hill0_58: 21300116
+      Hill0_70: 21300140
+      Hill0_78: 21300156
+      Hill0_131: 21300262
+      Hill0_68: 21300136
+      Hill0_105: 21300210
+      Hill0_118: 21300236
+      Hill0_44: 21300088
+      Hill0_26: 21300052
+      Hill0_42: 21300084
+      Hill0_2: 21300004
+      Hill0_45: 21300090
+      Hill0_53: 21300106
+      Hill0_103: 21300206
+      Hill0_55: 21300110
+      Hill0_80: 21300160
+      Hill0_16: 21300032
+      Hill0_69: 21300138
+      Hill0_99: 21300198
+      Hill0_116: 21300232
+      Hill0_138: 21300276
+      Hill0_117: 21300234
+      Hill0_39: 21300078
+      Hill0_37: 21300074
+      Hill0_54: 21300108
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

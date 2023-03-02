@@ -21,13 +21,13 @@ public class SettingUI : MonoBehaviour
     {
 //        LocalDataManager.Load();
 
-        if (LocalDataManager.musicsetting == 1) { musicButton.image.sprite = musicOnImage; }
-        else { musicButton.image.sprite = musicOffImage; }
-        if (LocalDataManager.soundsetting == 1) { soundButton.image.sprite = soundOnImage; }
-        else { soundButton.image.sprite = soundOffImage; }
+        //if (LocalDataManager.musicsetting == 1) { musicButton.image.sprite = musicOnImage; }
+        //else { musicButton.image.sprite = musicOffImage; }
+        //if (LocalDataManager.soundsetting == 1) { soundButton.image.sprite = soundOnImage; }
+        //else { soundButton.image.sprite = soundOffImage; }
 
-        musicSlider.value = LocalDataManager.musicsetting;
-        soundSlider.value = LocalDataManager.soundsetting;
+        //musicSlider.value = LocalDataManager.musicsetting;
+        //soundSlider.value = LocalDataManager.soundsetting;
 
     }
     private void OnEnable()
@@ -51,24 +51,24 @@ public class SettingUI : MonoBehaviour
         //UserData.SoundSetting = !UserData.SoundSetting;
         //musicButton.image.sprite = (LocalDataManager.soundsetting ==0) ? musicOnImage : musicOffImage;
 
-        if (LocalDataManager.musicsetting == 0)
-        {
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-            musicButton.image.sprite = musicOnImage;
-            LocalDataManager.musicsetting = 1;
-            musicSlider.value = LocalDataManager.musicsetting;
-            AudioManager.GetInstance.ToggleMusic();
-            LocalDataManager.Save();
-        }
-        else
-        {
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-            musicButton.image.sprite = musicOffImage;
-            LocalDataManager.musicsetting = 0;
-            musicSlider.value = LocalDataManager.musicsetting;
-            AudioManager.GetInstance.ToggleMusic();
-            LocalDataManager.Save();
-        }
+        //if (LocalDataManager.musicsetting == 0)
+        //{
+        //    AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        //    musicButton.image.sprite = musicOnImage;
+        //    LocalDataManager.musicsetting = 1;
+        //    musicSlider.value = LocalDataManager.musicsetting;
+        //    AudioManager.GetInstance.ToggleMusic();
+        //    LocalDataManager.Save();
+        //}
+        //else
+        //{
+        //    AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        //    musicButton.image.sprite = musicOffImage;
+        //    LocalDataManager.musicsetting = 0;
+        //    musicSlider.value = LocalDataManager.musicsetting;
+        //    AudioManager.GetInstance.ToggleMusic();
+        //    LocalDataManager.Save();
+        //}
 
     }
 
@@ -78,37 +78,37 @@ public class SettingUI : MonoBehaviour
 
         //soundButton.image.sprite = (isSoundOn) ? musicOnImage : musicOffImage;
 
-        if (LocalDataManager.soundsetting == 0)
-        {
-            soundButton.image.sprite = soundOnImage;
-            LocalDataManager.soundsetting = 1;
-            soundSlider.value = LocalDataManager.soundsetting;
-            AudioManager.GetInstance.ToggleSFX();
-            LocalDataManager.Save();
-        }
+        //if (LocalDataManager.soundsetting == 0)
+        //{
+        //    soundButton.image.sprite = soundOnImage;
+        //    LocalDataManager.soundsetting = 1;
+        //    soundSlider.value = LocalDataManager.soundsetting;
+        //    AudioManager.GetInstance.ToggleSFX();
+        //    LocalDataManager.Save();
+        //}
 
         
-        else
-        {
-            soundButton.image.sprite = soundOffImage;
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-            LocalDataManager.soundsetting = 0;
-            soundSlider.value = LocalDataManager.soundsetting;
-            AudioManager.GetInstance.ToggleSFX();
-            LocalDataManager.Save();
-        }
+        //else
+        //{
+        //    //soundButton.image.sprite = soundOffImage;
+        //    //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        //    //LocalDataManager.soundsetting = 0;
+        //    //soundSlider.value = LocalDataManager.soundsetting;
+        //    //AudioManager.GetInstance.ToggleSFX();
+        //    //LocalDataManager.Save();
+        //}
     }
 
     public void MusicVolume()
     {
         AudioManager.GetInstance.MusicVolume(musicSlider.value);
-        LocalDataManager.musicsetting = musicSlider.value;
+        //LocalDataManager.musicsetting = musicSlider.value;
     }
 
     public void SFXVolume()
     {
         AudioManager.GetInstance.SFXVolume(soundSlider.value);
-        LocalDataManager.soundsetting = soundSlider.value;
+//        LocalDataManager.soundsetting = soundSlider.value;
     }
 
     private void BackToMainMenu()
