@@ -9,13 +9,13 @@ namespace Game.Item
     {
         public float manaAmount = 1f;
 
-        //public override void PerformAction()
-        //{
-        //    if(PlayerScripts.GetInstance.currentMana < PlayerScripts.GetInstance.maxMana)
-        //    { 
-        //        PlayerScripts.GetInstance.AddMana(manaAmount);
-        //        Destroy(this.gameObject);
-	       // }
-        //}
+        public override void Interact(PlayerScripts player)
+        {
+            if(player.currentMana < player.maxMana && !player.isDead)
+            {
+                player.AddMana(manaAmount);
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

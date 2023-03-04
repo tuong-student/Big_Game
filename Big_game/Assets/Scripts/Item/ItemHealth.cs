@@ -10,13 +10,13 @@ namespace Game.Item
     {
         public float healthAmount = 1f;
 
-        public override void PerformAction() 
+        public override void Interact(PlayerScripts player) 
         {
-         //   if(PlayerScripts.GetInstance.currentHealth > 0 || PlayerScripts.GetInstance.currentHealth < PlayerScripts.GetInstance.maxHealth)
-         //   { 
-         //       PlayerScripts.GetInstance.AddHealth(healthAmount);
-         //       Destroy(this.gameObject);
-	        //}
+            if (player.currentHealth < player.maxHealth && !player.isDead)
+            {
+                player.AddHealth(healthAmount);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

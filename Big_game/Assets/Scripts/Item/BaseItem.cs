@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using NOOD;
+using Game.Player;
 
-public class BaseItem : MonoBehaviour
+public class BaseItem : MonoBehaviour, IInteractable
 {
     internal UnityAction action;
     public ItemType itemType;
@@ -14,11 +15,13 @@ public class BaseItem : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("DetectPlayer");
-            PerformAction();
+            Interact(collision.gameObject.GetComponent<PlayerScripts>());
 	    }
     }
 
-    public virtual void PerformAction() { }
+    public virtual void Interact(PlayerScripts player)
+    {
+    }
 }
 
 public enum ItemType
