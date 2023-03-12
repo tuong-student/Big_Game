@@ -7,11 +7,17 @@ using UnityEngine.SceneManagement;
 using Game.UI;
 using NOOD;
 using Game.Save;
+using Game.Player;
 
-namespace Game.Manager
+namespace Game.Common.Manager
 {
     public class GameManager : MonoBehaviorInstance<GameManager>
     {
+        #region Event
+        public EventHandler<int> OnGoldChange;
+
+        #endregion
+
         [SerializeField] Animator nextLevelAnim;
         public bool isEndGame = false;
         bool isAnimation = false;
@@ -26,14 +32,27 @@ namespace Game.Manager
             return Instantiate<GameManager>(Resources.Load<GameManager>("Prefabs/Manager/GameManger"), parent);
         }
 
-        public void StartGame()
+        public void CreatePlayerIfNeed()
         {
-            EventManager.GetInstance.OnStartGame.OnEventRaise?.Invoke();
+            LoadFromSave(); // Load again because after choosing player, the save file has been change
+            PlayerScripts currentPlayer = GameObject.FindObjectOfType<PlayerScripts>();
+            if(currentPlayer == null)
+            {
+                currentPlayer = PlayerScripts.Create();
+            }
+            currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
+            currentPlayer.ResetPosition(0); // number in ResetPostion(int number) is not be used
+            EventManager.GetInstance.OnContinuewGame.RaiseEvent();
         }
 
         private void Awake()
         {
             LoadFromSave();
+            if(gameSystemModel == null || gameSystemModel.playerNum == 0)
+            {
+                GameCanvas.GetInstance.ActiveChooseCharacterMenu();
+                // HideChooseCharacterMenu is subcribe to OnContinueGame event
+            }
         }
 
         private void Start()
@@ -46,16 +65,7 @@ namespace Game.Manager
 
         private void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.Tab))
-            //{
-            //    GameCanvas.GetInstance.CreateUpgradePanel();
-            //}
 
-            //if (isEndGame && !isAnimation)
-            //{
-            //    isAnimation = true;
-            //    NoodyCustomCode.StartDelayFunction(TransitionAnimation, 0.5f);
-            //}
         }
 
         private void Save()
@@ -85,25 +95,19 @@ namespace Game.Manager
 
         public bool MinusGold(int amount)
         {
-            //if(LocalDataManager.gold >= amount)
-            //{
-            //    LocalDataManager.gold -= amount;
-            //    LocalDataManager.SaveGold();
-            //    InGameUI.GetInstance.ResetGoldText();
-            //    return true;    
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-            return false;
+            gold -= amount;
+            if (gold < amount)
+            {
+                return false;
+            }
+            OnGoldChange?.Invoke(this, gold);
+            return true;
         }
 
         public void AddGold(int amount)
         {
-            //LocalDataManager.gold += amount;
-            //LocalDataManager.SaveGold();
-            //InGameUI.GetInstance.ResetGoldText();
+            gold += amount;
+            OnGoldChange?.Invoke(this, gold);
         }
 
         public void OpenSetting()

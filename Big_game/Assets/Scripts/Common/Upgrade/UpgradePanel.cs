@@ -20,17 +20,16 @@ namespace Game.UI
             Upgrade newUpgrade2 = new Upgrade();
             for (int i = 0; i < 3; i++)
             {
-                //newUpgrade2 = newUpgrade;
                 Upgrade newUpgrade = UpgradeMaster.RandomUpgrade();
                 UpgradeButton newBtn = Instantiate<UpgradeButton>(buttonRef, this.transform);
                 newBtn.gameObject.SetActive(true);
                 newBtn.SetBtn(newUpgrade, () =>
                 {
-                    //if (PlayerScripts.GetInstance.Buy(newUpgrade.goldNeed, newUpgrade))
-                    //{
-                    //    Dispose();
-                    //}
-                    //else Debug.Log("Not Enough Gold");
+                    if (PlayerScripts.GetInstance.Buy(newUpgrade.goldNeed, newUpgrade))
+                    {
+                        Dispose();
+                    }
+                    else Debug.Log("Not Enough Gold");
                 });
             }
 

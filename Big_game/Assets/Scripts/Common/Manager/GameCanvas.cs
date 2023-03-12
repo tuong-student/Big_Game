@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using NOOD;
+using Game.UI.Support;
 
 namespace Game.UI
 {
     public class GameCanvas : MonoBehaviorInstance<GameCanvas>
     {
-        public Text goldText;
         [SerializeField] GameObject mainMenu, inGameMenu, settingMenu, chooseCharacterMenu, winLoseMenu, debugMenu;
+        
 
         public static GameCanvas Create(Transform parent = null)
         {
             return Instantiate<GameCanvas>(Resources.Load<GameCanvas>("Prefabs/Canvas/GameCanvas"), parent);
         }
 
+        private void Awake()
+        {
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
+            {
+                ActiveInGameMenu();
+            };
+        }
+
         private void Start()
         {
-            EventManager.GetInstance.OnContinuewGame.RaiseEvent();
-            ActiveInGameMenu();
-
             EventManager.GetInstance.OnStartGame.OnEventRaise += ActiveInGameMenu;
             EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
             {
                 ActivePauseMenu();
             };
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
-            {
-                ActiveInGameMenu();
-            };
+            
             EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () =>
             {
                 inGameMenu.SetActive(false);
@@ -48,13 +51,6 @@ namespace Game.UI
         private void Update()
         {
 
-        }
-
-        public UpgradePanel CreateUpgradePanel()
-        {
-            EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
-            if (GameObject.FindObjectOfType<UpgradePanel>() != null) return null;
-            return Instantiate<UpgradePanel>(Resources.Load<UpgradePanel>("Prefabs/Game/Upgrade/UpgradePanel"), this.transform);
         }
 
         public void ActiveInGameMenu()
@@ -94,7 +90,6 @@ namespace Game.UI
         {
             debugMenu.gameObject.SetActive(false);
         }
-
 
         public void ActiveMenu(Menu menu)
         { 

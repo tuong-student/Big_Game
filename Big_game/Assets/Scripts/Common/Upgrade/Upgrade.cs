@@ -34,13 +34,12 @@ public static class UpgradeMaster
             case StatsType.attack:
             case StatsType.defense:
             case StatsType.maxHealth:
-            case StatsType.mana:
+            case StatsType.maxMana:
                 upgrade.upgradeAmount = r;
                 break;
             case StatsType.movement:
             case StatsType.fireRate:
-            case StatsType.reloadSpeed:
-            case StatsType.critical:
+            case StatsType.criticalRate:
                 upgrade.upgradeAmount = r * 0.1f;
                 break;
 	    }
@@ -70,13 +69,12 @@ public static class UpgradeMaster
             case StatsType.attack:
             case StatsType.defense:
             case StatsType.maxHealth:
-            case StatsType.mana:
+            case StatsType.maxMana:
                 upgrade.upgradeAmount = r;
                 break;
             case StatsType.movement:
             case StatsType.fireRate:
-	        case StatsType.reloadSpeed:
-            case StatsType.critical:
+            case StatsType.criticalRate:
                 upgrade.upgradeAmount = r * 0.1f;
                 break;
         }
@@ -91,10 +89,9 @@ public enum StatsType
 {
     attack,
     defense,
-    mana,
+    maxMana,
     maxHealth,
     movement,
     fireRate,
-    reloadSpeed,
-    critical
+    criticalRate
 }

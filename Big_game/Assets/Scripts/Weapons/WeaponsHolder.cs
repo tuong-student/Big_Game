@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.UI;
+using Game.UI.Support;
 using Game.Save;
 
-namespace Game.Player
+namespace Game.Player.Weapon
 {
     public class WeaponsHolder : MonoBehaviour
     {
-        [SerializeField] GunScripts currentGun;
-        [SerializeField] [Range(1, 9)] int gun1Index, gun2Index;
+        #region Event
+        public static EventHandler OnPickUpGun;
+        #endregion
+
+        [SerializeField] private PlayerScripts playerSript;
+        [SerializeField] private GunScripts currentGun;
+        [SerializeField] [Range(1, 9)] private int gun1Index, gun2Index;
 
         [HideInInspector] public bool isShootPress;
         private float nextShootTime;
@@ -18,7 +24,6 @@ namespace Game.Player
         private SaveModels.WeaponModel weaponModel;
 
         #region Bool
-        bool isCheat = false;
         #endregion
 
         private void Awake()
@@ -38,12 +43,12 @@ namespace Game.Player
         private void Start()
         {
             GameInput.OnPlayerChangeGun += ChangeGun;
+            UpdateGunSprite();
         }
 
         private void Update()
         {
-            //if (PlayerScripts.GetInstance == null) return;
-            //if (PlayerScripts.GetInstance.isDead) return;
+
         }
 
         private void LateUpdate()
@@ -60,6 +65,9 @@ namespace Game.Player
 
         private void Save()
         {
+            gun1Index = WeaponManager.GetInstance.GetIndexOf(gun1Data);
+            gun2Index = WeaponManager.GetInstance.GetIndexOf(gun2Data);
+
             weaponModel.gun1Index = this.gun1Index;
             weaponModel.gun2Index = this.gun2Index;
 
@@ -80,16 +88,10 @@ namespace Game.Player
             {
                 this.gun1Index = weaponModel.gun1Index;
                 this.gun2Index = weaponModel.gun2Index;
-
-                gun1Data = WeaponManager.GetInstance.GetGunData(gun1Index);
-                gun2Data = WeaponManager.GetInstance.GetGunData(gun2Index);
             }
-        }
 
-        GunData GetGunData(int index)
-        {
-                //WeaponManager.GetInstance.GetGunData(index);
-            return null;
+            gun1Data = WeaponManager.GetInstance.GetGunData(gun1Index);
+            gun2Data = WeaponManager.GetInstance.GetGunData(gun2Index);
         }
 
         public void ChangeGun(int index)
@@ -98,57 +100,52 @@ namespace Game.Player
             {
                 case 1:
                     currentGun.SetData(gun1Data);
-                    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
                     break;
                 case 2:
                     currentGun.SetData(gun2Data);
-                    InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
                     break;
             }
-            InGameUI.GetInstance.SetStats();
+            playerSript.ActiveOnPlayerStatsChange();
         }
 
-        public bool SetNewGun(GunData data)
+        private void UpdateGunSprite()
+        {
+            SupportUIComponentHolder.GetInstance.gun1Sprite = gun1Data.gunIcon;
+            SupportUIComponentHolder.GetInstance.gun2Sprite = gun2Data.gunIcon;
+        }
+
+        public void PickupNewGun(GroundGun groundGun)
         {
             if (IsEnoughGun())
             {
-                return false;
+                // Swap ground gun data with current gun data
+                GunData temp = GetCurrentGunData();
+                if(gun1Data == GetCurrentGunData())
+                {
+                    gun1Data = groundGun.GetData();
+                }
+                else
+                {
+                    gun2Data = groundGun.GetData();
+                }
+                currentGun.SetData(groundGun.GetData());
+                groundGun.SetData(temp);
             }
             else
             {
-                gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
-                gun2Data = data;
-                InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
-                return true;
+                // Pick up ground gun data and destroy its gameobject
+                gun2Index = WeaponManager.GetInstance.GetIndexOf(groundGun.GetData());
+                gun2Data = groundGun.GetData();
+                Destroy(groundGun.gameObject);
             }
+            UpdateGunSprite();
+            OnPickUpGun?.Invoke(this, EventArgs.Empty);
         }
 
         public bool IsEnoughGun()
         {
-            if (gun2Index != gun1Index) return true;
+            if (gun2Data != gun1Data) return true;
             else return false;
-        }
-
-        public void ChangeNewGun(GunData data)
-        {
-            //Set gunIndex
-            //if (this.currentGun.gunData.Equals(GetGunData(gun1Index)))
-            //{
-            //    gun1Index = WeaponManager.GetInstance.GetIndexOf(data);
-            //    gun1Data = data;
-            //    InGameUI.GetInstance.ChangeGunSprites(gun1Data.gunImage, gun2Data.gunImage);
-            //}
-            //else
-            //{
-            //    gun2Index = WeaponManager.GetInstance.GetIndexOf(data);
-            //    gun2Data = data;
-            //    InGameUI.GetInstance.ChangeGunSprites(gun2Data.gunImage, gun1Data.gunImage);
-            //}
-
-            ////Set new data
-            //this.currentGun.SetData(data);
-            //LocalDataManager.currentGun1Index = gun1Index;
-            //LocalDataManager.currentGun2Index = gun2Index;
         }
 
         public GunData GetCurrentGunData()
@@ -156,10 +153,22 @@ namespace Game.Player
             return this.currentGun.gunData;
         }
 
+        public void SetCurrentGunData(GunData gunData)
+        {
+            if (GetCurrentGunData() == gun1Data)
+            {
+                gun1Data = gunData;
+            }
+            else
+            {
+                gun2Data = gunData;
+            }
+        }
+
         void Fire()
         {
             if (!PlayerScripts.GetInstance.IsMoveable) return;
-            float fireRate = PlayerScripts.GetInstance.fireRate + GetCurrentGunData().fireRate;
+            float fireRate = PlayerScripts.GetInstance.fireRate.value + GetCurrentGunData().fireRate;
             if(Time.time >= nextShootTime)
             {
                 currentGun.Fire();

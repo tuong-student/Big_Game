@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Common.Manager;
 
-namespace Game.Player
+namespace Game.Player.Weapon
 {
     public class GunScripts : MonoBehaviour
     {
@@ -35,6 +36,11 @@ namespace Game.Player
 
         public void Fire()
         {
+            float bulletDamage = gunData.damage + PlayerScripts.GetInstance.damage.value;
+
+            bool isCritical = UnityEngine.Random.Range(0f, 1f) * 100 <= PlayerScripts.GetInstance.criticalRate.value;
+            if (isCritical) bulletDamage *= 2;
+
             if (gunData == WeaponManager.GetInstance.shotgunData)
             {
                 // Set pooling object is bullet
@@ -47,7 +53,8 @@ namespace Game.Player
                 foreach(var b in bullets)
                 {
                     b.transform.position = shootPoint.transform.position;
-                    SetBulletDamage(b, gunData.damage);
+                    SetBulletDamage(b, bulletDamage);
+                    SetBulletIsCritical(b, isCritical);
                 }
 
                 // Shoot 3 bullets to 3 different directions
@@ -65,7 +72,8 @@ namespace Game.Player
                 bullet.transform.SetPositionAndRotation(shootPoint.transform.position, shootPoint.transform.rotation);
 
                 bullet.GetComponent<Rigidbody2D>().AddForce(shootPoint.right * gunData.bulletForce * 10f);
-                SetBulletDamage(bullet, gunData.damage);
+                SetBulletDamage(bullet, bulletDamage);
+                SetBulletIsCritical(bullet, isCritical);
             }
 
             PlayGunSound();
@@ -98,9 +106,13 @@ namespace Game.Player
         void SetBulletDamage(GameObject bullet, float damage)
         {
             BulletScript bulletScript = bullet.GetComponent<BulletScript>();
-            // In the future damage will be randomed base on critical rate
-            
-            bulletScript.damage = damage + PlayerScripts.GetInstance.playerDamage;
+            bulletScript.damage = damage;
+        }
+
+        private void SetBulletIsCritical(GameObject bullet, bool isCritical)
+        {
+            BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+            bulletScript.isCritical = isCritical;
         }
     }
 }

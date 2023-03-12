@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,21 @@ namespace Game.Base
 {
     public class BaseCharacter : AbstractMonoBehaviour, IDamageable
     {
+        #region Event
+        public EventHandler <OnHealthChangeEventArgs> OnHealthChange;
+        public class OnHealthChangeEventArgs : EventArgs
+        {
+            public float health;
+            public float maxHealth;
+        }
+        public EventHandler <OnManaChangeEventArgs> OnManaChange;
+        public class OnManaChangeEventArgs : EventArgs
+        {
+            public float mana;
+            public float maxMana;
+        }
+        #endregion
+
         //[SerializeField] ParticleSystem bloodEff;
         public static BaseCharacter Instance { get; private set; }
 
@@ -17,8 +33,8 @@ namespace Game.Base
         public float currentHealth = 100f;
         public float maxMana = 50f;
         public float currentMana = 50f;
-        public float playerDamage = 1f;
-        public float criticalRate = 0f;
+        public float playerDamage = 0f;
+        public float criticalRate = 1f;
         public float fireRate = 0f;
         public float defence = 0f;
         public float stamina = 50f;
@@ -53,30 +69,26 @@ namespace Game.Base
             //if (bloodEff) bloodEff.Play();
         }
 
-        public void AddHealth(float amount)
+        public virtual void AddHealth(float amount)
         {
             this.currentHealth += amount;
             if (currentHealth > maxHealth) currentHealth = maxHealth;
-            InGameUI.GetInstance.SetHealth(currentHealth);
         }
 
-        public void MinusHealth(float amount)
+        public virtual void MinusHealth(float amount)
         {
             this.currentHealth -= (amount - defence);
-            InGameUI.GetInstance.SetHealth(currentHealth);
         }
 
-        public void AddMana(float amount)
+        public virtual void AddMana(float amount)
         {
             this.currentMana += amount;
             if (currentMana > maxMana) currentMana = maxMana;
-           // InGameUI.GetInstance.SetMana(currentMana);
         }
 
-        public void MinusMana(float amount)
+        public virtual void MinusMana(float amount)
         {
             this.currentMana -= amount;
-            //InGameUI.GetInstance.SetMana(currentMana);
         }
 
         public virtual void Die()

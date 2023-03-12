@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using NOOD.NoodCamera;
 using Game.Player;
+using Game.Common.Manager;
+using Game.UI;
 
 namespace Game.DebugMenu
 {
@@ -15,20 +17,21 @@ namespace Game.DebugMenu
         {
             if (isInfinityHealth)
             {
-                if (PlayerScripts.GetInstance.currentHealth < PlayerScripts.GetInstance.maxHealth)
+                if (PlayerScripts.GetInstance.health.value < PlayerScripts.GetInstance.health.max.value)
                 {
                     PlayerScripts.GetInstance.AddHealth(30);
                 }
             }
             if (isInfinityMana)
             {
-                if(PlayerScripts.GetInstance.currentMana < PlayerScripts.GetInstance.maxMana)
+                if(PlayerScripts.GetInstance.mana.value < PlayerScripts.GetInstance.mana.max.value)
                 {
                     PlayerScripts.GetInstance.AddMana(30);
                 }
             }
         }
 
+        //--- Perform Action Zone ---//
         public void PerformAction(DebugType type)
         {
             Invoke(type.ToString(), 0f);
@@ -64,6 +67,28 @@ namespace Game.DebugMenu
             PlayerScripts.GetInstance.AddMana(30f);
         }
 
+        public void AddGold30()
+        {
+            GameManager.GetInstance.AddGold(30);
+        }
+
+        public void OpenUpgradePanel()
+        {
+            InGameUI.GetInstance.CreateUpgradePanel();
+        }
+
+        public void Save()
+        {
+            PlayerScripts.GetInstance.Save();
+        }
+
+        public void Load()
+        {
+            PlayerScripts.GetInstance.LoadFromSave();
+        }
+
+        //-----------------//
+
         private float oldPlayerFireRate;
         private bool isMaxFireRate = false;
         public void MaxFireRate()
@@ -71,28 +96,28 @@ namespace Game.DebugMenu
             isMaxFireRate = !isMaxFireRate;
             if (isMaxFireRate)
             {
-                oldPlayerFireRate = PlayerScripts.GetInstance.fireRate;
-                PlayerScripts.GetInstance.fireRate = 10f;
+                oldPlayerFireRate = PlayerScripts.GetInstance.fireRate.value;
+                PlayerScripts.GetInstance.fireRate.value = 10f;
             }
             else
             {
-                PlayerScripts.GetInstance.fireRate = oldPlayerFireRate;
+                PlayerScripts.GetInstance.fireRate.value = oldPlayerFireRate;
             }
         }
 
-        private float oldPlayerDamage;
+        private float oldPlayerDamage = 0f;
         private bool isMaxDamage = false;
         public void MaxDamage()
         {
             isMaxDamage = !isMaxDamage;
             if(isMaxDamage)
             {
-                oldPlayerDamage = PlayerScripts.GetInstance.playerDamage;
-                PlayerScripts.GetInstance.playerDamage = 99f;
+                oldPlayerDamage = PlayerScripts.GetInstance.damage.value;
+                PlayerScripts.GetInstance.damage.value = 99f;
             }
             else
             {
-                PlayerScripts.GetInstance.playerDamage = oldPlayerDamage;
+                PlayerScripts.GetInstance.damage.value = oldPlayerDamage;
             }
         }
 
@@ -107,5 +132,6 @@ namespace Game.DebugMenu
             GroundGun groundGun = GroundGun.Create();
             groundGun.transform.position = PlayerScripts.GetInstance.transform.position + new Vector3(.1f, .1f, 0);
         }
+        //---------------//
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using NOOD;
 using UnityEngine.UI;
 
-namespace Game.Manager
+namespace Game.Common.Manager
 {
     public class ChooseCharacterManager : MonoBehaviorInstance<ChooseCharacterManager>
     {

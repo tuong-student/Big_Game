@@ -101,21 +101,19 @@ public class SettingUI : MonoBehaviour
 
     public void MusicVolume()
     {
-        AudioManager.GetInstance.MusicVolume(musicSlider.value);
-        //LocalDataManager.musicsetting = musicSlider.value;
+        //AudioManager.GetInstance.MusicVolume(musicSlider.value);
     }
 
     public void SFXVolume()
     {
-        AudioManager.GetInstance.SFXVolume(soundSlider.value);
-//        LocalDataManager.soundsetting = soundSlider.value;
+        //AudioManager.GetInstance.SFXVolume(soundSlider.value);
     }
 
     private void BackToMainMenu()
     {
         gameObject.SetActive(false);
         MainMenu.SetActive(true);
-        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
     }
 
 }

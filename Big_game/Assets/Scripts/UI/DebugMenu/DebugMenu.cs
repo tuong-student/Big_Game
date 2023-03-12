@@ -13,21 +13,25 @@ namespace Game.DebugMenu
         MinusMana30,
         AddHealth30,
         AddMana30,
+        AddGold30,
+        OpenUpgradePanel,
         MaxFireRate,
         MaxDamage,
         MoveToBossRoom,
-        SpawnGun
+        SpawnGun,
+        Save,
+        Load
     }
 
     public class DebugMenu : MonoBehaviour
     {
         [SerializeField] private DebugAction debugAction;
 
-        [SerializeField] private Button infinityHealth, infinityMana, minusHealth30, minusMana30, addHealth30, addMana30, maxFireRate, maxDamage, moveToBossRoom, spawnGun;
+        [SerializeField] private Button infinityHealth, infinityMana, minusHealth30, minusMana30, addHealth30, addMana30, addGold30, openUpgradPanel, maxFireRate, maxDamage, moveToBossRoom, spawnGun, save, load;
 
-        [SerializeField] private Image i_infinityHealth, i_infinityMana, i_minusHealth30, i_minusMana30, i_addHealth30, i_addMana30, i_maxFireRate, i_maxDamage, i_moveToBossRoom, i_spawnGun;
+        [SerializeField] private Image i_infinityHealth, i_infinityMana, i_maxFireRate, i_maxDamage;
 
-        private bool b_infinityHealth, b_infinityMana, b_minusHealth30, b_minusMana30, b_addHealth30, b_addMana30, b_maxFireRate, b_maxDamage;
+        private bool b_infinityHealth, b_infinityMana, b_maxFireRate, b_maxDamage;
 
         [SerializeField] private Color activeColor, inactiveColor;
 
@@ -39,10 +43,14 @@ namespace Game.DebugMenu
             minusMana30.onClick.AddListener(() => RequestAction(DebugType.MinusMana30));
             addHealth30.onClick.AddListener(() => RequestAction(DebugType.AddHealth30));
             addMana30.onClick.AddListener(() => RequestAction(DebugType.AddMana30));
+            addGold30.onClick.AddListener(() => RequestAction(DebugType.AddGold30));
+            openUpgradPanel.onClick.AddListener(() => RequestAction(DebugType.OpenUpgradePanel));
             maxFireRate.onClick.AddListener(() => RequestAction(DebugType.MaxFireRate));
             maxDamage.onClick.AddListener(() => RequestAction(DebugType.MaxDamage));
             moveToBossRoom.onClick.AddListener(() => RequestAction(DebugType.MoveToBossRoom));
             spawnGun.onClick.AddListener(() => RequestAction(DebugType.SpawnGun));
+            save.onClick.AddListener(() => RequestAction(DebugType.Save));
+            load.onClick.AddListener(() => RequestAction(DebugType.Load));
         }
 
         private void RequestAction(DebugType type)

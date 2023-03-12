@@ -3,41 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using NOOD;
 
-public class PoolingManager : MonoBehaviorInstance<PoolingManager>
+namespace Game.Common.Manager
 {
-    public static PoolingManager i;
-    [SerializeField] private ObjectPool bulletPooling, explodePooling;
-
-    public static PoolingManager Create(Transform parent = null)
+    public class PoolingManager : MonoBehaviorInstance<PoolingManager>
     {
-        return Instantiate(Resources.Load<PoolingManager>("Prefabs/Manager/PoolingManager"), parent);
-    }
+        public static PoolingManager i;
+        [SerializeField] private ObjectPool bulletPooling, explodePooling, damgageTextPooling;
 
-    public void SetBulletPoolingObject(GameObject bulletPrefab)
-    {
-        bulletPooling.objectToPool = bulletPrefab;
-    }
+        public static PoolingManager Create(Transform parent = null)
+        {
+            return Instantiate(Resources.Load<PoolingManager>("Prefabs/Manager/PoolingManager"), parent);
+        }
 
-    public void SetExpldePoolingObject(GameObject explodePrefab)
-    {
-        explodePooling.objectToPool = explodePrefab;
-    }
+        public void SetBulletPoolingObject(GameObject bulletPrefab)
+        {
+            bulletPooling.objectToPool = bulletPrefab;
+        }
 
-    public GameObject GetBullet()
-    {
-        return bulletPooling.GetPoolObject();
-    }
+        public void SetExpldePoolingObject(GameObject explodePrefab)
+        {
+            explodePooling.objectToPool = explodePrefab;
+        }
 
-    public GameObject GetExplode()
-    {
-        return explodePooling.GetPoolObject();
-    }
+        public void SetDamageTextPoolingObject(GameObject damageText)
+        {
+            damgageTextPooling.objectToPool = damageText;
+        }
 
-    private void OnDestroy()
-    {
-        if(bulletPooling)
-            Destroy(bulletPooling.gameObject);
-        if(explodePooling)
-            Destroy(explodePooling.gameObject);
+        public GameObject GetBullet()
+        {
+            return bulletPooling.GetPoolObject();
+        }
+
+        public GameObject GetExplode()
+        {
+            return explodePooling.GetPoolObject();
+        }
+
+        public GameObject GetDamageText()
+        {
+            return damgageTextPooling.GetPoolObject();
+        }
+
+        private void OnDestroy()
+        {
+            if(bulletPooling)
+                Destroy(bulletPooling.gameObject);
+            if(explodePooling)
+                Destroy(explodePooling.gameObject);
+        }
     }
 }

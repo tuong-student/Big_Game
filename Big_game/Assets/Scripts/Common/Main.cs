@@ -7,7 +7,7 @@ using NOOD.NoodCamera;
 using Game.Player;
 using Game.UI;
 
-namespace Game.Manager
+namespace Game.Common.Manager
 {
     public class Main : MonoBehaviorInstance<Main>
     {
@@ -18,7 +18,7 @@ namespace Game.Manager
         private void Start()
         {
             GameManager.Create();
-            //SelectCharacter();
+            SelectCharacter();
             PlayGame();
         }
 
@@ -47,11 +47,6 @@ namespace Game.Manager
             Clear();
             if (Camera.main != null) Destroy(Camera.main.gameObject);
             mainCamera = Instantiate(Resources.Load<CameraFollow>("Prefabs/Game/Player/Main Camera"), null);
-         //   LocalDataManager.LoadInit();
-         //   if(LocalDataManager.isSaveBefore == 1)
-         //   {
-         //       LocalDataManager.Load();
-	        //}
 
             DontDestroyOnLoad(EventManager.Create().gameObject);
             LevelManager.Create();
@@ -62,22 +57,6 @@ namespace Game.Manager
             PoolingManager.Create().AddTo(this);
             ExplodeManager.Create().AddTo(this);
             UIManager.Create().AddTo(this);
-
-            //EventManager.GetInstance.OnStartGame.OnEventRaise += GenerateNewLevel;
-            //EventManager.GetInstance.OnGenerateLevel.OnEventRaise += GenerateNewLevel;
-            //EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LocalDataManager.Save;
-            //EventManager.GetInstance.OnContinuewGame.OnEventRaise += SpawnPlayerIfNeed;
-            //EventManager.GetInstance.OnNewGame.OnEventRaise += NewGame;
-            //EventManager.GetInstance.OnTryAgain.OnEventRaise += () =>
-            //{
-            //    NoodyCustomCode.StartDelayFunction(SpawnPlayerIfNeed, 1.2f); 
-            //};
-
-            //LocalDataManager.soundsetting = 1;
-            //LocalDataManager.musicsetting = 1;
-            //yield return new WaitForSeconds(1.2f);
-            //if(LocalDataManager.playerNumber == 0)
-            //    GameCanvas.GetInstance.ActiveChooseCharacterMenu();
         }
 
         public void NewGame()
@@ -121,11 +100,11 @@ namespace Game.Manager
         private void SpawnPlayerIfNeed()
         { 
             if(respawnPos == null) respawnPos = GameObject.Find("RespawnPos").transform;
-         //   if (GameObject.FindObjectOfType<PlayerScripts>() == null && LocalDataManager.playerNumber != 0)
-         //   { 
-         //       player = (PlayerScripts)PlayerScripts.Create();
-         //       player.transform.position = respawnPos.transform.position;
-	        //}
+            if (GameObject.FindObjectOfType<PlayerScripts>() == null)
+            {
+                player = (PlayerScripts)PlayerScripts.Create();
+                player.transform.position = respawnPos.transform.position;
+            }
         }
     }
 }

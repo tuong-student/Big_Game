@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: shotgun
   m_EditorClassIdentifier: 
   gunImage: {fileID: 21300000, guid: ead36b265d3547d499e5c76684c60ec9, type: 3}
+  gunIcon: {fileID: 21300000, guid: 6714c693aec544944bccdfe4fb80ea7b, type: 3}
   bulletPrefab: {fileID: 8604692802058668377, guid: e38db39b452ef4c619201962d56764ba, type: 3}
   animationIndex: 0
   damage: 9

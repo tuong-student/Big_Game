@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: flameThrower
   m_EditorClassIdentifier: 
   gunImage: {fileID: 21300000, guid: 3a1495bff16b7114fb68aa9c4505e745, type: 3}
+  gunIcon: {fileID: 21300000, guid: 33431e1a5be4ea74799f2cd5b64b29bb, type: 3}
   bulletPrefab: {fileID: 3556666943420597385, guid: e6e6ad82309954d41a69979a2b110447, type: 3}
   animationIndex: 0
-  damage: 99
+  damage: 10
   fireRate: 4
   bulletForce: 10
   range: 0.8

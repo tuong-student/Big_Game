@@ -6,7 +6,7 @@ using Game.UI;
 using NOOD;
 using Game.System;
 
-namespace Game.Manager
+namespace Game.Common.Manager
 {
     public class LevelManager : MonoBehaviorInstance<LevelManager>
     {
@@ -37,7 +37,7 @@ namespace Game.Manager
         public void NextLevel()
         {
             StartCoroutine(LoadLevel(GameManager.GetInstance.CurrentLevel + 1));
-            NoodyCustomCode.StartDelayFunction(() => { GameCanvas.GetInstance.CreateUpgradePanel(); }, 1.8f);
+            NoodyCustomCode.StartDelayFunction(() => { InGameUI.GetInstance.CreateUpgradePanel(); }, 1.8f);
         }
 
         public void ActiveMainMenuLevel()
@@ -61,8 +61,8 @@ namespace Game.Manager
 
         public IEnumerator LoadLevel(int level)
         {
-            if (!isFirstTime)
-                GameManager.GetInstance.TransitionAnimation();
+            GameManager.GetInstance.TransitionAnimation();
+            
             isFirstTime = false;
             yield return new WaitForSeconds(1f);
             if (level <= 0) level = 1;
@@ -74,7 +74,7 @@ namespace Game.Manager
             }
 
             activeLevels.Add(Instantiate(levels[level - 1]));
-            levelPortal = FindObjectOfType<Portal>();
+            levelPortal = FindObjectOfType<Portal>(false);
             EventManager.GetInstance.OnGenerateLevelComplete.RaiseEvent(level);
         }
 

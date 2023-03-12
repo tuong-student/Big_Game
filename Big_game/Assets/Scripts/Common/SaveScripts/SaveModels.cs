@@ -11,6 +11,7 @@ namespace Game.Save
             PlayerSave,
             GameSystemSave,
             WeaponSave,
+            UserSettingSave,
         }
 
         public class PlayerModel
@@ -18,26 +19,30 @@ namespace Game.Save
             public float maxHealth;
             public float maxMana;
             public float criticalRate;
+            public float damage;
             public float fireRate;
             public float defence;
-            public float walkSpeed;
-            public float runSpeed;
+            public float speed;
             public float dashForce;
             public float dashTime;
-
-            public int playerNum;
         }
 
         public class GameSystemModel
         {
             public int gold;
             public int level;
+            public int playerNum;
         }
 
         public class WeaponModel
         {
             public int gun1Index;
             public int gun2Index;
+        }
+
+        public class UserSetting
+        {
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Game.UI
         public void Interact(PlayerScripts player)
         {
             Debug.Log("Store Interact");
-            GameCanvas.GetInstance.CreateUpgradePanel();
+            InGameUI.GetInstance.CreateUpgradePanel();
         }
     }
 }

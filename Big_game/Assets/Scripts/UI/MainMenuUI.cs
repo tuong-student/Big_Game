@@ -35,30 +35,30 @@ namespace Game.UI
         }
         private void ContinueGame()
         {
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+            //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
         }
         private void NewGame()
         {
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+            //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             newGame.NewGame();
         }
         private void ToSetting()
         {
+            //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             GameCanvas.GetInstance.ActiveMenu(Menu.Setting);
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         }
 
         private void ToCreadit()
         {
             gameObject.SetActive(false);
             creditsPanel.SetActive(true);
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+            //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
         }
         private void Exit()
         {
 
-            AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+            //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
             Application.Quit();
 
         }

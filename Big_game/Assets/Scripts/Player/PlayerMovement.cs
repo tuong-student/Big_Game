@@ -27,7 +27,6 @@ namespace Game.Player
             {
                 playerScripts = temp;
             }
-            playerScripts.currentSpeed = playerScripts.runSpeed;
             myBody = GetComponent<Rigidbody2D>();
         }
 
@@ -39,24 +38,13 @@ namespace Game.Player
 
         private void Update()
         {
-         //   if (!playerScripts.IsMoveable)
-         //   {
-         //       this.myBody.velocity = Vector3.zero;
-         //       isStop = true;
-         //       return; 
-	        //}
-         //   if (playerScripts.isDead) return;
-
-         //   float moveX = Input.GetAxisRaw("Horizontal");
-         //   float moveY = Input.GetAxisRaw("Vertical");
-         //   movement = new Vector3(moveX, moveY);
-
-
-         //   if (Input.GetKeyDown(KeyCode.LeftShift)) isDashPress = true;
-
-         //   Move(movement);
-
-            
+            if (!playerScripts.IsMoveable)
+            {
+                this.myBody.velocity = Vector3.zero;
+                isStop = true;
+                return;
+            }
+            if (playerScripts.isDead) return;
         }
 
         private void OnDisable()
@@ -74,7 +62,7 @@ namespace Game.Player
         {
             if (!playerScripts.IsMoveable) return;
             this.movement = movement;
-            this.myBody.velocity = movement * playerScripts.currentSpeed;
+            this.myBody.velocity = movement * playerScripts.speed.value;
             if (movement == Vector2.zero)
             {
                 if (Mathf.Abs(myBody.velocity.x) > 0.02f) myBody.drag = 2;
@@ -95,9 +83,8 @@ namespace Game.Player
             if (isDashing == false)
             {
                 float manaAmount = 10f;
-                //playerScripts.dashEff.Play();
                 if (movement == Vector3.zero) movement = new Vector3(1, 0);
-                if(playerScripts.currentMana >= manaAmount) 
+                if(playerScripts.mana.value >= manaAmount) 
 	            { 
                     myBody.AddForce(movement * playerScripts.dashForce, ForceMode2D.Impulse);
                     myBody.drag = 2;
@@ -111,7 +98,6 @@ namespace Game.Player
                     yield return new WaitForSeconds(playerScripts.dashTime);
                     //return to normal speed
                     myBody.drag = 0;
-                    playerScripts.currentSpeed = playerScripts.runSpeed;
                     isDashPress = false;
                     isDashing = false;
                 }

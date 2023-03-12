@@ -1,13 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Save;
+using Game.Player;
+using Game.Common.Manager;
 
-public class CharacterImage : MonoBehaviour 
+namespace Game.UI.ChooseCharacter
 {
-    public int characterNumber;
-
-    public void ChangeCharacterNumber()
+    public class CharacterImage : MonoBehaviour 
     {
-        //LocalDataManager.playerNumber = characterNumber;
+        public int characterNumber;
+
+        public void ChangeCharacterNumber()
+        {
+            SaveModels.GameSystemModel gameSystemModel = LoadJson<SaveModels.GameSystemModel>.LoadFromJson(SaveModels.SaveFile.GameSystemSave.ToString());
+            if(gameSystemModel == null)
+            {
+                gameSystemModel.gold = 0;
+                gameSystemModel.level = 1;
+                gameSystemModel.playerNum = characterNumber;
+            }
+            else
+            {
+                gameSystemModel.playerNum = characterNumber;
+            }
+            SaveJson.SaveToJson(gameSystemModel, SaveModels.SaveFile.GameSystemSave.ToString());
+
+            GameManager.GetInstance.CreatePlayerIfNeed();
+        }
     }
 }

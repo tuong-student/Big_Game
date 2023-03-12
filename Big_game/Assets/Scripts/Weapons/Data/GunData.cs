@@ -6,6 +6,7 @@ using UnityEngine;
 public class GunData : ScriptableObject
 {
     public Sprite gunImage;
+    public Sprite gunIcon;
     public GameObject bulletPrefab;
     public int animationIndex;
     public float damage;

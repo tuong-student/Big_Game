@@ -11,7 +11,7 @@ namespace Game.Item
 
         public override void Interact(PlayerScripts player)
         {
-            if(player.currentMana < player.maxMana && !player.isDead)
+            if(player.mana.value < player.mana.max.value)
             {
                 player.AddMana(manaAmount);
                 Destroy(this.gameObject);

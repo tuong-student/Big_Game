@@ -12,7 +12,7 @@ namespace Game.Item
 
         public override void Interact(PlayerScripts player) 
         {
-            if (player.currentHealth < player.maxHealth && !player.isDead)
+            if (player.health.value < player.health.max.value)
             {
                 player.AddHealth(healthAmount);
                 Destroy(this.gameObject);

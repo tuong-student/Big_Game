@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Manager;
+using Game.Common.Manager;
 using Game.Player;
 using Game.System.Enemy;
 using Game.Enemy;

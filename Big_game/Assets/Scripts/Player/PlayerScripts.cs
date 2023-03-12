@@ -1,15 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Game.Base;
-using Game.UI;
-using Game.Manager;
+using Game.UI.Support;
+using Game.Common.Manager;
 using Game.Save;
+using Game.Player.Weapon;
+using Game.Common.RPGStats;
+using NOOD;
+using SeawispHunter.RolePlay.Attributes;
 
 namespace Game.Player
 {
-    public class PlayerScripts : BaseCharacter
+    public class PlayerScripts : MonoBehaviorInstance<PlayerScripts>
     {
+        #region Event
+        public EventHandler<OnPlayerStatsChangeEventArg> OnPlayerStatsChange;
+        public EventHandler<OnHealthChangeEventArgs> OnHealthChange;
+        public class OnHealthChangeEventArgs : EventArgs
+        {
+            public float health;
+            public float maxHealth;
+        }
+        public EventHandler<OnManaChangeEventArgs> OnManaChange;
+        public class OnManaChangeEventArgs : EventArgs
+        {
+            public float mana;
+            public float maxMana;
+        }
+        public class OnPlayerStatsChangeEventArg : EventArgs
+        {
+            public float maxHealth;
+            public float bonusHealth;
+            public float maxMana;
+            public float bonusMana;
+            public float damage;
+            public float bonusDamage;
+            public float criticalRate;
+            public float bonusCriticalRate;
+            public float fireRate;
+            public float bonusFireRate;
+            public float currentSpeed;
+            public float bonusSpeed;
+            public float defence;
+            public float bonusDefence;
+        }
+        #endregion
+
         #region Component
         public Sprite[] playerSprites;
         public PlayerMovement playerMovement;
@@ -18,8 +57,32 @@ namespace Game.Player
         public ParticleSystem dashEff;
 
         [SerializeField] private WeaponsHolder weaponsHolder;
-        [SerializeField] private GameObject player1View, player2View, player3View;
+        [SerializeField] private List<GameObject> playerViewList;
         private IInteractable groundObject = null;
+        #endregion
+
+        #region Stats
+        public float baseHealth = 100f;
+        public float baseMana = 50f;
+        public float baseCriticalRate = 1f;
+        public float baseFireRate = 0f;
+        public float baseDamage = 1f;
+        public float baseSpeed = 0.8f;
+        public float baseDefence = 0f;
+
+        public RPGStats<float> health = new RPGStats<float>();
+        public RPGStats<float> mana = new RPGStats<float>();
+        public RPGStats<float> damage = new RPGStats<float>();
+        public RPGStats<float> criticalRate = new RPGStats<float>();
+        public RPGStats<float> fireRate = new RPGStats<float>();
+        public RPGStats<float> speed = new RPGStats<float>();
+        public RPGStats<float> defence = new RPGStats<float>();
+
+        public float dashForce = 30f;
+        public float dashTime = 0.5f;
+
+        public RPGStats<float> temp = new RPGStats<float>();
+
         #endregion
 
         public int playerNum = 1; // Index of the player sprite (0 -> 2)
@@ -28,6 +91,7 @@ namespace Game.Player
         #region Bool
         private bool isMoveable = true;
         public bool IsMoveable { get { return isMoveable; } }
+        public bool isDead { get; private set; }
         #endregion
 
         public static PlayerScripts Create(Transform parent = null)
@@ -37,59 +101,102 @@ namespace Game.Player
             return player;
         }
 
-        public static PlayerScripts GetInstance { get { return (PlayerScripts)Instance; } private set { } }
-
         private void Awake()
         {
-            LoadFromSave();
+            this.health.initial.value = baseHealth;
+            this.mana.initial.value = baseMana;
+            this.damage.initial.value = baseDamage;
+            this.criticalRate.initial.value = baseCriticalRate;
+            this.fireRate.initial.value = baseFireRate;
+            this.speed.initial.value = baseSpeed;
+            this.defence.initial.value = baseDefence;
         }
 
         private void Start()
         {
+            LoadFromSave();
+            
+            ActiveOnPlayerStatsChange();
+            UpdatePlayerSprite();
+
             GameInput.OnPlayerInteract += InteractWithObject;
 
-            EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
-            {
-                isMoveable = false;
-            };
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
-            {
-                isMoveable = true;
-            };
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
-            {
-                ResetPosition();
-            };
+            EventManager.GetInstance.OnPauseGame.OnEventRaise += CanNotMove;
+
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += CanMove;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += UpdatePlayerSprite;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnHealthChange;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnManaChange;
+
+            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += ResetPosition;
         }
 
         private void Update()
         {
-            if (currentHealth <= 0 && isDead == false) Die();
             if (!isMoveable) return;
         }
 
         private void OnDisable()
         {
             GameInput.OnPlayerInteract -= InteractWithObject;
+
+            EventManager.GetInstance.OnPauseGame.OnEventRaise -= CanNotMove;
+
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= CanMove;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= UpdatePlayerSprite;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= ActiveOnHealthChange;
+            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= ActiveOnManaChange;
+
+            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise -= ResetPosition;
         }
 
-        void Save()
+        public void ChangePlayerVisualWithPlayerNum(int playerNum)
         {
-            playerModel.maxHealth = this.maxHealth;
-            playerModel.maxMana = this.maxMana;
-            playerModel.criticalRate = this.criticalRate;
+            this.playerNum = playerNum;
+            for(int i = 0; i < playerViewList.Count; i++)
+            {
+                if(i == playerNum - 1)
+                {
+                    playerViewList[i].SetActive(true);
+                }
+                else
+                {
+                    playerViewList[i].SetActive(false);
+                }
+            }
+            playerAnimation.GetAnimAndSrAgain();
+        }
+
+        private void CanMove()
+        {
+            isMoveable = true;
+        }
+
+        private void CanNotMove()
+        {
+            isMoveable = false;
+        }
+
+        private void UpdatePlayerSprite()
+        {
+            SupportUIComponentHolder.GetInstance.playerSprite = playerSprites[playerNum - 1];
+        }
+
+        public void Save()
+        {
+            playerModel.maxHealth = this.health.max.value;
+            playerModel.maxMana = this.mana.max.value;
+            playerModel.criticalRate = this.criticalRate.value;
             playerModel.dashForce = this.dashForce;
             playerModel.dashTime = this.dashTime;
-            playerModel.defence = this.defence;
-            playerModel.fireRate = this.fireRate;
-            playerModel.playerNum = this.playerNum;
-            playerModel.runSpeed = this.runSpeed;
-            playerModel.walkSpeed = this.walkSpeed;
+            playerModel.defence = this.defence.value;
+            playerModel.fireRate = this.fireRate.value;
+            playerModel.speed = this.speed.value;
 
             SaveJson.SaveToJson(playerModel, SaveModels.SaveFile.PlayerSave.ToString());
         }
 
-        void LoadFromSave()
+        public void LoadFromSave()
         {
             playerModel = LoadJson<SaveModels.PlayerModel>.LoadFromJson(SaveModels.SaveFile.PlayerSave.ToString());
             if (playerModel == null)
@@ -97,31 +204,100 @@ namespace Game.Player
                 // No save file
                 // Create new model, set new data then save
                 playerModel = new SaveModels.PlayerModel();
-                playerModel.maxHealth = this.maxHealth;
-                playerModel.maxMana = this.maxMana;
-                playerModel.criticalRate = this.criticalRate;
+                playerModel.maxHealth = this.health.initial.value;
+                playerModel.maxMana = this.mana.initial.value;
+                playerModel.criticalRate = this.criticalRate.initial.value;
+                playerModel.damage = this.damage.initial.value;
                 playerModel.dashForce = this.dashForce;
                 playerModel.dashTime = this.dashTime;
-                playerModel.defence = this.defence;
-                playerModel.fireRate = this.fireRate;
-                playerModel.playerNum = this.playerNum;
-                playerModel.runSpeed = this.runSpeed;
-                playerModel.walkSpeed = this.walkSpeed;
-                Save();
+                playerModel.defence = this.defence.initial.value;
+                playerModel.fireRate = this.fireRate.initial.value;
+                playerModel.speed = this.speed.initial.value;
             }
-            else
+
+
+            this.health.max.Set(playerModel.maxHealth);
+            this.health.value = this.health.max.value;
+            this.mana.max.Set(playerModel.maxMana);
+            this.mana.value = this.mana.max.value;
+            this.criticalRate.max.Set(playerModel.criticalRate);
+            this.criticalRate.value = playerModel.criticalRate;
+            this.damage.max.Set(playerModel.damage);
+            this.damage.value = playerModel.damage;
+            this.dashForce = playerModel.dashForce;
+            this.dashTime = playerModel.dashTime;
+            this.defence.max.Set(playerModel.defence);
+            this.defence.value = playerModel.defence;
+            this.fireRate.max.Set(playerModel.fireRate);
+            this.fireRate.value = playerModel.fireRate;
+            this.speed.max.Set(playerModel.speed);
+            this.speed.value = playerModel.speed;
+
+            ActiveOnHealthChange();
+            ActiveOnManaChange();
+        }
+
+        public void AddHealth(float amount)
+        {
+            this.health.value += amount;
+            ActiveOnHealthChange();
+        }
+
+        public void MinusHealth(float amount)
+        {
+            this.health.value -= amount;
+            ActiveOnHealthChange();
+        }
+
+        public void AddMana(float amount)
+        {
+            this.mana.value += amount;
+            ActiveOnManaChange();
+        }
+
+        public void MinusMana(float amount)
+        {
+            this.mana.value -= amount;
+            ActiveOnManaChange();
+        }
+
+        private void ActiveOnHealthChange()
+        {
+            OnHealthChange?.Invoke(this, new OnHealthChangeEventArgs
             {
-                this.maxHealth = playerModel.maxHealth;
-                this.maxMana = playerModel.maxMana;
-                this.criticalRate = playerModel.criticalRate;
-                this.dashForce = playerModel.dashForce;
-                this.dashTime = playerModel.dashTime;
-                this.defence = playerModel.defence;
-                this.fireRate = playerModel.fireRate;
-                this.playerNum = playerModel.playerNum;
-                this.runSpeed = playerModel.runSpeed;
-                this.walkSpeed = playerModel.walkSpeed;
-            }
+                health = this.health.value,
+                maxHealth = this.health.max.value
+            });
+        }
+
+        public void ActiveOnManaChange()
+        {
+            OnManaChange?.Invoke(this, new OnManaChangeEventArgs
+            {
+                mana = this.mana.value,
+                maxMana = this.mana.max.value
+            });
+        }
+
+        public void ActiveOnPlayerStatsChange()
+        {
+            OnPlayerStatsChange?.Invoke(this, new OnPlayerStatsChangeEventArg
+            {
+                maxHealth = this.health.max.value,
+                bonusHealth = this.health.bonus,
+                maxMana = this.mana.max.value,
+                bonusMana = this.mana.bonus,
+                damage = this.GetCurrentGunData().damage + this.damage.value,
+                bonusDamage = this.damage.value,
+                criticalRate = this.criticalRate.value,
+                bonusCriticalRate = this.criticalRate.bonus,
+                fireRate = this.GetCurrentGunData().fireRate + this.fireRate.value,
+                bonusFireRate = this.fireRate.value,
+                currentSpeed = this.speed.value,
+                bonusSpeed = this.speed.bonus,
+                defence = this.defence.value,
+                bonusDefence = this.defence.bonus
+            });
         }
 
         public GunData GetCurrentGunData()
@@ -157,7 +333,6 @@ namespace Game.Player
             if (GameManager.GetInstance.MinusGold(amountOfGold))
             {
                 ApplyUpgrade(upgrade);
-                InGameUI.GetInstance.SetStats();
                 return true;
             }
             return false;
@@ -165,49 +340,37 @@ namespace Game.Player
 
         private void ApplyUpgrade(Upgrade upgrade)
         {
-            //Debug.Log(upgrade.upgradeStats);
-            //switch (upgrade.upgradeStats)
-            //{
-            //    case StatsType.attack:
-            //        this.bonusDamage += upgrade.upgradeAmount;
-            //        break;
-            //    case StatsType.defense:
-            //        this.defence += upgrade.upgradeAmount;
-            //        break;
-            //    case StatsType.mana:
-            //        this.maxMana += upgrade.upgradeAmount;
-            //        InGameUI.GetInstance.SetMaxMana(maxMana);
-            //        break;
-            //    case StatsType.maxHealth:
-            //        this.maxHealth += upgrade.upgradeAmount;
-            //        InGameUI.GetInstance.SetMaxHealth(maxHealth);
-            //        break;
-            //    case StatsType.movement:
-            //        this.runSpeed += upgrade.upgradeAmount;
-            //        this.walkSpeed += upgrade.upgradeAmount;
-            //        this.currentSpeed = this.runSpeed;
-            //        break;
-            //    case StatsType.critical:
-            //        this.criticalRate += upgrade.upgradeAmount;
-            //        break;
-            //    case StatsType.fireRate:
-            //        this.fireRate += upgrade.upgradeAmount;
-            //        break;
-            //    case StatsType.reloadSpeed:
-            //        this.reloadSpeed += upgrade.upgradeAmount;
-            //        break;
-            //}
-            //LocalDataManager.bonusDamage = bonusDamage;
-            //LocalDataManager.defence = defence;
-            //LocalDataManager.maxMana = maxMana;
-            //LocalDataManager.maxHealth = currentHealth;
-            //LocalDataManager.runSpeed = runSpeed;
-            //LocalDataManager.walkSpeed = walkSpeed;
-            //LocalDataManager.criticalRate = criticalRate;
-            //LocalDataManager.bonusFireRate = fireRate;
-            //LocalDataManager.bonusReloadSpeed = reloadSpeed;
-
-            //InGameUI.GetInstance.SetStats();
+            Debug.Log(upgrade.upgradeStats);
+            switch (upgrade.upgradeStats)
+            {
+                case StatsType.attack:
+                    this.damage.max.Sum(upgrade.upgradeAmount);
+                    this.damage.value += upgrade.upgradeAmount;
+                    break;
+                case StatsType.defense:
+                    this.defence.max.Sum(upgrade.upgradeAmount);
+                    this.defence.value += upgrade.upgradeAmount;
+                    break;
+                case StatsType.maxMana:
+                    this.mana.max.Sum(upgrade.upgradeAmount);
+                    break;
+                case StatsType.maxHealth:
+                    this.health.max.Sum(upgrade.upgradeAmount);
+                    break;
+                case StatsType.movement:
+                    this.speed.max.Sum(upgrade.upgradeAmount);
+                    this.speed.value += upgrade.upgradeAmount;
+                    break;
+                case StatsType.criticalRate:
+                    this.criticalRate.max.Sum(upgrade.upgradeAmount);
+                    this.criticalRate.value += upgrade.upgradeAmount;
+                    break;
+                case StatsType.fireRate:
+                    this.fireRate.max.Sum(upgrade.upgradeAmount);
+                    this.fireRate.value += upgrade.upgradeAmount;
+                    break;
+            }
+            ActiveOnPlayerStatsChange();
         }
 
         public void SetGroundObject(IInteractable interactable)
@@ -232,36 +395,33 @@ namespace Game.Player
         {
             if (groundGun)
             {
-                if (weaponsHolder.SetNewGun(groundGun.GetData()))
-                {
-                    // after set gun complete destroy groundGun object
-                    groundGun.DestroySelf();
-                }
-                else
-                {
-                    // Pick up new gun and drop current gun
-                    GunData temp = weaponsHolder.GetCurrentGunData();
-                    weaponsHolder.ChangeNewGun(groundGun.GetData());
-                    groundGun.SetData(temp);
-                }
-                //AudioManager.GetInstance.PlaySFX(sound.pickUp);
+                weaponsHolder.PickupNewGun(groundGun);
             }
         }
 
-        public override void Die()
+        public void Die()
         {
             Debug.Log("Player Die");
             playerAnimation.DeadAnimation();
             isDead = true;
             //GameManager.GetInstance.isEndGame = true;
-            base.Die();
         }
 
-        private void ResetPosition()
+        public void ResetPosition(int number)
         {
             Vector3 startPos = GameObject.Find("RespawnPos").transform.position;
 
             this.transform.position = startPos;
+        }
+
+        public void Damage(float value)
+        {
+            this.health.value -= value;
+            ActiveOnHealthChange();
+            if(this.health.value <= 0)
+            {
+                Die();
+            }
         }
     }
 }

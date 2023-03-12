@@ -40,10 +40,9 @@ namespace Game.Player
 
         private void Start()
         {
-            // true, false is that do you want to get component if that gameobject is deactive.
+            // true, false is that do you want to get component if that gameobject is not active.
             anim = GetComponentInChildren<Animator>(false);
             sr = GetComponentInChildren<SpriteRenderer>(false);
-
         }
 
         private void Update()
@@ -59,6 +58,12 @@ namespace Game.Player
         private void OnDisable()
         {
             GameInput.OnMouseMove -= AnimationBaseOnMouse;
+        }
+
+        public void GetAnimAndSrAgain()
+        {
+            anim = GetComponentInChildren<Animator>(false);
+            sr = GetComponentInChildren<SpriteRenderer>(false);
         }
 
         public void AnimationBaseOnMouse(Vector3 mousePos)
