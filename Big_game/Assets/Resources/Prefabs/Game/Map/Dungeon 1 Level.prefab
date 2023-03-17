@@ -3035,9 +3035,9 @@ Tilemap:
   - m_RefCount: 253
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
-    m_Data: {r: 0.70750874, g: 0.36005318, b: 0.39059457, a: 1}
+    m_Data: {r: 0.7246349, g: 0.35521162, b: 0.4065505, a: 1}
   - m_RefCount: 9
-    m_Data: {r: 0.73448896, g: 0.41049114, b: 0.4379814, a: 1}
+    m_Data: {r: 0.7444717, g: 0.3147327, b: 0.34568518, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -17170,14 +17170,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5233011736229804880}
     m_Modifications:
-    - target: {fileID: 548228925119338707, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.009
-      objectReference: {fileID: 0}
-    - target: {fileID: 548228925119338707, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.322
-      objectReference: {fileID: 0}
     - target: {fileID: 548228926566677486, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -17226,65 +17218,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss holder
       objectReference: {fileID: 0}
-    - target: {fileID: 548228926807327667, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: bulletSpeed
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 548228926807327667, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: numberOfBullets
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 548228926807327668, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: chasingSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 548228926807327668, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      propertyPath: shootTimeDelay
-      value: 1.6
-      objectReference: {fileID: 0}
+    - target: {fileID: 2548387053495673059, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 4662914333368988971}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 548228926566677487, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2548387053495673059}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
 --- !u!4 &467881670410853262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 548228926566677486, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
   m_PrefabInstance: {fileID: 136670032697024608}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &467881670410853263 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 548228926566677487, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-  m_PrefabInstance: {fileID: 136670032697024608}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2548387053495673059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467881670410853263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9ae822ea17ca41a6987c3b675d0808a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boss: {fileID: 6677863113207595061}
-  door: {fileID: 4662914333368988971}
---- !u!114 &6677863113207595061 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6721910195103244373, guid: 8bf7bebdfcdaab84a964fe26ce27445d, type: 3}
-  m_PrefabInstance: {fileID: 136670032697024608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467881670410853263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1679a6f99cd738747bce984f04bccdec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &479338618914218396
 PrefabInstance:
   m_ObjectHideFlags: 0

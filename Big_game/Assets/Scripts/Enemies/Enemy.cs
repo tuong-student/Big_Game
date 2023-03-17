@@ -130,7 +130,7 @@ namespace Game.Enemy
             {
                 damageCooldownTimer = Time.time + damageCooldownThershold;
                 dealthDamageToPlayer = true;
-                collision.gameObject.GetComponent<BaseCharacter>().Damage(damageAmount);
+                collision.gameObject.GetComponent<PlayerScripts>().Damage(damageAmount);
             }
         }
     }

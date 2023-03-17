@@ -12,32 +12,29 @@ namespace Game.System.Enemy
 
     public class EnenmyTargetController : MonoBehaviour
     {
-        [SerializeField]
-        private EnemyTargetType enemyTargetType;
-        [SerializeField]
-        private EnemyBatchHandler enemyBatch;
-        [SerializeField]
-        private BossMovement boss;
-        [SerializeField]
-        private bool bossZone;
+        private readonly string PLAYER_TAG = "Player";
+        [SerializeField] private BossMovement boss;
 
-        private void OnTriggerEnter2D(Collider2D other) {
-            if(bossZone){
-                if(other.CompareTag("Player"))
-                {
-                    if(enemyTargetType == EnemyTargetType.EnableEnemyTarget && boss)
-                        boss.PlayerDetected(true);
-                    else if(enemyTargetType == EnemyTargetType.DisableEnemyTarget && boss) 
-                        boss.PlayerDetected(false);
-                }
-            }else{
-                if(other.CompareTag("Player"))
-                {
-                    if(enemyTargetType == EnemyTargetType.EnableEnemyTarget)
-                        enemyBatch.EnablePlayerTarget();
-                    else
-                        enemyBatch.DisabledPlayerTarget();
-                }
+        private void Start()
+        {
+            boss.PlayerDetected(false);
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if(other.CompareTag(PLAYER_TAG))
+            {
+                if(boss)
+                    boss.PlayerDetected(true);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag(PLAYER_TAG))
+            {
+                if (boss)
+                    boss.PlayerDetected(false);
             }
         }
     }

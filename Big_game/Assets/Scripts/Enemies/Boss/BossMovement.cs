@@ -79,22 +79,21 @@ namespace Game.Enemy
 
         private void HandleMovement()
         {
+            if (!isDetected) return;
+
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
-                if (isDetected)
+                if (Random.Range(0, 10) > 5)
                 {
-                    if (Random.Range(0, 10) > 5)
+                    targetPos = playerTarget.position;
+                    chasePlayer = true;
+                }
+                else
+                {
+                    if (!chasePlayer)
                     {
-                        targetPos = playerTarget.position;
-                        chasePlayer = true;
-                    }
-                    else
-                    {
-                        if (!chasePlayer)
-                        {
-                            GetRandMovementPos();
-                        }
+                        GetRandMovementPos();
                     }
                 }
             }
@@ -148,7 +147,7 @@ namespace Game.Enemy
             {
                 chasePlayer = false;
                 GetRandMovementPos();
-                other.GetComponent<BaseCharacter>().Damage(damageAmount);
+                other.GetComponent<Game.Player.PlayerScripts>().Damage(damageAmount);
             }
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Base;
+using Game.Player;
 
 namespace Game.Enemy
 {
@@ -64,7 +65,7 @@ namespace Game.Enemy
                 {
                     if(!dealthDamage){
                         dealthDamage = true;
-                        other.GetComponent<BaseCharacter>().Damage(damage);
+                        other.GetComponent<PlayerScripts>().Damage(damage);
                     }
                 }
                 this.gameObject.SetActive(false);

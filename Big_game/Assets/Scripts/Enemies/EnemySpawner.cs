@@ -33,10 +33,6 @@ namespace Game.System.Enemy
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.R))
-            {
-                SpawnEnemies();
-            }
         }
 
         public void SpawnEnemies()
