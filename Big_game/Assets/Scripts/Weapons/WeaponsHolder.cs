@@ -15,7 +15,7 @@ namespace Game.Player.Weapon
 
         [SerializeField] private PlayerScripts playerSript;
         [SerializeField] private GunScripts currentGun;
-        [SerializeField] [Range(1, 9)] private int gun1Index, gun2Index;
+        [SerializeField] [Range(1, 9)] private int gun1Index = 1, gun2Index = 1;
 
         [HideInInspector] public bool isShootPress;
         private float nextShootTime;
@@ -42,8 +42,8 @@ namespace Game.Player.Weapon
 
         private void Start()
         {
-            GameInput.OnPlayerChangeGun += ChangeGun;
             UpdateGunSprite();
+            GameInput.OnPlayerChangeGun += ChangeGun;
         }
 
         private void Update()
@@ -71,18 +71,15 @@ namespace Game.Player.Weapon
             weaponModel.gun1Index = this.gun1Index;
             weaponModel.gun2Index = this.gun2Index;
 
-            SaveJson.SaveToJson(weaponModel, SaveModels.SaveFile.WeaponSave.ToString());
         }
 
         private void LoadFromSave()
         {
-            weaponModel = LoadJson<SaveModels.WeaponModel>.LoadFromJson(SaveModels.SaveFile.WeaponSave.ToString());
             if(weaponModel == null)
             {
                 weaponModel = new SaveModels.WeaponModel();
                 weaponModel.gun1Index = this.gun1Index;
                 weaponModel.gun2Index = this.gun2Index;
-                Save();
             }
             else
             {

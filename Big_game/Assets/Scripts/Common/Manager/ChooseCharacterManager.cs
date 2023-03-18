@@ -19,7 +19,7 @@ namespace Game.Common.Manager
         {
             ConfirmBtn.onClick.AddListener(() =>
             {
-                Main.GetInstance.PlayGame();
+                //Main.GetInstance.PlayGame();
             });
         }
 

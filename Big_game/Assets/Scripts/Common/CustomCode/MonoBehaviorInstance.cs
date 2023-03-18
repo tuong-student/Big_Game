@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace NOOD
 {
@@ -18,7 +19,7 @@ namespace NOOD
 
                 if (instance == null)
                 {
-                    Debug.Log("Errorrrrr: " + typeof(T) + " not exit");
+                    Debug.LogWarning("Errorrrrr: " + typeof(T) + " not exit");
                 }
                 return instance;
             }

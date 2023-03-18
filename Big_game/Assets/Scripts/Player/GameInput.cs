@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using NOOD;
 
-public class GameInput : MonoBehaviour
+public class GameInput : AbstractMonoBehaviour
 {
     public static Action<Vector2> OnPlayerMove;
     public static Action<Vector3> OnMouseMove;
@@ -62,8 +63,13 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
+        Dispose();
+    }
+
+    protected override void Dispose()
+    {    
         OnPlayerMove = null;
         OnPlayerDash = null;
         OnMouseMove = null;

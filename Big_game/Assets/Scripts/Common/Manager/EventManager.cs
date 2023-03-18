@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,13 @@ using NOOD;
 
 public class EventManager : MonoBehaviorInstance<EventManager>
 {
+    //--- Player Event region ---//
+    #region PlayerEvent
+    public EventHandler OnPlayerCreate;
+    #endregion
+
+    //-------/
+
     public VoidEventChannelSO OnNewGame;
     public VoidEventChannelSO OnStartGame;
     public VoidEventChannelSO OnContinuewGame;
@@ -30,6 +38,11 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         return Instantiate<EventManager>(Resources.Load<EventManager>("Prefabs/Manager/EventManager"), parent);
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     private void Start()
     {
         GameInput.OnPlayerPause += () =>
@@ -42,7 +55,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         };
     }
 
-    private void OnDisable()
+    protected override void Dispose()
     {
         OnNewGame.OnEventRaise = null;
         OnStartGame.OnEventRaise = null;
@@ -56,5 +69,6 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         OnTurnOnUI.OnEventRaise = null;
         OnDebugEnable.OnEventRaise = null;
         OnDebugDisable.OnEventRaise = null;
+        OnPlayerCreate = null;
     }
 }

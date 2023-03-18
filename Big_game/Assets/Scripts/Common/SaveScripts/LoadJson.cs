@@ -21,7 +21,7 @@ namespace Game.Save
             }
             else
             {
-                Debug.Log(SAVE_FILE_NAME + " file not exit");
+                Debug.Log(SAVE_FILE_NAME + " file not exist");
             }
 
             return newJsonObject;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Base;
 using Game.Common.Manager;
+using NOOD;
 
 namespace Game.Player
 {
-    public class BulletScript : MonoBehaviour
+    public class BulletScript : AbstractMonoBehaviour
     {
         private readonly List<string> EFFECT_TAGS = new List<string> { "Enemy", "Blocking", "Door", "Boss" };
 
@@ -15,9 +16,6 @@ namespace Game.Player
         public ExplodeType ExplodeType;
         private bool isBlock;
         public bool isCritical = false;
-
-        private Color objectToDisappearColor;
-        private TMPro.TextMeshPro objectToDisappear;
 
         private void OnEnable()
         {
@@ -42,6 +40,7 @@ namespace Game.Player
             if (isBlock == true) return;
 
             // Create explode
+            if (!PoolingManager.GetInstance) return;
             GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(ExplodeType);
             PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
             GameObject explode = PoolingManager.GetInstance.GetExplode();
@@ -67,6 +66,7 @@ namespace Game.Player
                 enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
 
                 // Create damageText
+                if (!DamageTextManager.GetInstance) return;
                 GameObject damageText = DamageTextManager.GetInstance.CreateDamageText(damage, isCritical);
                 damageText.transform.position = enemy.transform.position;
             }

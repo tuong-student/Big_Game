@@ -32,26 +32,19 @@ namespace Game.Common.Manager
             return Instantiate<GameManager>(Resources.Load<GameManager>("Prefabs/Manager/GameManger"), parent);
         }
 
-        public void CreatePlayerIfNeed()
-        {
-            LoadFromSave(); // Load again because after choosing player, the save file has been change
-            PlayerScripts currentPlayer = GameObject.FindObjectOfType<PlayerScripts>();
-            if(currentPlayer == null)
-            {
-                currentPlayer = PlayerScripts.Create();
-            }
-            currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
-            currentPlayer.ResetPosition(0); // number in ResetPostion(int number) is not be used
-            EventManager.GetInstance.OnContinuewGame.RaiseEvent();
-        }
-
         private void Awake()
         {
-            LoadFromSave();
+            gameSystemModel = LoadJson<SaveModels.GameSystemModel>.LoadFromJson(SaveModels.SaveFile.GameSystemSave.ToString());
             if(gameSystemModel == null || gameSystemModel.playerNum == 0)
             {
+                // No save before
+                gameSystemModel = new SaveModels.GameSystemModel();
                 GameCanvas.GetInstance.ActiveChooseCharacterMenu();
-                // HideChooseCharacterMenu is subcribe to OnContinueGame event
+                // HideChooseCharacterMenu is already subcribed to OnContinueGame event
+            }
+            else
+            {
+                CreateOrChangePlayerWithNewSave();
             }
         }
 
@@ -68,17 +61,56 @@ namespace Game.Common.Manager
 
         }
 
+        private void OnDisable()
+        {
+            Dispose();
+        }
+
+        protected override void Dispose()
+        {
+            Clear();
+            OnGoldChange = null;
+        }
+
+        public SaveModels.GameSystemModel GetGameSystemModel()
+        {
+            return gameSystemModel;
+        }
+
+        public void CreateOrChangePlayerWithNewSave()
+        {
+            LoadFromSave(); // Load again because after choosing player, the save file has been change
+            PlayerScripts currentPlayer = GameObject.FindObjectOfType<PlayerScripts>();
+            if (currentPlayer == null)
+            {
+                // Player is not created
+                // Create player
+                // Change player image (do in player script)
+                // Reset player position (do in player script)
+                // Active OnContinueGame in EventManager
+                currentPlayer = PlayerScripts.Create();
+                currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
+                currentPlayer.ResetPosition(0); // This number will not use
+                EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+            }
+            else
+            {
+                // Player is exit
+                // Change player image
+                currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
+                EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+            }
+        }
+
         private void Save()
         {
             gameSystemModel.gold = this.gold;
             gameSystemModel.level = this.level;
 
-            SaveJson.SaveToJson(gameSystemModel, SaveModels.SaveFile.GameSystemSave.ToString());
         }
 
         private void LoadFromSave()
         {
-            gameSystemModel = LoadJson<SaveModels.GameSystemModel>.LoadFromJson(SaveModels.SaveFile.GameSystemSave.ToString());
             if(gameSystemModel == null)
             {
                 gameSystemModel = new SaveModels.GameSystemModel();

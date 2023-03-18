@@ -103,6 +103,8 @@ namespace Game.Player
 
         private void Awake()
         {
+            EventManager.GetInstance.OnPlayerCreate?.Invoke(this, EventArgs.Empty);
+
             this.health.initial.value = baseHealth;
             this.mana.initial.value = baseMana;
             this.damage.initial.value = baseDamage;
@@ -110,14 +112,15 @@ namespace Game.Player
             this.fireRate.initial.value = baseFireRate;
             this.speed.initial.value = baseSpeed;
             this.defence.initial.value = baseDefence;
+
+            LoadFromSave();
         }
 
         private void Start()
         {
-            LoadFromSave();
             
-            ActiveOnPlayerStatsChange();
-            UpdatePlayerSprite();
+
+            this.AddTo(EventManager.GetInstance);
 
             GameInput.OnPlayerInteract += InteractWithObject;
 
@@ -128,7 +131,15 @@ namespace Game.Player
             EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnHealthChange;
             EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnManaChange;
 
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += ResetPosition;
+            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
+            {
+                NoodyCustomCode.StartDelayFunction(() => ResetPosition(0), 0.2f);
+            };
+
+            UpdatePlayerSprite();
+            ActiveOnHealthChange();
+            ActiveOnManaChange();
+            ActiveOnPlayerStatsChange();
         }
 
         private void Update()
@@ -136,18 +147,9 @@ namespace Game.Player
             if (!isMoveable) return;
         }
 
-        private void OnDisable()
+        protected override void Dispose()
         {
-            GameInput.OnPlayerInteract -= InteractWithObject;
 
-            EventManager.GetInstance.OnPauseGame.OnEventRaise -= CanNotMove;
-
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= CanMove;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= UpdatePlayerSprite;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= ActiveOnHealthChange;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise -= ActiveOnManaChange;
-
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise -= ResetPosition;
         }
 
         public void ChangePlayerVisualWithPlayerNum(int playerNum)
@@ -193,12 +195,12 @@ namespace Game.Player
             playerModel.fireRate = this.fireRate.value;
             playerModel.speed = this.speed.value;
 
-            SaveJson.SaveToJson(playerModel, SaveModels.SaveFile.PlayerSave.ToString());
         }
 
         public void LoadFromSave()
         {
             playerModel = LoadJson<SaveModels.PlayerModel>.LoadFromJson(SaveModels.SaveFile.PlayerSave.ToString());
+
             if (playerModel == null)
             {
                 // No save file
@@ -233,8 +235,12 @@ namespace Game.Player
             this.speed.max.Set(playerModel.speed);
             this.speed.value = playerModel.speed;
 
-            ActiveOnHealthChange();
-            ActiveOnManaChange();
+            Save();
+        }
+
+        public SaveModels.PlayerModel GetPlayerModel()
+        {
+            return playerModel;
         }
 
         public void AddHealth(float amount)
@@ -281,6 +287,7 @@ namespace Game.Player
 
         public void ActiveOnPlayerStatsChange()
         {
+            Debug.Log(OnPlayerStatsChange.GetInvocationList().Length);
             OnPlayerStatsChange?.Invoke(this, new OnPlayerStatsChangeEventArg
             {
                 maxHealth = this.health.max.value,

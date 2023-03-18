@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Game.Player;
 using UnityEngine.UI;
@@ -18,6 +19,11 @@ namespace Game.UI
         private void OnDisable()
         {
             Support.SupportUIComponentHolder.OnPlayerStatsUpdate -= ShowStats;
+        }
+
+        private void EventManager_OnPlayerCreate(object sender, EventArgs eventArgs)
+        {
+            PlayerScripts player = sender as PlayerScripts;
         }
 
         public void ShowStats(PlayerScripts.OnPlayerStatsChangeEventArg eventArg)

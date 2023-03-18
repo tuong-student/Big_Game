@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace NOOD
 {
@@ -17,6 +18,7 @@ namespace NOOD
         private void OnDestroy()
         {
             Clear();
+            Dispose();
         }
 
         public void Clear()
@@ -25,9 +27,14 @@ namespace NOOD
             {
                 if (obj)
                 {
-                    Destroy(obj.gameObject);
+                    obj.Dispose();
+                    DestroyImmediate(obj.gameObject);
                 }
             }
+        }
+
+        protected virtual void Dispose()
+        {
         }
     }
 }

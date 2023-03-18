@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Common.Manager;
-using Lean.Transition;
+using DG.Tweening;
+using UnityEngine.UI;
 
 namespace Game.Player.Weapon
 {
@@ -10,9 +11,11 @@ namespace Game.Player.Weapon
     {
         [SerializeField] private TMPro.TextMeshPro textMeshPro;
         private Color color;
+        private float moveToY;
 
         private void Start()
         {
+            moveToY = this.transform.position.y + 0.3f;
             MoveUp();
         }
 
@@ -32,7 +35,7 @@ namespace Game.Player.Weapon
 
         private void MoveUp()
         {
-            this.transform.positionTransition_y(0.5f, 1f,  LeanEase.ExpoOut);
+            this.transform.DOLocalMoveY(moveToY, 1f).SetEase(Ease.OutSine);
         }
     }
 }
