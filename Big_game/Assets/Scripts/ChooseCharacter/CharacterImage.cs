@@ -14,9 +14,10 @@ namespace Game.UI.ChooseCharacter
 
         public void ChangeCharacterNumber()
         {
-            GameManager.GetInstance.GetGameSystemModel().playerNum = this.characterNumber;
+            GameManager gameManager = SingletonContainer.Resolve<GameManager>();            
+            gameManager.GetGameSystemModel().playerNum = this.characterNumber;
 
-            GameManager.GetInstance.CreateOrChangePlayerWithNewSave();
+            gameManager.CreateOrChangePlayerWithNewSave();
         }
     }
 }

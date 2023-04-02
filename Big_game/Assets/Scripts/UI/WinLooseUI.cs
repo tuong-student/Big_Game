@@ -4,22 +4,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using NOOD;
+using Game.Common.Interface;
 
-public class WinLooseUI : MonoBehaviorInstance<WinLooseUI>
+public class WinLooseUI : MonoBehaviour, ISingleton
 {
     [SerializeField] private CanvasGroup winPanel, loosePanel;
     [SerializeField] private Button tryAgainButton, quitButton, playAgainButton, restartGameButton;
     [SerializeField] private ResetUI reset;
 
+    private EventManager eventManager;
+    private AudioManager audioManager;
+
     private void Start()
     {
-        WinPanelUnactivate();
-        LoosePanelUnactivate();
-        EventManager.GetInstance.OnLoseGame.OnEventRaise += () =>
+        eventManager = SingletonContainer.Resolve<EventManager>();
+        audioManager = SingletonContainer.Resolve<AudioManager>();
+        WinPanelDeactivate();
+        LoosePanelDeactivate();
+        eventManager.OnLoseGame.OnEventRaise += () =>
         {
             NoodyCustomCode.StartDelayFunction(LoosePanelActivate, 0.2f);
         };
-        EventManager.GetInstance.OnWinGame.OnEventRaise += () =>
+        eventManager.OnWinGame.OnEventRaise += () =>
         {
             NoodyCustomCode.StartDelayFunction(WinPanelActivate, 0.2f);
         };
@@ -55,14 +61,14 @@ public class WinLooseUI : MonoBehaviorInstance<WinLooseUI>
         loosePanel.blocksRaycasts = true;
 
     }
-    public void WinPanelUnactivate()
+    public void WinPanelDeactivate()
     {
         winPanel.alpha = 0;
         winPanel.interactable = false;
         winPanel.blocksRaycasts = false;
 
     }
-    public void LoosePanelUnactivate()
+    public void LoosePanelDeactivate()
     {
         loosePanel.alpha = 0;
         loosePanel.interactable = false;
@@ -72,27 +78,37 @@ public class WinLooseUI : MonoBehaviorInstance<WinLooseUI>
 
     private void TryAgainFromLevel1()
     {
-        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-        LoosePanelUnactivate();
+        audioManager.PlaySFX(sound.buttonClick);
+        LoosePanelDeactivate();
         reset.TryAgain();
     }
     private void ExitGame()
     {
-        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        audioManager.PlaySFX(sound.buttonClick);
         Application.Quit();
     }
     private void PlayAgainFromPickChar()
     {
-        AudioManager.GetInstance.PlaySFX(sound.buttonClick);
+        audioManager.PlaySFX(sound.buttonClick);
         if (loosePanel.alpha == 1)
         {
-            LoosePanelUnactivate();
+            LoosePanelDeactivate();
         }
         else
         {
-            WinPanelUnactivate();
+            WinPanelDeactivate();
         }
         reset.NewGame();
+    }
+
+    public void RegisterToContainer()
+    {
+        SingletonContainer.Register(this);
+    }
+
+    public void UnregisterToContainer()
+    {
+        SingletonContainer.UnRegister(this);
     }
 }
 

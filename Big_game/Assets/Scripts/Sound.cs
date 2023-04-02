@@ -7,7 +7,7 @@ public class Sound
 {
     public string name;
     public AudioClip clip;
-    public sound soundtype;
+    public sound soundType;
 }
 public enum sound
 {
@@ -19,7 +19,7 @@ public enum sound
     pickUp,
     lose,
     hitEnemy,
-    telePortal,
+    teleportPortal,
     gateClose,
     gateOpen,
     win,

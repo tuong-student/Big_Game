@@ -7,10 +7,11 @@ using Game.UI.Support;
 
 namespace Game.UI
 {
-    public class GameCanvas : MonoBehaviorInstance<GameCanvas>
+    public class GameCanvas : MonoBehaviour, Game.Common.Interface.ISingleton
     {
         [SerializeField] GameObject mainMenu, inGameMenu, settingMenu, chooseCharacterMenu, winLoseMenu, debugMenu;
-        
+
+        private EventManager eventManager;
 
         public static GameCanvas Create(Transform parent = null)
         {
@@ -19,33 +20,31 @@ namespace Game.UI
 
         private void Awake()
         {
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += () =>
-            {
-                ActiveInGameMenu();
-            };
+            RegisterToContainer();
         }
 
         private void Start()
         {
-            EventManager.GetInstance.OnStartGame.OnEventRaise += ActiveInGameMenu;
-            EventManager.GetInstance.OnPauseGame.OnEventRaise += () =>
+            eventManager = SingletonContainer.Resolve<EventManager>();
+            eventManager.OnStartGame.OnEventRaise += ActiveInGameMenu;
+            eventManager.OnPauseGame.OnEventRaise += () =>
             {
                 ActivePauseMenu();
             };
             
-            EventManager.GetInstance.OnGenerateLevel.OnEventRaise += () =>
+            eventManager.OnGenerateLevel.OnEventRaise += () =>
             {
                 inGameMenu.SetActive(false);
             };
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
+            eventManager.OnGenerateLevelComplete.OnEventRaise += (int number) =>
             {
                 inGameMenu.SetActive(true);
             };
-            EventManager.GetInstance.OnWinGame.OnEventRaise += ActiveWinLoseMenu;
-            EventManager.GetInstance.OnLoseGame.OnEventRaise += ActiveWinLoseMenu;
+            eventManager.OnWinGame.OnEventRaise += ActiveWinLoseMenu;
+            eventManager.OnLoseGame.OnEventRaise += ActiveWinLoseMenu;
 
-            EventManager.GetInstance.OnDebugEnable.OnEventRaise += ActiveDebugMenu;
-            EventManager.GetInstance.OnDebugDisable.OnEventRaise += HideDebugMenu;
+            eventManager.OnDebugEnable.OnEventRaise += ActiveDebugMenu;
+            eventManager.OnDebugDisable.OnEventRaise += HideDebugMenu;
         }
 
         private void Update()
@@ -60,13 +59,13 @@ namespace Game.UI
 
         public void ActivePauseMenu()
         {
-            EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
+            eventManager.OnTurnOnUI.RaiseEvent();
             ActiveMenu(Menu.Main);
         }
 
         public void ActiveSettingMenu()
         {
-            EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
+            eventManager.OnTurnOnUI.RaiseEvent();
             ActiveMenu(Menu.Setting);
         }
 
@@ -77,7 +76,7 @@ namespace Game.UI
 
         public void ActiveWinLoseMenu()
         {
-            EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
+            eventManager.OnTurnOnUI.RaiseEvent();
             ActiveMenu(Menu.WinLose);
         }
 
@@ -133,12 +132,22 @@ namespace Game.UI
             }
         }
 
-        public void DeactiveAllMenu()
+        public void DeactivateAllMenu()
         {
             mainMenu.SetActive(false);
             inGameMenu.SetActive(false);
             settingMenu.SetActive(false);
             chooseCharacterMenu.SetActive(false);
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 

@@ -17,9 +17,16 @@ namespace Game.Player
         private bool isBlock;
         public bool isCritical = false;
 
+        private PoolingManager poolingManager;
+
         private void OnEnable()
         {
             isBlock = false;
+        }
+
+        private void Start()
+        {
+            poolingManager = SingletonContainer.Resolve<PoolingManager>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -40,17 +47,17 @@ namespace Game.Player
             if (isBlock == true) return;
 
             // Create explode
-            if (!PoolingManager.GetInstance) return;
-            GameObject explodePref = ExplodeManager.GetInstance.GetExplodePref(ExplodeType);
-            PoolingManager.GetInstance.SetExpldePoolingObject(explodePref);
-            GameObject explode = PoolingManager.GetInstance.GetExplode();
+            if (!poolingManager) return;
+            GameObject explodePref = SingletonContainer.Resolve<ExplodeManager>().GetExplodePref(ExplodeType);
+            poolingManager.SetExplodePoolingObject(explodePref);
+            GameObject explode = poolingManager.GetExplode();
             explode.transform.position = this.transform.position;
             explode.GetComponent<ParticleSystem>().Play();
         }
 
         public void SetRange(float range)
         {
-            GetComponent<SetObjectDeactive>().second = range;
+            GetComponent<SetObjectDeactivate>().second = range;
         }
 
         public void SetBackForce(float backForce)
@@ -66,8 +73,8 @@ namespace Game.Player
                 enemy.GetComponent<Rigidbody2D>().AddForce(this.gameObject.transform.right * backForce);
 
                 // Create damageText
-                if (!DamageTextManager.GetInstance) return;
-                GameObject damageText = DamageTextManager.GetInstance.CreateDamageText(damage, isCritical);
+                if (!SingletonContainer.Resolve<DamageTextManager>()) return;
+                GameObject damageText = SingletonContainer.Resolve<DamageTextManager>().CreateDamageText(damage, isCritical);
                 damageText.transform.position = enemy.transform.position;
             }
         }

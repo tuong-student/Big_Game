@@ -19,7 +19,7 @@ namespace Game.UI
             continueButton.onClick.AddListener(ContinueGame);
             newGameButton.onClick.AddListener(NewGame);
             settingButton.onClick.AddListener(ToSetting);
-            creditButton.onClick.AddListener(ToCreadit);
+            creditButton.onClick.AddListener(ToCredit);
             exitButton.onClick.AddListener(Exit);
         }
 
@@ -29,14 +29,14 @@ namespace Game.UI
             continueButton.onClick.RemoveListener(ContinueGame);
             newGameButton.onClick.RemoveListener(NewGame);
             settingButton.onClick.RemoveListener(ToSetting);
-            creditButton.onClick.RemoveListener(ToCreadit);
+            creditButton.onClick.RemoveListener(ToCredit);
             exitButton.onClick.RemoveListener(Exit);
 
         }
         private void ContinueGame()
         {
             //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-            GameCanvas.GetInstance.ActiveMenu(Menu.InGame);
+            SingletonContainer.Resolve<GameCanvas>().ActiveMenu(Menu.InGame);
         }
         private void NewGame()
         {
@@ -46,10 +46,10 @@ namespace Game.UI
         private void ToSetting()
         {
             //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-            GameCanvas.GetInstance.ActiveMenu(Menu.Setting);
+            SingletonContainer.Resolve<GameCanvas>().ActiveMenu(Menu.Setting);
         }
 
-        private void ToCreadit()
+        private void ToCredit()
         {
             gameObject.SetActive(false);
             creditsPanel.SetActive(true);

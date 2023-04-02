@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using NOOD;
 
 
-public class EventManager : MonoBehaviorInstance<EventManager>
+public class EventManager : AbstractMonoBehaviour, Game.Common.Interface.ISingleton
 {
     //--- Player Event region ---//
     #region PlayerEvent
@@ -17,7 +17,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
 
     public VoidEventChannelSO OnNewGame;
     public VoidEventChannelSO OnStartGame;
-    public VoidEventChannelSO OnContinuewGame;
+    public VoidEventChannelSO OnContinueGame;
     public VoidEventChannelSO OnPauseGame;
     public VoidEventChannelSO OnGenerateLevel;
     public VoidEventChannelSO OnLoseGame;
@@ -41,6 +41,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        RegisterToContainer();
     }
 
     private void Start()
@@ -51,7 +52,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
             if (isPause)
                 OnPauseGame.RaiseEvent();
             else
-                OnContinuewGame.RaiseEvent();
+                OnContinueGame.RaiseEvent();
         };
     }
 
@@ -59,7 +60,7 @@ public class EventManager : MonoBehaviorInstance<EventManager>
     {
         OnNewGame.OnEventRaise = null;
         OnStartGame.OnEventRaise = null;
-        OnContinuewGame.OnEventRaise = null;
+        OnContinueGame.OnEventRaise = null;
         OnPauseGame.OnEventRaise = null;
         OnGenerateLevel.OnEventRaise = null;
         OnGenerateLevelComplete.OnEventRaise = null;
@@ -70,5 +71,15 @@ public class EventManager : MonoBehaviorInstance<EventManager>
         OnDebugEnable.OnEventRaise = null;
         OnDebugDisable.OnEventRaise = null;
         OnPlayerCreate = null;
+    }
+
+    public void RegisterToContainer()
+    {
+        SingletonContainer.Register(this);
+    }
+
+    public void UnregisterToContainer()
+    {
+        SingletonContainer.UnRegister(this);
     }
 }

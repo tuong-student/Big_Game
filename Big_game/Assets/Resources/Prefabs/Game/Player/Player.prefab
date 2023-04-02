@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6697b76e6f5f433e9b3038918bf3b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSript: {fileID: 6715641731601680243}
+  playerScript: {fileID: 6715641731601680243}
   currentGun: {fileID: 5018497532369957803}
   gun1Index: 4
   gun2Index: 1
@@ -836,7 +836,7 @@ Transform:
   - {fileID: 8882048146139273891}
   - {fileID: 6206319977244856656}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3886398686517044956
 Rigidbody2D:
@@ -877,19 +877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42517ce074df54f2c98d38bba2765801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  maxMana: 50
-  currentMana: 50
-  playerDamage: 1
-  criticalRate: 0.5
-  fireRate: 0
-  defence: 0
-  stamina: 50
-  walkSpeed: 0.5
-  runSpeed: 0.8
-  dashForce: 15
-  dashTime: 0.5
   playerSprites:
   - {fileID: 21300000, guid: 5dfcae8411c2d844faae6e901a31dc5f, type: 3}
   - {fileID: 21300000, guid: 5de1393f24f4bc541b933443051d9cc7, type: 3}
@@ -903,6 +890,15 @@ MonoBehaviour:
   - {fileID: 6102769691291206813}
   - {fileID: 1426449731092501425}
   - {fileID: 8771111814686891754}
+  baseHealth: 100
+  baseMana: 50
+  baseCriticalRate: 1
+  baseFireRate: 0
+  baseDamage: 1
+  baseSpeed: 0.8
+  baseDefense: 0
+  dashForce: 15
+  dashTime: 0.5
   playerNum: 2
 --- !u!114 &6935578856058936187
 MonoBehaviour:

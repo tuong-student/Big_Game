@@ -21,7 +21,7 @@ namespace Game.Save
             public float criticalRate;
             public float damage;
             public float fireRate;
-            public float defence;
+            public float defense;
             public float speed;
             public float dashForce;
             public float dashTime;
@@ -42,7 +42,8 @@ namespace Game.Save
 
         public class UserSetting
         {
-
+            public float musicVolume;
+            public float soundVolume;
         }
     }
 }

@@ -12,7 +12,7 @@ using Game.Common.Manager;
 
 namespace Game.UI
 {
-    public class InGameUI : MonoBehaviorInstance<InGameUI>
+    public class InGameUI : AbstractMonoBehaviour, Game.Common.Interface.ISingleton
     {
         [SerializeField] private Slider healthSlider;
         [SerializeField] private Slider manaSlider;
@@ -29,25 +29,32 @@ namespace Game.UI
         public float maxMana = 50;
         public float currentMana;
 
+        private EventManager eventManager;
+        private SupportUIComponentHolder supportUIComponent;
+
         private void Awake()
         {
+            RegisterToContainer();   
             gameCanvas = GetComponentInParent<GameCanvas>();
         }
 
         public void OnEnable()
         {
-            this.AddTo(GameManager.GetInstance);
+            supportUIComponent = SingletonContainer.Resolve<SupportUIComponentHolder>();
+            eventManager = SingletonContainer.Resolve<EventManager>();
+            GameManager gameManager = SingletonContainer.Resolve<GameManager>();
+            this.AddTo(gameManager);
 
-            EventManager.GetInstance.OnPlayerCreate += EventManager_OnPlayerCreate;
+            eventManager.OnPlayerCreate += EventManager_OnPlayerCreate;
 
-            GameManager.GetInstance.OnGoldChange += UpdateGoldText;
+            gameManager.OnGoldChange += UpdateGoldText;
 
             GameInput.OnPlayerWatchStats += ShowStatsPressed;
             GameInput.OnPlayerChangeGun += UpdateGunSprite;
             WeaponsHolder.OnPickUpGun += WeaponsHolder_OnPickUpGun;
 
-            SupportUIComponentHolder.GetInstance.OnUpdateHealth += SupportUIComponentHolder_OnUpdateHealth;
-            SupportUIComponentHolder.GetInstance.OnUpdateMana += SupportUIComponentHolder_OnUpdateMana;
+            SupportUIComponentHolder_OnUpdateHealth(null, supportUIComponent.OnPlayerHealthChangeEventArgs);
+            SupportUIComponentHolder_OnUpdateMana(null, supportUIComponent.OnPlayerManaChangeEventArgs);
 
             NoodyCustomCode.StartDelayFunction(() =>
             {
@@ -58,8 +65,8 @@ namespace Game.UI
 
         public void Start()
         {
-            SupportUIComponentHolder_OnUpdateHealth(null, SupportUIComponentHolder.GetInstance.OnPlayerHealthChangeEventArgs);
-            SupportUIComponentHolder_OnUpdateMana(null, SupportUIComponentHolder.GetInstance.OnPlayerManaChangeEventArgs);
+            supportUIComponent.OnUpdateHealth += SupportUIComponentHolder_OnUpdateHealth;
+            supportUIComponent.OnUpdateMana += SupportUIComponentHolder_OnUpdateMana;
         }
 
 
@@ -123,7 +130,7 @@ namespace Game.UI
 
         public UpgradePanel CreateUpgradePanel()
         {
-            EventManager.GetInstance.OnTurnOnUI.RaiseEvent();
+            eventManager.OnTurnOnUI.RaiseEvent();
             if (GameObject.FindObjectOfType<UpgradePanel>() != null) return null;
             return Instantiate<UpgradePanel>(Resources.Load<UpgradePanel>("Prefabs/Game/Upgrade/UpgradePanel"), this.transform);
         }
@@ -134,7 +141,7 @@ namespace Game.UI
             if (isStatsShow)
             {
                 MoveIn(statsMenuRect);
-                statsMenuUI.ShowStats(Support.SupportUIComponentHolder.GetInstance.OnPlayerStatsChangeEventArg);
+                statsMenuUI.ShowStats(supportUIComponent.OnPlayerStatsChangeEventArg);
             }
             else
             {
@@ -144,7 +151,7 @@ namespace Game.UI
 
         private void UpdatePlayerSprite()
         {
-            ChangePlayerSprite(SupportUIComponentHolder.GetInstance.playerSprite);
+            ChangePlayerSprite(supportUIComponent.playerSprite);
         }
 
         private void UpdateGoldText(object sender, int gold)
@@ -156,13 +163,13 @@ namespace Game.UI
         {
             if(number == 1)
             {
-                this.mainGun.sprite = SupportUIComponentHolder.GetInstance.gun1Sprite;
-                this.subGun.sprite = SupportUIComponentHolder.GetInstance.gun2Sprite;
+                this.mainGun.sprite = supportUIComponent.gun1Sprite;
+                this.subGun.sprite = supportUIComponent.gun2Sprite;
             }
             else
             {
-                this.mainGun.sprite = SupportUIComponentHolder.GetInstance.gun2Sprite;
-                this.subGun.sprite = SupportUIComponentHolder.GetInstance.gun1Sprite;
+                this.mainGun.sprite = supportUIComponent.gun2Sprite;
+                this.subGun.sprite = supportUIComponent.gun1Sprite;
             }
         }
 
@@ -174,6 +181,7 @@ namespace Game.UI
 
         public void MoveOut(RectTransform rect)
         {
+            SingletonContainer.Resolve<Player.PlayerScripts>().ActiveOnPlayerStatsChange();
             float anchorPosX = -1300;
             Tween tweenContain = rect.DOLocalMoveX(anchorPosX, 0.05f).SetEase(Ease.InQuad);
             tweenContain.Play();
@@ -182,6 +190,16 @@ namespace Game.UI
         public void ChangePlayerSprite(Sprite playerSprite)
         {
             playerImage.sprite = playerSprite;
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

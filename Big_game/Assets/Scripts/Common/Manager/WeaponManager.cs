@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using NOOD;
 
-public class WeaponManager : MonoBehaviorInstance<WeaponManager>
+public class WeaponManager : MonoBehaviour, Game.Common.Interface.ISingleton
 {
     [SerializeField] List<GunData> gunDatas;
     public GunData shotgunData;
+
+    void Awake()
+    {
+        RegisterToContainer();
+    }
 
     public static WeaponManager Create(Transform parent = null)
     {
@@ -26,5 +31,15 @@ public class WeaponManager : MonoBehaviorInstance<WeaponManager>
     public int GetIndexOf(GunData data)
     {
         return gunDatas.IndexOf(data);
+    }
+
+    public void RegisterToContainer()
+    {
+        SingletonContainer.Register(this);
+    }
+
+    public void UnregisterToContainer()
+    {
+        SingletonContainer.UnRegister(this);
     }
 }

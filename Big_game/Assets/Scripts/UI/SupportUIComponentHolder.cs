@@ -7,7 +7,7 @@ using Game.Player;
 
 namespace Game.UI.Support
 {
-    public class SupportUIComponentHolder : MonoBehaviorInstance<SupportUIComponentHolder>
+    public class SupportUIComponentHolder : AbstractMonoBehaviour, Game.Common.Interface.ISingleton
     {
         #region Events
         public static Action<PlayerScripts.OnPlayerStatsChangeEventArg> OnPlayerStatsUpdate;
@@ -16,14 +16,22 @@ namespace Game.UI.Support
         #endregion
 
         [HideInInspector] public Sprite playerSprite, gun1Sprite, gun2Sprite;
-        [HideInInspector] public PlayerScripts.OnPlayerStatsChangeEventArg OnPlayerStatsChangeEventArg;
-        [HideInInspector] public PlayerScripts.OnHealthChangeEventArgs OnPlayerHealthChangeEventArgs;
-        [HideInInspector] public PlayerScripts.OnManaChangeEventArgs OnPlayerManaChangeEventArgs;
+        [HideInInspector] public PlayerScripts.OnPlayerStatsChangeEventArg OnPlayerStatsChangeEventArg = new PlayerScripts.OnPlayerStatsChangeEventArg();
+        [HideInInspector] public PlayerScripts.OnHealthChangeEventArgs OnPlayerHealthChangeEventArgs = new PlayerScripts.OnHealthChangeEventArgs();
+        [HideInInspector] public PlayerScripts.OnManaChangeEventArgs OnPlayerManaChangeEventArgs = new PlayerScripts.OnManaChangeEventArgs();
+
+        private PlayerScripts playerScripts;
 
         private void Awake()
         {
-            EventManager.GetInstance.OnPlayerCreate += EventManager_OnPlayerCreate;
-            
+            RegisterToContainer();
+            SingletonContainer.Resolve<EventManager>().OnPlayerCreate += EventManager_OnPlayerCreate;
+
+            OnPlayerHealthChangeEventArgs.maxHealth = 100f;
+            OnPlayerHealthChangeEventArgs.health = 100f;
+
+            OnPlayerManaChangeEventArgs.maxMana = 50f;
+            OnPlayerManaChangeEventArgs.mana = 50f;
         }
 
         private void Start()
@@ -42,17 +50,18 @@ namespace Game.UI.Support
 
         protected override void Dispose()
         {
-            PlayerScripts.GetInstance.OnPlayerStatsChange -= PlayerScript_UpdatePlayerStats;
+            playerScripts.OnPlayerStatsChange -= PlayerScript_UpdatePlayerStats;
         }
 
         private void EventManager_OnPlayerCreate(object sender, EventArgs eventArgs)
         {
             PlayerScripts player = sender as PlayerScripts;
-
+            
+            playerScripts = SingletonContainer.Resolve<PlayerScripts>();
             player.OnPlayerStatsChange += PlayerScript_UpdatePlayerStats;
             player.OnHealthChange += PlayerScript_OnHealthChange;
             player.OnManaChange += PlayerScript_OnManaChange;
-            this.AddTo(PlayerScripts.GetInstance);
+            this.AddTo(playerScripts);
         }
 
         private void PlayerScript_UpdatePlayerStats(object sender, PlayerScripts.OnPlayerStatsChangeEventArg eventArg)
@@ -64,11 +73,23 @@ namespace Game.UI.Support
         private void PlayerScript_OnHealthChange(object sender, PlayerScripts.OnHealthChangeEventArgs eventArgs)
         {
             OnPlayerHealthChangeEventArgs = eventArgs;
+            OnUpdateHealth?.Invoke(this, OnPlayerHealthChangeEventArgs);
         }
 
         private void PlayerScript_OnManaChange(object sender, PlayerScripts.OnManaChangeEventArgs eventArgs)
         {
             OnPlayerManaChangeEventArgs = eventArgs;
+            OnUpdateMana?.Invoke(this, OnPlayerManaChangeEventArgs);
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

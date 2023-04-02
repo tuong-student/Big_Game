@@ -7,25 +7,30 @@ namespace Game.Player.Weapon
 {
     public class GunScripts : MonoBehaviour
     {
+        #region Singleton
+        private WeaponManager weaponManager;
+        private PoolingManager poolingManager;
+        #endregion
+
         [HideInInspector] public GunData gunData;
         public SpriteRenderer sr;
         public Animator anim;
         [SerializeField] Transform shootPoint;
 
-        #region
+
         ObjectPool bulletPooling;
-        #endregion
 
         private void Awake()
         {
-            if(sr == null)
-                sr = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
         {
+            weaponManager = SingletonContainer.Resolve<WeaponManager>();
+            poolingManager = SingletonContainer.Resolve<PoolingManager>();
+
             //EventManager.GetInstance.OnCheatEnable.OnEventRaise += () => { isCheat = true; };
-            //EventManager.GetInstance.OnCheatDisable.OnEventRaise += () => { isCheat = false; };
+            //EventManager.GetInstance.OnCheatDisable.OnEventRaise += () => { isCheat = false; };            
         }
 
         public void SetData(GunData data)
@@ -36,20 +41,20 @@ namespace Game.Player.Weapon
 
         public void Fire()
         {
-            float bulletDamage = gunData.damage + PlayerScripts.GetInstance.damage.value;
+            float bulletDamage = gunData.damage + SingletonContainer.Resolve<PlayerScripts>().damage.value;
 
-            bool isCritical = UnityEngine.Random.Range(0f, 1f) * 100 <= PlayerScripts.GetInstance.criticalRate.value;
+            bool isCritical = UnityEngine.Random.Range(0f, 1f) * 100 <= SingletonContainer.Resolve<PlayerScripts>().criticalRate.value;
             if (isCritical) bulletDamage *= 2;
 
-            if (gunData == WeaponManager.GetInstance.shotgunData)
+            if (gunData == weaponManager.shotgunData)
             {
                 // Set pooling object is bullet
-                PoolingManager.GetInstance.SetBulletPoolingObject(this.gunData.bulletPrefab);
+                poolingManager.SetBulletPoolingObject(this.gunData.bulletPrefab);
                 // Create 3 bullets
                 GameObject[] bullets = new GameObject[3];
-                bullets[0] = PoolingManager.GetInstance.GetBullet();
-                bullets[1] = PoolingManager.GetInstance.GetBullet();
-                bullets[2] = PoolingManager.GetInstance.GetBullet();
+                bullets[0] = poolingManager.GetBullet();
+                bullets[1] = poolingManager.GetBullet();
+                bullets[2] = poolingManager.GetBullet();
                 foreach(var b in bullets)
                 {
                     b.transform.position = shootPoint.transform.position;
@@ -65,8 +70,8 @@ namespace Game.Player.Weapon
             }
             else
             {
-                PoolingManager.GetInstance.SetBulletPoolingObject(this.gunData.bulletPrefab);
-                GameObject bullet = PoolingManager.GetInstance.GetBullet();
+                poolingManager.SetBulletPoolingObject(this.gunData.bulletPrefab);
+                GameObject bullet = poolingManager.GetBullet();
                 BulletScript bulletScript = bullet.GetComponent<BulletScript>();
                 bulletScript.SetRange(gunData.range);
                 bullet.transform.SetPositionAndRotation(shootPoint.transform.position, shootPoint.transform.rotation);

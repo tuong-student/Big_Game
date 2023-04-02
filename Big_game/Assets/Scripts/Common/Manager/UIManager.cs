@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NOOD;
 
-public class UIManager : MonoBehaviorInstance<UIManager>
+public class UIManager : MonoBehaviour
 {
     public static UIManager Create(Transform parent = null)
     {

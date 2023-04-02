@@ -10,11 +10,10 @@ using Game.Save;
 using Game.Player.Weapon;
 using Game.Common.RPGStats;
 using NOOD;
-using SeawispHunter.RolePlay.Attributes;
 
 namespace Game.Player
 {
-    public class PlayerScripts : MonoBehaviorInstance<PlayerScripts>
+    public class PlayerScripts : AbstractMonoBehaviour, Game.Common.Interface.ISingleton
     {
         #region Event
         public EventHandler<OnPlayerStatsChangeEventArg> OnPlayerStatsChange;
@@ -44,8 +43,8 @@ namespace Game.Player
             public float bonusFireRate;
             public float currentSpeed;
             public float bonusSpeed;
-            public float defence;
-            public float bonusDefence;
+            public float defense;
+            public float bonusDefense;
         }
         #endregion
 
@@ -68,7 +67,7 @@ namespace Game.Player
         public float baseFireRate = 0f;
         public float baseDamage = 1f;
         public float baseSpeed = 0.8f;
-        public float baseDefence = 0f;
+        public float baseDefense = 0f;
 
         public RPGStats<float> health = new RPGStats<float>();
         public RPGStats<float> mana = new RPGStats<float>();
@@ -76,7 +75,7 @@ namespace Game.Player
         public RPGStats<float> criticalRate = new RPGStats<float>();
         public RPGStats<float> fireRate = new RPGStats<float>();
         public RPGStats<float> speed = new RPGStats<float>();
-        public RPGStats<float> defence = new RPGStats<float>();
+        public RPGStats<float> defense = new RPGStats<float>();
 
         public float dashForce = 30f;
         public float dashTime = 0.5f;
@@ -94,6 +93,8 @@ namespace Game.Player
         public bool isDead { get; private set; }
         #endregion
 
+        private EventManager eventManager;
+
         public static PlayerScripts Create(Transform parent = null)
         {
             //Create a clone of player object in Resources/Prefabs/Game/Player/Player in Asset folder
@@ -103,35 +104,36 @@ namespace Game.Player
 
         private void Awake()
         {
-            EventManager.GetInstance.OnPlayerCreate?.Invoke(this, EventArgs.Empty);
-
+            RegisterToContainer();
             this.health.initial.value = baseHealth;
             this.mana.initial.value = baseMana;
             this.damage.initial.value = baseDamage;
             this.criticalRate.initial.value = baseCriticalRate;
             this.fireRate.initial.value = baseFireRate;
             this.speed.initial.value = baseSpeed;
-            this.defence.initial.value = baseDefence;
+            this.defense.initial.value = baseDefense;
 
             LoadFromSave();
         }
 
         private void Start()
         {
-            
+            eventManager = SingletonContainer.Resolve<EventManager>();
 
-            this.AddTo(EventManager.GetInstance);
+            eventManager.OnPlayerCreate?.Invoke(this, EventArgs.Empty);
+            this.AddTo(eventManager);
 
             GameInput.OnPlayerInteract += InteractWithObject;
 
-            EventManager.GetInstance.OnPauseGame.OnEventRaise += CanNotMove;
+            eventManager.OnPauseGame.OnEventRaise += CanNotMove;
 
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += CanMove;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += UpdatePlayerSprite;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnHealthChange;
-            EventManager.GetInstance.OnContinuewGame.OnEventRaise += ActiveOnManaChange;
+            eventManager.OnContinueGame.OnEventRaise += CanMove;
+            eventManager.OnContinueGame.OnEventRaise += UpdatePlayerSprite;
+            eventManager.OnContinueGame.OnEventRaise += ActiveOnHealthChange;
+            eventManager.OnContinueGame.OnEventRaise += ActiveOnManaChange;
+            eventManager.OnGenerateLevel.OnEventRaise += Save;
 
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
+            eventManager.OnGenerateLevelComplete.OnEventRaise += (int number) =>
             {
                 NoodyCustomCode.StartDelayFunction(() => ResetPosition(0), 0.2f);
             };
@@ -139,7 +141,6 @@ namespace Game.Player
             UpdatePlayerSprite();
             ActiveOnHealthChange();
             ActiveOnManaChange();
-            ActiveOnPlayerStatsChange();
         }
 
         private void Update()
@@ -181,7 +182,7 @@ namespace Game.Player
 
         private void UpdatePlayerSprite()
         {
-            SupportUIComponentHolder.GetInstance.playerSprite = playerSprites[playerNum - 1];
+            SingletonContainer.Resolve<SupportUIComponentHolder>().playerSprite = playerSprites[playerNum - 1];
         }
 
         public void Save()
@@ -191,7 +192,7 @@ namespace Game.Player
             playerModel.criticalRate = this.criticalRate.value;
             playerModel.dashForce = this.dashForce;
             playerModel.dashTime = this.dashTime;
-            playerModel.defence = this.defence.value;
+            playerModel.defense = this.defense.value;
             playerModel.fireRate = this.fireRate.value;
             playerModel.speed = this.speed.value;
 
@@ -212,7 +213,7 @@ namespace Game.Player
                 playerModel.damage = this.damage.initial.value;
                 playerModel.dashForce = this.dashForce;
                 playerModel.dashTime = this.dashTime;
-                playerModel.defence = this.defence.initial.value;
+                playerModel.defense = this.defense.initial.value;
                 playerModel.fireRate = this.fireRate.initial.value;
                 playerModel.speed = this.speed.initial.value;
             }
@@ -228,8 +229,8 @@ namespace Game.Player
             this.damage.value = playerModel.damage;
             this.dashForce = playerModel.dashForce;
             this.dashTime = playerModel.dashTime;
-            this.defence.max.Set(playerModel.defence);
-            this.defence.value = playerModel.defence;
+            this.defense.max.Set(playerModel.defense);
+            this.defense.value = playerModel.defense;
             this.fireRate.max.Set(playerModel.fireRate);
             this.fireRate.value = playerModel.fireRate;
             this.speed.max.Set(playerModel.speed);
@@ -287,7 +288,6 @@ namespace Game.Player
 
         public void ActiveOnPlayerStatsChange()
         {
-            Debug.Log(OnPlayerStatsChange.GetInvocationList().Length);
             OnPlayerStatsChange?.Invoke(this, new OnPlayerStatsChangeEventArg
             {
                 maxHealth = this.health.max.value,
@@ -302,8 +302,8 @@ namespace Game.Player
                 bonusFireRate = this.fireRate.value,
                 currentSpeed = this.speed.value,
                 bonusSpeed = this.speed.bonus,
-                defence = this.defence.value,
-                bonusDefence = this.defence.bonus
+                defense = this.defense.value,
+                bonusDefense = this.defense.bonus
             });
         }
 
@@ -337,7 +337,7 @@ namespace Game.Player
 
         public bool Buy(int amountOfGold, Upgrade upgrade)
         {
-            if (GameManager.GetInstance.MinusGold(amountOfGold))
+            if (SingletonContainer.Resolve<GameManager>().MinusGold(amountOfGold))
             {
                 ApplyUpgrade(upgrade);
                 return true;
@@ -355,8 +355,8 @@ namespace Game.Player
                     this.damage.value += upgrade.upgradeAmount;
                     break;
                 case StatsType.defense:
-                    this.defence.max.Sum(upgrade.upgradeAmount);
-                    this.defence.value += upgrade.upgradeAmount;
+                    this.defense.max.Sum(upgrade.upgradeAmount);
+                    this.defense.value += upgrade.upgradeAmount;
                     break;
                 case StatsType.maxMana:
                     this.mana.max.Sum(upgrade.upgradeAmount);
@@ -429,6 +429,16 @@ namespace Game.Player
             {
                 Die();
             }
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

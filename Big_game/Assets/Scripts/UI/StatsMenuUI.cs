@@ -34,7 +34,7 @@ namespace Game.UI
             txtCriticalRate.text = $"Critical: {eventArg.criticalRate} (<color=#FF5353>{eventArg.bonusCriticalRate}</color>)";
             txtFireRate.text = $"FireRate: {eventArg.fireRate} (<color=#FF5353>{eventArg.bonusFireRate}</color>)";
             txtCurrentSpeed.text = $"Speed: {eventArg.currentSpeed} (<color=#FF5353>{eventArg.bonusSpeed}</color>)";
-            txtDefence.text = $"Defence: {eventArg.defence} (<color=#FF5353>{eventArg.bonusDefence}</color>)";
+            txtDefence.text = $"Defence: {eventArg.defense} (<color=#FF5353>{eventArg.bonusDefense}</color>)";
         }
 
     }

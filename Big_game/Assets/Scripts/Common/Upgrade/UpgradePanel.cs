@@ -25,7 +25,7 @@ namespace Game.UI
                 newBtn.gameObject.SetActive(true);
                 newBtn.SetBtn(newUpgrade, () =>
                 {
-                    if (PlayerScripts.GetInstance.Buy(newUpgrade.goldNeed, newUpgrade))
+                    if (SingletonContainer.Resolve<PlayerScripts>().Buy(newUpgrade.goldNeed, newUpgrade))
                     {
                         Dispose();
                     }
@@ -37,7 +37,7 @@ namespace Game.UI
 
         public void Dispose()
         {
-            EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+            SingletonContainer.Resolve<EventManager>().OnContinueGame.RaiseEvent();
             Destroy(this.gameObject);
         }
 

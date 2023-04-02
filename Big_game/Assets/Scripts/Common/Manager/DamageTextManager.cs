@@ -6,9 +6,16 @@ using NOOD;
 
 namespace Game.Common.Manager
 {
-    public class DamageTextManager : MonoBehaviorInstance<DamageTextManager>
+    public class DamageTextManager : MonoBehaviour, Game.Common.Interface.ISingleton
     {
         private GameObject damageTextObject;
+        private PoolingManager poolingManager;
+
+        void Start()
+        {
+            RegisterToContainer();
+            poolingManager = SingletonContainer.Resolve<PoolingManager>();
+        }
 
         public GameObject CreateDamageText(float damage, bool isCritical)
         {
@@ -20,10 +27,20 @@ namespace Game.Common.Manager
             {
                 damageTextObject = Resources.Load<GameObject>("Prefabs/Game/Text/DamageText");
             }
-            PoolingManager.GetInstance.SetDamageTextPoolingObject(damageTextObject);
-            TextMeshPro damageText = PoolingManager.GetInstance.GetDamageText().GetComponent<TextMeshPro>();
+            poolingManager.SetDamageTextPoolingObject(damageTextObject);
+            TextMeshPro damageText = poolingManager.GetDamageText().GetComponent<TextMeshPro>();
             SetDamageText(damageText, damage);
             return damageText.gameObject;
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
 
         private void SetDamageText(TextMeshPro damageText, float damage)

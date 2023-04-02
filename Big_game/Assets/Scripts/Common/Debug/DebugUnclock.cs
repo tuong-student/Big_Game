@@ -6,10 +6,22 @@ using NOOD.NoodCamera;
 
 namespace Game.DebugMenu
 {
-    public class DebugUnclock : MonoBehaviorInstance<DebugUnclock>
+    public class DebugUnlock : MonoBehaviour, Game.Common.Interface.ISingleton
     {
         public bool isDebug = false;
         int debugCount, maxDebugCount = 4;
+
+        private EventManager eventManager;
+
+        void Awake()
+        {
+            RegisterToContainer();
+        }
+
+        void Start()
+        {
+            eventManager = SingletonContainer.Resolve<EventManager>();
+        }
 
         private void Update()
         {
@@ -30,7 +42,7 @@ namespace Game.DebugMenu
                 debugCount = 0;
                 isDebug = true;
                 CameraShake.GetInstance.Shake();
-                EventManager.GetInstance.OnDebugEnable.RaiseEvent();
+                eventManager.OnDebugEnable.RaiseEvent();
                 
                 Debug.Log("Debug Mode: " + isDebug);
 	        }
@@ -39,7 +51,17 @@ namespace Game.DebugMenu
         public void CloseDebugMenu()
         {
             isDebug = false;
-            EventManager.GetInstance.OnDebugDisable.RaiseEvent();
+            eventManager.OnDebugDisable.RaiseEvent();
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.Register(this);
         }
     }
 }

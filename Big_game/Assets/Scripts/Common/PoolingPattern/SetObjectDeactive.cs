@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SetObjectDeactive : MonoBehaviour
+public class SetObjectDeactivate : MonoBehaviour
 {
 
     #region Bool

@@ -18,10 +18,10 @@ namespace Game.Player
         private void Start()
         {
             if(data == null)
-                data = WeaponManager.GetInstance.GetRandomGunData();
+                data = SingletonContainer.Resolve<WeaponManager>().GetRandomGunData();
             sr = GetComponent<SpriteRenderer>();
             sr.sprite = data.gunImage;
-            EventManager.GetInstance.OnGenerateLevel.OnEventRaise += DestroyThis;
+            SingletonContainer.Resolve<EventManager>().OnGenerateLevel.OnEventRaise += DestroyThis;
         }
 
         public void DestroyThis()

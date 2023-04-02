@@ -5,10 +5,14 @@ using NOOD;
 
 namespace Game.Common.Manager
 {
-    public class PoolingManager : MonoBehaviorInstance<PoolingManager>
+    public class PoolingManager : MonoBehaviour, Game.Common.Interface.ISingleton
     {
-        public static PoolingManager i;
-        [SerializeField] private ObjectPool bulletPooling, explodePooling, damgageTextPooling;
+        [SerializeField] private ObjectPool bulletPooling, explodePooling, damageTextPooling;
+
+        void Awake()
+        {
+            RegisterToContainer();
+        }
 
         public static PoolingManager Create(Transform parent = null)
         {
@@ -20,14 +24,14 @@ namespace Game.Common.Manager
             bulletPooling.objectToPool = bulletPrefab;
         }
 
-        public void SetExpldePoolingObject(GameObject explodePrefab)
+        public void SetExplodePoolingObject(GameObject explodePrefab)
         {
             explodePooling.objectToPool = explodePrefab;
         }
 
         public void SetDamageTextPoolingObject(GameObject damageText)
         {
-            damgageTextPooling.objectToPool = damageText;
+            damageTextPooling.objectToPool = damageText;
         }
 
         public GameObject GetBullet()
@@ -42,7 +46,7 @@ namespace Game.Common.Manager
 
         public GameObject GetDamageText()
         {
-            return damgageTextPooling.GetPoolObject();
+            return damageTextPooling.GetPoolObject();
         }
 
         private void OnDestroy()
@@ -51,6 +55,16 @@ namespace Game.Common.Manager
                 Destroy(bulletPooling.gameObject);
             if(explodePooling)
                 Destroy(explodePooling.gameObject);
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

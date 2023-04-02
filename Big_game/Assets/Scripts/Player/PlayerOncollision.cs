@@ -52,7 +52,7 @@ namespace Game.Player
 
             if (collision.GetComponent<Portal>())
             {
-                LevelManager.GetInstance.ClosePortal();
+                SingletonContainer.Resolve<LevelManager>().ClosePortal();
             }
         }
 

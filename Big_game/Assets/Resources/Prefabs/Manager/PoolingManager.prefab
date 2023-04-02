@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a4775c164f14ab4a1d9adaf7abe9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPool: {fileID: 0}
+  objectToPool: {fileID: 6201288749823271714, guid: 50ab055bedf3b45488dfe6340110c70d, type: 3}
   poolSize: 10
 --- !u!1 &8799893473957045624
 GameObject:
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 8799893475323175240}
   - {fileID: 8245575167868861889}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2555179518692226196
 MonoBehaviour:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPooling: {fileID: 8799893473957045630}
   explodePooling: {fileID: 8799893475323175247}
-  damgageTextPooling: {fileID: 4597968921247397981}
+  damageTextPooling: {fileID: 4597968921247397981}
 --- !u!1 &8799893475323175241
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,28 +7,19 @@ public class SettingUI : MonoBehaviour
 {
     public Sprite musicOnImage;
     public Sprite musicOffImage;
-    [SerializeField] private Button musicButton, soundButton, backButton;
     public Sprite soundOnImage, soundOffImage;
+    private Image musicImage, soundImage;
+    [SerializeField] private Button musicButton, soundButton, backButton;
     [SerializeField] public Slider musicSlider, soundSlider;
     [SerializeField] public GameObject MainMenu;
-    
 
-    // public bool isMusicOn = true;
-    // public bool isSoundOn = true;
-
+    private bool isMusicOn = true;
+    private bool isSoundOn = true;
 
     private void Start()
     {
-//        LocalDataManager.Load();
-
-        //if (LocalDataManager.musicsetting == 1) { musicButton.image.sprite = musicOnImage; }
-        //else { musicButton.image.sprite = musicOffImage; }
-        //if (LocalDataManager.soundsetting == 1) { soundButton.image.sprite = soundOnImage; }
-        //else { soundButton.image.sprite = soundOffImage; }
-
-        //musicSlider.value = LocalDataManager.musicsetting;
-        //soundSlider.value = LocalDataManager.soundsetting;
-
+        musicImage = musicButton.gameObject.GetComponent<Image>();
+        soundImage = soundButton.gameObject.GetComponent<Image>();
     }
     private void OnEnable()
     {
@@ -47,73 +38,48 @@ public class SettingUI : MonoBehaviour
 
     private void UpdateMusicButtonImage()
     {
-        //AudioManager.instance.PlayManagerSound(Soundame.ButtonClick);
-        //UserData.SoundSetting = !UserData.SoundSetting;
-        //musicButton.image.sprite = (LocalDataManager.soundsetting ==0) ? musicOnImage : musicOffImage;
+        isMusicOn = !isMusicOn;
+        if (isMusicOn)
+        {
+            musicImage.sprite = musicOnImage;
 
-        //if (LocalDataManager.musicsetting == 0)
-        //{
-        //    AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-        //    musicButton.image.sprite = musicOnImage;
-        //    LocalDataManager.musicsetting = 1;
-        //    musicSlider.value = LocalDataManager.musicsetting;
-        //    AudioManager.GetInstance.ToggleMusic();
-        //    LocalDataManager.Save();
-        //}
-        //else
-        //{
-        //    AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-        //    musicButton.image.sprite = musicOffImage;
-        //    LocalDataManager.musicsetting = 0;
-        //    musicSlider.value = LocalDataManager.musicsetting;
-        //    AudioManager.GetInstance.ToggleMusic();
-        //    LocalDataManager.Save();
-        //}
+        }
+        else
+        {
+            musicImage.sprite = musicOffImage;
 
+        }
     }
 
     private void UpdateSoundButtonImage()
     {
+        isSoundOn = !isSoundOn;
+        if (isSoundOn)
+        {
+            soundImage.sprite = soundOnImage;
 
+        }
+        else
+        {
+            soundImage.sprite = soundOffImage;
 
-        //soundButton.image.sprite = (isSoundOn) ? musicOnImage : musicOffImage;
-
-        //if (LocalDataManager.soundsetting == 0)
-        //{
-        //    soundButton.image.sprite = soundOnImage;
-        //    LocalDataManager.soundsetting = 1;
-        //    soundSlider.value = LocalDataManager.soundsetting;
-        //    AudioManager.GetInstance.ToggleSFX();
-        //    LocalDataManager.Save();
-        //}
-
-        
-        //else
-        //{
-        //    //soundButton.image.sprite = soundOffImage;
-        //    //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
-        //    //LocalDataManager.soundsetting = 0;
-        //    //soundSlider.value = LocalDataManager.soundsetting;
-        //    //AudioManager.GetInstance.ToggleSFX();
-        //    //LocalDataManager.Save();
-        //}
+        }
     }
 
     public void MusicVolume()
     {
-        //AudioManager.GetInstance.MusicVolume(musicSlider.value);
+
     }
 
     public void SFXVolume()
     {
-        //AudioManager.GetInstance.SFXVolume(soundSlider.value);
+
     }
 
     private void BackToMainMenu()
     {
         gameObject.SetActive(false);
         MainMenu.SetActive(true);
-        //AudioManager.GetInstance.PlaySFX(sound.buttonClick);
     }
 
 }

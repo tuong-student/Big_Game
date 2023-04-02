@@ -13,7 +13,7 @@ namespace Game.Player.Weapon
         public static EventHandler OnPickUpGun;
         #endregion
 
-        [SerializeField] private PlayerScripts playerSript;
+        [SerializeField] private PlayerScripts playerScript;
         [SerializeField] private GunScripts currentGun;
         [SerializeField] [Range(1, 9)] private int gun1Index = 1, gun2Index = 1;
 
@@ -23,16 +23,17 @@ namespace Game.Player.Weapon
         private GunData gun1Data, gun2Data;
         private SaveModels.WeaponModel weaponModel;
 
+        private WeaponManager weaponManager;
         #region Bool
         #endregion
 
         private void Awake()
         {
             LoadFromSave();
-            
-            currentGun.SetData(gun1Data);
+
             nextShootTime = Time.time;
         }
+
 
         private void OnEnable()
         {
@@ -42,8 +43,12 @@ namespace Game.Player.Weapon
 
         private void Start()
         {
+            weaponManager = SingletonContainer.Resolve<WeaponManager>();
+            playerScript = SingletonContainer.Resolve<PlayerScripts>();
+            UpdateFromLoad();
             UpdateGunSprite();
             GameInput.OnPlayerChangeGun += ChangeGun;
+            SingletonContainer.Resolve<EventManager>().OnGenerateLevel.OnEventRaise += Save;
         }
 
         private void Update()
@@ -65,8 +70,8 @@ namespace Game.Player.Weapon
 
         private void Save()
         {
-            gun1Index = WeaponManager.GetInstance.GetIndexOf(gun1Data);
-            gun2Index = WeaponManager.GetInstance.GetIndexOf(gun2Data);
+            gun1Index = weaponManager.GetIndexOf(gun1Data);
+            gun2Index = weaponManager.GetIndexOf(gun2Data);
 
             weaponModel.gun1Index = this.gun1Index;
             weaponModel.gun2Index = this.gun2Index;
@@ -86,9 +91,14 @@ namespace Game.Player.Weapon
                 this.gun1Index = weaponModel.gun1Index;
                 this.gun2Index = weaponModel.gun2Index;
             }
+        }
 
-            gun1Data = WeaponManager.GetInstance.GetGunData(gun1Index);
-            gun2Data = WeaponManager.GetInstance.GetGunData(gun2Index);
+        private void UpdateFromLoad()
+        {
+            gun1Data = weaponManager.GetGunData(gun1Index);
+            gun2Data = weaponManager.GetGunData(gun2Index);
+
+            currentGun.SetData(gun1Data);
         }
 
         public void ChangeGun(int index)
@@ -102,13 +112,13 @@ namespace Game.Player.Weapon
                     currentGun.SetData(gun2Data);
                     break;
             }
-            playerSript.ActiveOnPlayerStatsChange();
+            playerScript.ActiveOnPlayerStatsChange();
         }
 
         private void UpdateGunSprite()
         {
-            SupportUIComponentHolder.GetInstance.gun1Sprite = gun1Data.gunIcon;
-            SupportUIComponentHolder.GetInstance.gun2Sprite = gun2Data.gunIcon;
+            SingletonContainer.Resolve<SupportUIComponentHolder>().gun1Sprite = gun1Data.gunIcon;
+            SingletonContainer.Resolve<SupportUIComponentHolder>().gun2Sprite = gun2Data.gunIcon;
         }
 
         public void PickupNewGun(GroundGun groundGun)
@@ -130,8 +140,8 @@ namespace Game.Player.Weapon
             }
             else
             {
-                // Pick up ground gun data and destroy its gameobject
-                gun2Index = WeaponManager.GetInstance.GetIndexOf(groundGun.GetData());
+                // Pick up ground gun data and destroy its gameObject
+                gun2Index = weaponManager.GetIndexOf(groundGun.GetData());
                 gun2Data = groundGun.GetData();
                 Destroy(groundGun.gameObject);
             }
@@ -164,8 +174,8 @@ namespace Game.Player.Weapon
 
         void Fire()
         {
-            if (!PlayerScripts.GetInstance.IsMoveable) return;
-            float fireRate = PlayerScripts.GetInstance.fireRate.value + GetCurrentGunData().fireRate;
+            if (!playerScript.IsMoveable) return;
+            float fireRate = playerScript.fireRate.value + GetCurrentGunData().fireRate;
             if(Time.time >= nextShootTime)
             {
                 currentGun.Fire();
@@ -175,7 +185,7 @@ namespace Game.Player.Weapon
 
         void LookAtMouse(Vector3 mousePos)
         {
-            if (!PlayerScripts.GetInstance.IsMoveable) return;
+            if (!playerScript.IsMoveable) return;
             Vector3 mouseInWorldPos = NOOD.NoodyCustomCode.ScreenPointToWorldPoint(mousePos);
             NOOD.NoodyCustomCode.LookToPoint2D(this.transform, mouseInWorldPos);
         }

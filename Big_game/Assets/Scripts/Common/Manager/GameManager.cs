@@ -8,14 +8,14 @@ using Game.UI;
 using NOOD;
 using Game.Save;
 using Game.Player;
+using Game.Common.Interface;
 
 namespace Game.Common.Manager
 {
-    public class GameManager : MonoBehaviorInstance<GameManager>
+    public class GameManager : AbstractMonoBehaviour, ISingleton
     {
         #region Event
         public EventHandler<int> OnGoldChange;
-
         #endregion
 
         [SerializeField] Animator nextLevelAnim;
@@ -27,6 +27,8 @@ namespace Game.Common.Manager
 
         private SaveModels.GameSystemModel gameSystemModel;
 
+        private EventManager eventManager;
+
         public static GameManager Create(Transform parent = null)
         {
             return Instantiate<GameManager>(Resources.Load<GameManager>("Prefabs/Manager/GameManger"), parent);
@@ -34,23 +36,29 @@ namespace Game.Common.Manager
 
         private void Awake()
         {
+            RegisterToContainer();
+
             gameSystemModel = LoadJson<SaveModels.GameSystemModel>.LoadFromJson(SaveModels.SaveFile.GameSystemSave.ToString());
             if(gameSystemModel == null || gameSystemModel.playerNum == 0)
             {
                 // No save before
                 gameSystemModel = new SaveModels.GameSystemModel();
-                GameCanvas.GetInstance.ActiveChooseCharacterMenu();
-                // HideChooseCharacterMenu is already subcribed to OnContinueGame event
+                // HideChooseCharacterMenu had already subscribed to OnContinueGame event
             }
             else
             {
+                // Has save file already
                 CreateOrChangePlayerWithNewSave();
             }
         }
 
         private void Start()
         {
-            EventManager.GetInstance.OnGenerateLevelComplete.OnEventRaise += (int number) =>
+            eventManager = SingletonContainer.Resolve<EventManager>();
+            SingletonContainer.Resolve<GameCanvas>().ActiveChooseCharacterMenu();
+            eventManager.OnGenerateLevel.OnEventRaise += Save;
+
+            eventManager.OnGenerateLevelComplete.OnEventRaise += (int number) =>
             {
                 level = number;
             };
@@ -91,14 +99,14 @@ namespace Game.Common.Manager
                 currentPlayer = PlayerScripts.Create();
                 currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
                 currentPlayer.ResetPosition(0); // This number will not use
-                EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+                GameObject.FindObjectOfType<EventManager>().GetComponent<EventManager>().OnContinueGame.RaiseEvent();
             }
             else
             {
                 // Player is exit
                 // Change player image
                 currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
-                EventManager.GetInstance.OnContinuewGame.RaiseEvent();
+                GameObject.FindObjectOfType<EventManager>().GetComponent<EventManager>().OnContinueGame.RaiseEvent();
             }
         }
 
@@ -150,6 +158,16 @@ namespace Game.Common.Manager
         public void TransitionAnimation()
         {
             nextLevelAnim.SetTrigger("Start");
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

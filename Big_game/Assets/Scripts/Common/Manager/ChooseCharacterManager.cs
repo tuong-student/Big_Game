@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using NOOD;
 using UnityEngine.UI;
+using Game.Common.Interface;
 
 namespace Game.Common.Manager
 {
-    public class ChooseCharacterManager : MonoBehaviorInstance<ChooseCharacterManager>
+    public class ChooseCharacterManager : MonoBehaviour, ISingleton
     {
         public static ChooseCharacterManager Create(Transform parent = null)
         {
@@ -14,6 +15,10 @@ namespace Game.Common.Manager
         }
 
         [SerializeField] Button ConfirmBtn;
+        void Awake()
+        {
+            RegisterToContainer();
+        }
 
         private void Start()
         {
@@ -26,6 +31,16 @@ namespace Game.Common.Manager
         private void OnDisable()
         {
             ConfirmBtn.onClick.RemoveAllListeners();
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

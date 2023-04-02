@@ -35,15 +35,15 @@ namespace Game.System
             { 
                 if(isMenuLevel)
                 {
-                    EventManager.GetInstance.OnStartGame.RaiseEvent();
+                    SingletonContainer.Resolve<EventManager>().OnStartGame.RaiseEvent();
                 }
                 else if(isLastLevel)
                 {
-                    EventManager.GetInstance.OnWinGame.RaiseEvent();
+                    SingletonContainer.Resolve<EventManager>().OnWinGame.RaiseEvent();
 	            }
                 else
                 {
-                    LevelManager.GetInstance.NextLevel();
+                    SingletonContainer.Resolve<LevelManager>().NextLevel();
                 }
 	        }
         }

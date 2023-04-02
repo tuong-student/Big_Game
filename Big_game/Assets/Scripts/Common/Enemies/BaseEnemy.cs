@@ -76,7 +76,7 @@ namespace Game.Base
         public void AddGold()
         {
             // Add Gold
-            GameManager.GetInstance.AddGold(gold);
+            SingletonContainer.Resolve<GameManager>().AddGold(gold);
         }
 
         public void TakeDamage(float damageAmount)

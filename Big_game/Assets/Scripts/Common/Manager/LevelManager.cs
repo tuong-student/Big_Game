@@ -5,39 +5,49 @@ using UnityEngine;
 using Game.UI;
 using NOOD;
 using Game.System;
+using Game.Common.Interface;
 
 namespace Game.Common.Manager
 {
-    public class LevelManager : MonoBehaviorInstance<LevelManager>
+    public class LevelManager : MonoBehaviour, ISingleton
     {
         [SerializeField] private List<GameObject> levels;
         [SerializeField] private GameObject mainMenuDungeon;
         private List<GameObject> activeLevels = new List<GameObject>();
         private bool isFirstTime = true;
         private Portal levelPortal;
+        private GameManager gameManager;
+        private EventManager eventManager;
 
         public static LevelManager Create(Transform parent = null)
         {
             return Instantiate<LevelManager>(Resources.Load<LevelManager>("Prefabs/Manager/LevelManager"), parent);
         }
 
+        void Awake()
+        {
+            RegisterToContainer();
+        }
+
         private void Start()
         {
+            eventManager = SingletonContainer.Resolve<EventManager>();
+            gameManager = SingletonContainer.Resolve<GameManager>();
             mainMenuDungeon = GameObject.Find("Main Menu Dungeon");
             if(mainMenuDungeon == null)
                 mainMenuDungeon = Instantiate(mainMenuDungeon);
             ActiveMainMenuLevel();
 
-            EventManager.GetInstance.OnStartGame.OnEventRaise += LoadCurrentLevel;
-            EventManager.GetInstance.OnStartGame.OnEventRaise += DeactiveMainMenuLevel;
-            EventManager.GetInstance.OnGenerateLevel.OnEventRaise += LoadCurrentLevel;
-            EventManager.GetInstance.OnTryAgain.OnEventRaise += LoadCurrentLevel;
+            eventManager.OnStartGame.OnEventRaise += LoadCurrentLevel;
+            eventManager.OnStartGame.OnEventRaise += DeactivateMainMenuLevel;
+            eventManager.OnGenerateLevel.OnEventRaise += LoadCurrentLevel;
+            eventManager.OnTryAgain.OnEventRaise += LoadCurrentLevel;
         }
 
         public void NextLevel()
         {
-            StartCoroutine(LoadLevel(GameManager.GetInstance.CurrentLevel + 1));
-            NoodyCustomCode.StartDelayFunction(() => { InGameUI.GetInstance.CreateUpgradePanel(); }, 1.8f);
+            StartCoroutine(LoadLevel(gameManager.CurrentLevel + 1));
+            NoodyCustomCode.StartDelayFunction(() => { SingletonContainer.Resolve<InGameUI>().CreateUpgradePanel(); }, 1.8f);
         }
 
         public void ActiveMainMenuLevel()
@@ -49,19 +59,19 @@ namespace Game.Common.Manager
             mainMenuDungeon.SetActive(true);
         }
 
-        public void DeactiveMainMenuLevel()
+        public void DeactivateMainMenuLevel()
         {
             mainMenuDungeon.SetActive(false);
         }
 
         public void LoadCurrentLevel()
         {
-            StartCoroutine(LoadLevel(GameManager.GetInstance.CurrentLevel));
+            StartCoroutine(LoadLevel(gameManager.CurrentLevel));
         }
 
         public IEnumerator LoadLevel(int level)
         {
-            GameManager.GetInstance.TransitionAnimation();
+            gameManager.TransitionAnimation();
             
             isFirstTime = false;
             yield return new WaitForSeconds(1f);
@@ -75,14 +85,14 @@ namespace Game.Common.Manager
 
             activeLevels.Add(Instantiate(levels[level - 1]));
             levelPortal = FindObjectOfType<Portal>(false);
-            EventManager.GetInstance.OnGenerateLevelComplete.RaiseEvent(level);
+            eventManager.OnGenerateLevelComplete.RaiseEvent(level);
         }
 
         public void OpenPortal()
         {
             if(levelPortal != null)
             { 
-                AudioManager.GetInstance.PlaySFX(sound.telePortal);
+                SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.teleportPortal);
                 levelPortal.Open();
 	        }
         }
@@ -91,6 +101,16 @@ namespace Game.Common.Manager
         {
             if(levelPortal != null)
                 levelPortal.Close();
+        }
+
+        public void RegisterToContainer()
+        {
+            SingletonContainer.Register(this);
+        }
+
+        public void UnregisterToContainer()
+        {
+            SingletonContainer.UnRegister(this);
         }
     }
 }

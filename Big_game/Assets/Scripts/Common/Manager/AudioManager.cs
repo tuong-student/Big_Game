@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using NOOD;
 
-public class AudioManager : MonoBehaviorInstance<AudioManager>
+public class AudioManager : MonoBehaviour, Game.Common.Interface.ISingleton
 {
     public Sound[] musicSound, sfxSounds;
     public AudioSource musicSource, sfxSource;
@@ -12,6 +12,11 @@ public class AudioManager : MonoBehaviorInstance<AudioManager>
     public static AudioManager Create(Transform parent = null)
     {
         return Instantiate<AudioManager>(Resources.Load<AudioManager>("Prefabs/Manager/AudioManager"), parent);
+    }
+
+    void Awake()
+    {
+        RegisterToContainer();
     }
 
     private void Start()
@@ -37,7 +42,7 @@ public class AudioManager : MonoBehaviorInstance<AudioManager>
 
     public void PlaySFX(sound soundName)
     {
-        Sound s = Array.Find(sfxSounds, x => x.soundtype == soundName);
+        Sound s = Array.Find(sfxSounds, x => x.soundType == soundName);
         if (s == null)
         {
             Debug.Log("Sound not found");
@@ -51,46 +56,31 @@ public class AudioManager : MonoBehaviorInstance<AudioManager>
 
     public void ToggleMusic()
     {
-        //if(LocalDataManager.musicsetting == 0)
-        //{
-        //    musicSource.volume = 0;
-        //    Debug.Log(LocalDataManager.musicsetting);
 
-        //}
-        //else
-        //{
-        //    musicSource.volume = 1;
-        //    PlayMusic("Theme");
-        //    musicSource.loop = true;
-        //    Debug.Log(LocalDataManager.musicsetting);
-
-        //}
 
     }
 
     public void ToggleSFX()
     {
-        //if (LocalDataManager.soundsetting == 0)
-        //{
-        //    sfxSource.volume = 0;
-        //    Debug.Log(LocalDataManager.soundsetting);
 
-        //}
-        //else
-        //{
-        //    sfxSource.volume = 1;
-        //    Debug.Log(LocalDataManager.soundsetting);
-
-        //}
     }
 
-    public void MusicVolume (float volume)
+    public void SetMusicVolume (float volume)
     {
         musicSource.volume = volume;
     }
-    public void SFXVolume(float volume)
+    public void SetSFXVolume(float volume)
     {
         sfxSource.volume = volume;
-    }   
+    }
 
+    public void RegisterToContainer()
+    {
+        SingletonContainer.Register(this);
+    }
+
+    public void UnregisterToContainer()
+    {
+        SingletonContainer.UnRegister(this);
+    }
 }
