@@ -20,7 +20,7 @@ namespace Game.Player.Weapon
         [HideInInspector] public bool isShootPress;
         private float nextShootTime;
 
-        private GunData gun1Data, gun2Data;
+        private GunData gun1Data = null, gun2Data = null;
         private SaveModels.WeaponModel weaponModel;
 
         private WeaponManager weaponManager;
@@ -151,7 +151,7 @@ namespace Game.Player.Weapon
 
         public bool IsEnoughGun()
         {
-            if (gun2Data != gun1Data) return true;
+            if (gun2Data != null) return true;
             else return false;
         }
 
@@ -180,6 +180,7 @@ namespace Game.Player.Weapon
             {
                 currentGun.Fire();
                 nextShootTime = Time.time + 1 / fireRate;
+                NOOD.NoodCamera.CameraShake.GetInstance.Shake();
             }
         }
 

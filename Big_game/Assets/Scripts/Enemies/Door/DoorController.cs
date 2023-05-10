@@ -8,37 +8,48 @@ namespace Game.System
     public class DoorController : MonoBehaviour
     {
         [SerializeField] private bool isFirstDoor;
-        private BoxCollider2D myColider;
-        private SpriteRenderer sr;
+        private BoxCollider2D myCollider;
+        [SerializeField] private SpriteRenderer doorSr;
+        [SerializeField] private SpriteRenderer outline;
         [SerializeField] private EnemyBatchHandler enemyBatchHandler;
+        private bool isCanOpenDoor = false;
 
         private void Awake() {
-            myColider = GetComponent<BoxCollider2D>();
-            sr = GetComponent<SpriteRenderer>();
+            myCollider = GetComponent<BoxCollider2D>();
             if (isFirstDoor)
-                OpenDoor();
+            {
+                CanOpenDoor();
+            }
+            else
+                enemyBatchHandler.OnIsOpenDoorTrue += CanOpenDoor;
         }
 
         public void OpenDoor(){
-            myColider.isTrigger = true;
-            sr.enabled = false;
+            myCollider.isTrigger = true;
+            doorSr.enabled = false;
+            outline.enabled = false;
         }
 
         public void CloseDoor(){
-            myColider.isTrigger = false;
-            sr.enabled = true;
+            myCollider.isTrigger = false;
+            doorSr.enabled = true;
+            outline.enabled = true;
+        }
+
+        private void CanOpenDoor()
+        {
+            outline.color = Color.green;
+            isCanOpenDoor = true;
         }
 
         private void OnCollisionEnter2D(Collision2D other) {
-            if (isFirstDoor == true) return;
-            if(other.gameObject.CompareTag("Player") && enemyBatchHandler.CheckUnlockDoor())
+            if(other.gameObject.CompareTag("Player") && isCanOpenDoor == true)
             {
                 OpenDoor();
             }
         }
 
         private void OnTriggerExit2D(Collider2D other) {
-            if (isFirstDoor == true) return;
             CloseDoor();
         } 
     }

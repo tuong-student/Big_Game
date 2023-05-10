@@ -13,10 +13,14 @@ namespace Game.UI
 
         [SerializeField] private ResetUI newGame;
 
+        void Start()
+        {
+            SingletonContainer.Resolve<EventManager>().OnContinueGame.OnEventRaise += ContinueGame;
+        }
+
         private void OnEnable()
         {
-
-            continueButton.onClick.AddListener(ContinueGame);
+            SingletonContainer.Resolve<EventManager>().OnContinueGame.OnEventRaise -= ContinueGame;
             newGameButton.onClick.AddListener(NewGame);
             settingButton.onClick.AddListener(ToSetting);
             creditButton.onClick.AddListener(ToCredit);
@@ -26,7 +30,6 @@ namespace Game.UI
         private void OnDisable()
         {
         
-            continueButton.onClick.RemoveListener(ContinueGame);
             newGameButton.onClick.RemoveListener(NewGame);
             settingButton.onClick.RemoveListener(ToSetting);
             creditButton.onClick.RemoveListener(ToCredit);

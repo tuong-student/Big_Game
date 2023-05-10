@@ -25,7 +25,7 @@ namespace Game.UI.Support
         private void Awake()
         {
             RegisterToContainer();
-            SingletonContainer.Resolve<EventManager>().OnPlayerCreate += EventManager_OnPlayerCreate;
+            GameObject.FindObjectOfType<EventManager>().OnPlayerCreate += EventManager_OnPlayerCreate;
 
             OnPlayerHealthChangeEventArgs.maxHealth = 100f;
             OnPlayerHealthChangeEventArgs.health = 100f;
@@ -50,7 +50,8 @@ namespace Game.UI.Support
 
         protected override void Dispose()
         {
-            playerScripts.OnPlayerStatsChange -= PlayerScript_UpdatePlayerStats;
+            if(playerScripts != null)
+                playerScripts.OnPlayerStatsChange -= PlayerScript_UpdatePlayerStats;
         }
 
         private void EventManager_OnPlayerCreate(object sender, EventArgs eventArgs)
@@ -61,11 +62,13 @@ namespace Game.UI.Support
             player.OnPlayerStatsChange += PlayerScript_UpdatePlayerStats;
             player.OnHealthChange += PlayerScript_OnHealthChange;
             player.OnManaChange += PlayerScript_OnManaChange;
+            NoodyCustomCode.StartDelayFunction(player.ActiveOnPlayerStatsChange, 0.2f);
             this.AddTo(playerScripts);
         }
 
         private void PlayerScript_UpdatePlayerStats(object sender, PlayerScripts.OnPlayerStatsChangeEventArg eventArg)
         {
+            Debug.Log("OnPlayerStatsChange");
             OnPlayerStatsChangeEventArg = eventArg;
             OnPlayerStatsUpdate?.Invoke(OnPlayerStatsChangeEventArg);
         }

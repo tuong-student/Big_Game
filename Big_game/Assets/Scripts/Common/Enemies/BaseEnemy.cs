@@ -98,7 +98,8 @@ namespace Game.Base
 
         public void DestroySelf()
         {
-            Destroy(this.gameObject);
+            if(this)
+                Destroy(this.gameObject);
         }
 
         public bool IsAlive()

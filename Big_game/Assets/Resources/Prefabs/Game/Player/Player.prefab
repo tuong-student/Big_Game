@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7055740827778100267}
   - component: {fileID: 4293279584836249286}
   - component: {fileID: 4985441576291850706}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerView_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6206319977244856656}
   - component: {fileID: 1915051232245636687}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8882048146139273891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8470352366468983227}
   - component: {fileID: 8662302445628149751}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DashEff2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4760911552239904100}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 1192042838457669099}
   - component: {fileID: 8351695711452664378}
   - component: {fileID: 2144722461413242711}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerView_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 6364216630835527051}
   - component: {fileID: 5018497532369957803}
   - component: {fileID: 2113140875970023665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 1426330137264485145}
   - component: {fileID: 989931373}
   - component: {fileID: 9076987504261023118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShootEff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +705,7 @@ GameObject:
   - component: {fileID: 387428587735549567}
   - component: {fileID: 4880700540080713307}
   - component: {fileID: 4365954662426343857}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerView_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +814,7 @@ GameObject:
   - component: {fileID: 6946583462553598074}
   - component: {fileID: 2971400110636064631}
   - component: {fileID: 8501675313230595011}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -915,6 +915,9 @@ MonoBehaviour:
   playerScripts: {fileID: 6715641731601680243}
   myBody: {fileID: 3886398686517044956}
   movement: {x: 0, y: 0, z: 0}
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 64
   isStop: 1
 --- !u!114 &6946583462553598074
 MonoBehaviour:

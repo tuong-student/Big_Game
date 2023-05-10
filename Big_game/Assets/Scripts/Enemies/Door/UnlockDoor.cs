@@ -12,7 +12,7 @@ namespace Game.System
         [SerializeField]
         private DoorController doorController;
         private void OnCollisionEnter2D(Collision2D other) {
-            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor == true)
+            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.isOpenDoor == true)
             {
                 // other.collider.enabled=false;
                 doorController.OpenDoor();
@@ -20,7 +20,7 @@ namespace Game.System
         }
         private void OnCollisionExit2D(Collision2D other) {
             Debug.Log("exit");
-            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor == true)
+            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.isOpenDoor == true)
             {
 
                 // other.collider.enabled=true;
@@ -30,7 +30,7 @@ namespace Game.System
         private void OnTriggerExit2D(Collider2D other) {
         
             Debug.Log("exit");
-            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.openDoor == true)
+            if(other.gameObject.CompareTag("Door") && enemyBatchHandler.isOpenDoor == true)
             {
 
                 // other.collider.enabled=true;

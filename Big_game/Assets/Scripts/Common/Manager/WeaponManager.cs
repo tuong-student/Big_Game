@@ -20,7 +20,9 @@ public class WeaponManager : MonoBehaviour, Game.Common.Interface.ISingleton
 
     public GunData GetGunData(int index)
     {
-        return gunDatas[index];
+        GunData newGunData = null;
+        newGunData = gunDatas[index];
+        return newGunData;
     }
 
     public GunData GetRandomGunData()

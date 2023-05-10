@@ -9,16 +9,16 @@ namespace Game.UI
 {
     public class StatsMenuUI : MonoBehaviour
     {
-        [SerializeField] private Text txtHealth, txtMana, txtDamage, txtCriticalRate, txtFireRate, txtCurrentSpeed, txtDefence;
+        [SerializeField] private Text txtHealth, txtMana, txtDamage, txtCriticalRate, txtFireRate, txtCurrentSpeed, txtDefense;
 
         private void OnEnable()
         {
-            Support.SupportUIComponentHolder.OnPlayerStatsUpdate += ShowStats;
+            Support.SupportUIComponentHolder.OnPlayerStatsUpdate += UpdateStats;
         }
 
         private void OnDisable()
         {
-            Support.SupportUIComponentHolder.OnPlayerStatsUpdate -= ShowStats;
+            Support.SupportUIComponentHolder.OnPlayerStatsUpdate -= UpdateStats;
         }
 
         private void EventManager_OnPlayerCreate(object sender, EventArgs eventArgs)
@@ -26,7 +26,7 @@ namespace Game.UI
             PlayerScripts player = sender as PlayerScripts;
         }
 
-        public void ShowStats(PlayerScripts.OnPlayerStatsChangeEventArg eventArg)
+        public void UpdateStats(PlayerScripts.OnPlayerStatsChangeEventArg eventArg)
         {
             txtHealth.text = $"Health: {eventArg.maxHealth} (<color=#FF5353>{eventArg.bonusHealth}</color>)";
             txtMana.text = $"Mana: {eventArg.maxMana} (<color=#FF5353>{eventArg.bonusMana}</color>)";
@@ -34,7 +34,7 @@ namespace Game.UI
             txtCriticalRate.text = $"Critical: {eventArg.criticalRate} (<color=#FF5353>{eventArg.bonusCriticalRate}</color>)";
             txtFireRate.text = $"FireRate: {eventArg.fireRate} (<color=#FF5353>{eventArg.bonusFireRate}</color>)";
             txtCurrentSpeed.text = $"Speed: {eventArg.currentSpeed} (<color=#FF5353>{eventArg.bonusSpeed}</color>)";
-            txtDefence.text = $"Defence: {eventArg.defense} (<color=#FF5353>{eventArg.bonusDefense}</color>)";
+            txtDefense.text = $"Defense: {eventArg.defense} (<color=#FF5353>{eventArg.bonusDefense}</color>)";
         }
 
     }

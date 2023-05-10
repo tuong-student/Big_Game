@@ -10,16 +10,22 @@ namespace Game.System.Enemy
         [SerializeField] BaseEnemy boss;
         [SerializeField] Portal door;
 
-        private void Update()
+        void Start()
         {
-            if(!boss.IsAlive())
+            if(door) door.Close();
+        }
+
+        void Update()
+        {
+            if(boss.IsAlive() == false) Destroy(this.gameObject);
+        }
+
+        void OnDestroy()
+        {
+            if(door)
             {
                 door.Open();
             }
-            else
-            {
-                door.Close();
-	        }
         }
     }
 }

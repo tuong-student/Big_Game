@@ -425,6 +425,7 @@ namespace Game.Player
         {
             this.health.value -= value;
             ActiveOnHealthChange();
+            NOOD.NoodCamera.CameraShake.GetInstance.HeaveShake();
             if(this.health.value <= 0)
             {
                 Die();

@@ -27,6 +27,7 @@ namespace Game.UI
         {
             eventManager = SingletonContainer.Resolve<EventManager>();
             eventManager.OnStartGame.OnEventRaise += ActiveInGameMenu;
+            eventManager.OnContinueGame.OnEventRaise += ActiveInGameMenu;
             eventManager.OnPauseGame.OnEventRaise += () =>
             {
                 ActivePauseMenu();

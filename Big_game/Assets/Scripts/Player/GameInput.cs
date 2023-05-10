@@ -16,11 +16,11 @@ public class GameInput : AbstractMonoBehaviour
     public static Action OnPlayerPause;
     public static Action OnPlayerInteract;
 
-    private GameInputSytem gameInputSystem;
+    private GameInputSystem gameInputSystem;
 
     private void Awake()
     {
-        gameInputSystem = new GameInputSytem();
+        gameInputSystem = new GameInputSystem();
         gameInputSystem.Player.Enable();
 
         gameInputSystem.Player.Watch_stats.performed += (InputAction.CallbackContext callback) =>

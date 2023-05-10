@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4041564669243120411
 MonoBehaviour:
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnNewGame: {fileID: 11400000, guid: 171f58fce4f264443879f96088614792, type: 2}
   OnStartGame: {fileID: 11400000, guid: 5e0da5c01b48449dea8e198774cb320c, type: 2}
-  OnContinuewGame: {fileID: 11400000, guid: 58c5cc4ccffc441b0bf4e18ce41c0732, type: 2}
+  OnContinueGame: {fileID: 11400000, guid: 58c5cc4ccffc441b0bf4e18ce41c0732, type: 2}
   OnPauseGame: {fileID: 11400000, guid: 24308ba51d14544c2ab5d3e11b4a7939, type: 2}
   OnGenerateLevel: {fileID: 11400000, guid: 8bfbaaaa6b884472692f5e492ad6886f, type: 2}
   OnLoseGame: {fileID: 11400000, guid: 884ea5d19d2eb4c90a651fb67ca05901, type: 2}

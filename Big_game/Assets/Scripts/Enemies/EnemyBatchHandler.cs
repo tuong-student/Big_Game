@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Game.System.Enemy
 {
     public class EnemyBatchHandler : MonoBehaviour
     {
+        public Action OnIsOpenDoorTrue;
         private readonly string PLAYER_TAG = "Player";
 
         private EnemyShooter[] shooterEnemies;
@@ -15,7 +17,7 @@ namespace Game.System.Enemy
 
         [SerializeField] private bool hasShooterEnemies;
 
-        public bool openDoor = false;
+        public bool isOpenDoor = false;
 
         private void Start(){ 
             enemies = GetComponentsInChildren<BaseEnemy>();
@@ -31,6 +33,14 @@ namespace Game.System.Enemy
             if (collision.gameObject.CompareTag(PLAYER_TAG))
             {
                 EnablePlayerTarget();
+            }
+        }
+
+        void OnTriggerStay2D(Collider2D other)
+        {
+            if(other.gameObject.CompareTag(PLAYER_TAG))
+            {
+                CheckUnlockDoor();
             }
         }
 
@@ -53,7 +63,12 @@ namespace Game.System.Enemy
         }
 
         public bool CheckUnlockDoor(){
-            return this.transform.childCount == 0;
+            if(this.transform.childCount == 0)
+            {
+                isOpenDoor = true;
+                OnIsOpenDoorTrue?.Invoke();
+            }
+            return isOpenDoor;
         }
     }
 }

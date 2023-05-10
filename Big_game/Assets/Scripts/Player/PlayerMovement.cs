@@ -11,10 +11,12 @@ namespace Game.Player
         [SerializeField] PlayerScripts playerScripts;
         [HideInInspector] public Rigidbody2D myBody;
         [HideInInspector] public Vector3 movement;
+        [SerializeField] private LayerMask blockingLayer;
 
         #region Bool
         bool isDashPress;
         bool isDashing;
+        bool isBlock;
         [HideInInspector] public bool isStop;
         #endregion
 
@@ -62,14 +64,53 @@ namespace Game.Player
         {
             if (!playerScripts.IsMoveable) return;
             this.movement = movement;
-            this.myBody.velocity = movement * playerScripts.speed.value;
-            if (movement == Vector2.zero)
+
+            if(IsBlock(movement) == false)
+            {
+                // Move normally
+                ForceMove(movement);
+            }
+            else
+            {
+                // The direction is stop
+                if(movement.x == 0 || movement.y == 0) return;     // Player only press 1 direction
+                if(movement.x != 0 && IsBlock(new Vector2(movement.x, 0)) == false)
+                {
+                    // Can move in X axis
+                    ForceMove(new Vector2(movement.x, 0).normalized);
+                }
+                if(movement.y != 0 && IsBlock(new Vector2(0, movement.y)) == false)
+                {
+                    // Can move in Y axis
+                    ForceMove(new Vector2(0, movement.y).normalized);
+                }
+            }
+        }
+
+        private void ForceMove(Vector2 direction)
+        {
+            this.myBody.velocity = direction * playerScripts.speed.value;
+            if (direction == Vector2.zero)
             {
                 if (Mathf.Abs(myBody.velocity.x) > 0.02f) myBody.drag = 2;
                 isStop = true;
             }
             else
                 isStop = false;
+        }
+
+        private bool IsBlock(Vector2 direction)
+        {
+            if(Physics2D.Raycast(this.transform.position, direction, 0.2f, blockingLayer))
+            {
+                isBlock = true;
+                return true;
+            }
+            else
+            {
+                isBlock = false;
+                return false;
+            }
         }
 
         private void DashPress()
