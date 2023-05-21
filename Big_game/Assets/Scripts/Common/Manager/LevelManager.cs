@@ -41,7 +41,10 @@ namespace Game.Common.Manager
             eventManager.OnStartGame.OnEventRaise += LoadCurrentLevel;
             eventManager.OnStartGame.OnEventRaise += DeactivateMainMenuLevel;
             eventManager.OnGenerateLevel.OnEventRaise += LoadCurrentLevel;
-            eventManager.OnTryAgain.OnEventRaise += LoadCurrentLevel;
+            eventManager.OnTryAgain.OnEventRaise += () =>
+            {
+                NOOD.NoodyCustomCode.StartDelayFunction(LoadCurrentLevel, 0.3f);
+            };
         }
 
         public void NextLevel()

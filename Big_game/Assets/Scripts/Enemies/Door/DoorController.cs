@@ -28,6 +28,7 @@ namespace Game.System
             myCollider.isTrigger = true;
             doorSr.enabled = false;
             outline.enabled = false;
+            SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.gateOpen);
         }
 
         public void CloseDoor(){

@@ -90,21 +90,21 @@ namespace Game.Player.Weapon
         { 
             switch(gunData.name)
             {
-                //case "laser":
-                //case "spazer":
-                //case "flameThrower":
-                //    AudioManager.GetInstance.PlaySFX(sound.laserWeapon);
-                //    break;
-                //case "matter":
-                //    AudioManager.GetInstance.PlaySFX(sound.matterWeapon);
-                //    break;
-                //case "piston":
-                //case "mg":
-                //case "shotgun":
-                //case "cannon":
-                //case "rocket":
-                //    AudioManager.GetInstance.PlaySFX(sound.pistolWeapon);
-                //    break;
+                case "laser":
+                case "spazer":
+                case "flameThrower":
+                   SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.laserWeapon);
+                   break;
+                case "matter":
+                   SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.matterWeapon);
+                   break;
+                case "piston":
+                case "mg":
+                case "shotgun":
+                case "cannon":
+                case "rocket":
+                   SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.pistolWeapon);
+                   break;
 	        }
         }
 

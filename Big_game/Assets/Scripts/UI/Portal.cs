@@ -52,6 +52,7 @@ namespace Game.System
         {
             myCollider.isTrigger = true;
             portalAnim.SetTrigger("Open");
+            SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.teleportPortal);
         }
 
         public void Close()

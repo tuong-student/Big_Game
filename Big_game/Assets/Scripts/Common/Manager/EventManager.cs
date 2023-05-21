@@ -18,6 +18,7 @@ public class EventManager : AbstractMonoBehaviour, Game.Common.Interface.ISingle
     public VoidEventChannelSO OnNewGame;
     public VoidEventChannelSO OnStartGame;
     public VoidEventChannelSO OnContinueGame;
+    public VoidEventChannelSO OnRestartGame;
     public VoidEventChannelSO OnPauseGame;
     public VoidEventChannelSO OnGenerateLevel;
     public VoidEventChannelSO OnLoseGame;
@@ -62,6 +63,7 @@ public class EventManager : AbstractMonoBehaviour, Game.Common.Interface.ISingle
         OnStartGame.OnEventRaise = null;
         OnContinueGame.OnEventRaise = null;
         OnPauseGame.OnEventRaise = null;
+        OnRestartGame.OnEventRaise = null;
         OnGenerateLevel.OnEventRaise = null;
         OnGenerateLevelComplete.OnEventRaise = null;
         OnWinGame.OnEventRaise = null;

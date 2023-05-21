@@ -62,9 +62,15 @@ namespace Game.Common.Manager
             {
                 level = number;
             };
+            eventManager.OnTryAgain.OnEventRaise += CreateOrChangePlayerWithNewSave;
         }
 
         private void Update()
+        {
+
+        }
+
+        public void RestartGame()
         {
 
         }
@@ -88,7 +94,7 @@ namespace Game.Common.Manager
         public void CreateOrChangePlayerWithNewSave()
         {
             LoadFromSave(); // Load again because after choosing player, the save file has been change
-            PlayerScripts currentPlayer = GameObject.FindObjectOfType<PlayerScripts>();
+            PlayerScripts currentPlayer = GameObject.FindObjectOfType<PlayerScripts>(true);
             if (currentPlayer == null)
             {
                 // Player is not created
@@ -105,9 +111,13 @@ namespace Game.Common.Manager
             {
                 // Player is exit
                 // Change player image
+                currentPlayer.gameObject.SetActive(true);
+                currentPlayer.Revive();
                 currentPlayer.ChangePlayerVisualWithPlayerNum(gameSystemModel.playerNum);
                 GameObject.FindObjectOfType<EventManager>().GetComponent<EventManager>().OnContinueGame.RaiseEvent();
             }
+            currentPlayer.OnPlayerDead += () => isEndGame = true;
+            this.isEndGame = false;
         }
 
         private void Save()

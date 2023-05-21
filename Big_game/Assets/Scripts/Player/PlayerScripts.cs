@@ -46,6 +46,7 @@ namespace Game.Player
             public float defense;
             public float bonusDefense;
         }
+        public Action OnPlayerDead;
         #endregion
 
         #region Component
@@ -411,7 +412,8 @@ namespace Game.Player
             Debug.Log("Player Die");
             playerAnimation.DeadAnimation();
             isDead = true;
-            //GameManager.GetInstance.isEndGame = true;
+            OnPlayerDead?.Invoke();
+            SingletonContainer.Resolve<EventManager>().OnLoseGame.RaiseEvent();
         }
 
         public void ResetPosition(int number)
@@ -440,6 +442,17 @@ namespace Game.Player
         public void UnregisterToContainer()
         {
             SingletonContainer.UnRegister(this);
+        }
+
+        public void Revive()
+        {
+            this.isMoveable = true;
+            this.isDead = false;
+            this.playerAnimation.Revive();
+            this.health.value = this.health.max.value;
+            this.mana.value = this.mana.max.value;
+            ActiveOnManaChange();
+            ActiveOnHealthChange();
         }
     }
 }

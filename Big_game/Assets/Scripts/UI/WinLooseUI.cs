@@ -8,7 +8,7 @@ using Game.Common.Interface;
 
 public class WinLooseUI : MonoBehaviour, ISingleton
 {
-    [SerializeField] private CanvasGroup winPanel, loosePanel;
+    [SerializeField] private GameObject winPanel, loosePanel;
     [SerializeField] private Button tryAgainButton, quitButton, playAgainButton, restartGameButton;
     [SerializeField] private ResetUI reset;
 
@@ -23,12 +23,21 @@ public class WinLooseUI : MonoBehaviour, ISingleton
         LoosePanelDeactivate();
         eventManager.OnLoseGame.OnEventRaise += () =>
         {
-            NoodyCustomCode.StartDelayFunction(LoosePanelActivate, 0.2f);
+            NoodyCustomCode.StartDelayFunction(LoosePanelActivate, 1f);
         };
         eventManager.OnWinGame.OnEventRaise += () =>
         {
             NoodyCustomCode.StartDelayFunction(WinPanelActivate, 0.2f);
         };
+        eventManager.OnTryAgain.OnEventRaise += () =>
+        {
+            NoodyCustomCode.StartDelayFunction(TryAgainFromLevel1, 0.2f);
+        };
+        eventManager.OnRestartGame.OnEventRaise += () =>
+        {
+            SingletonContainer.Resolve<Game.Common.Manager.GameManager>().RestartGame();
+        };
+
     }
 
     private void OnEnable()
@@ -50,30 +59,20 @@ public class WinLooseUI : MonoBehaviour, ISingleton
 
     public void WinPanelActivate()
     {
-        winPanel.alpha = 1;
-        winPanel.interactable = true;
-        winPanel.blocksRaycasts = true;
+        winPanel.SetActive(true);
     }
     public void LoosePanelActivate()
     {
-        loosePanel.alpha = 1;
-        loosePanel.interactable = true;
-        loosePanel.blocksRaycasts = true;
-
+        Debug.Log("Active");
+        loosePanel.SetActive(true);
     }
     public void WinPanelDeactivate()
     {
-        winPanel.alpha = 0;
-        winPanel.interactable = false;
-        winPanel.blocksRaycasts = false;
-
+        winPanel.SetActive(false);
     }
     public void LoosePanelDeactivate()
     {
-        loosePanel.alpha = 0;
-        loosePanel.interactable = false;
-        loosePanel.blocksRaycasts = false;
-
+        loosePanel.SetActive(false);
     }
 
     private void TryAgainFromLevel1()
@@ -90,7 +89,7 @@ public class WinLooseUI : MonoBehaviour, ISingleton
     private void PlayAgainFromPickChar()
     {
         audioManager.PlaySFX(sound.buttonClick);
-        if (loosePanel.alpha == 1)
+        if (loosePanel.activeInHierarchy)
         {
             LoosePanelDeactivate();
         }

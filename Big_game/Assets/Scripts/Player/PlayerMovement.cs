@@ -32,7 +32,7 @@ namespace Game.Player
             myBody = GetComponent<Rigidbody2D>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             GameInput.OnPlayerMove += Move;
             GameInput.OnPlayerDash += DashPress;
@@ -48,6 +48,7 @@ namespace Game.Player
             }
             if (playerScripts.isDead) return;
         }
+
 
         private void OnDisable()
         {

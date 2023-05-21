@@ -100,35 +100,30 @@ namespace Game.UI
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.InGame:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(true);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.Setting:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(true);
                     chooseCharacterMenu.SetActive(false);
-                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.ChooseCharacter:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(true);
-                    winLoseMenu.SetActive(false);
                     break;
                 case Menu.WinLose:
                     mainMenu.SetActive(false);
                     inGameMenu.SetActive(false);
                     settingMenu.SetActive(false);
                     chooseCharacterMenu.SetActive(false);
-                    winLoseMenu.SetActive(true);
                     break;
             }
         }

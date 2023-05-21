@@ -21,5 +21,16 @@ namespace Game.Save
             string jsonString = JsonConvert.SerializeObject(objectToSave);
             File.WriteAllText(SAVE_PATH + SAVE_FILE_NAME, jsonString);
         }
+
+        public static void DeleteJson(string SAVE_FILE_NAME)
+        {
+            if(!Directory.Exists(SAVE_PATH))
+            {
+                Directory.CreateDirectory(SAVE_PATH);
+            }
+
+            string jsonString = "";
+            File.WriteAllText(SAVE_PATH + SAVE_FILE_NAME, jsonString);
+        }
     }
 }

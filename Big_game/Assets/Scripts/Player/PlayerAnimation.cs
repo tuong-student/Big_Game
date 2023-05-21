@@ -123,8 +123,17 @@ namespace Game.Player
                 fade -= Time.deltaTime * fadeTime;
                 playerMaterial.SetFloat("_Fade", fade);
                 yield return null;
-                if (fade <= 0) this.gameObject.SetActive(false);
+                if (fade <= 0)
+                {
+                    this.gameObject.SetActive(false);
+                }
+
             }
+        }
+
+        public void Revive()
+        {
+            playerMaterial.SetFloat("_Fade", 1);
         }
     }
 }

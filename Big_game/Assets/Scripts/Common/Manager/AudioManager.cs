@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using NOOD;
+using Game.Save;
 
 public class AudioManager : MonoBehaviour, Game.Common.Interface.ISingleton
 {
     public Sound[] musicSound, sfxSounds;
     public AudioSource musicSource, sfxSource;
+    private SaveModels.UserSetting userSetting;
 
     public static AudioManager Create(Transform parent = null)
     {
@@ -17,6 +19,14 @@ public class AudioManager : MonoBehaviour, Game.Common.Interface.ISingleton
     void Awake()
     {
         RegisterToContainer();
+        userSetting = LoadJson<SaveModels.UserSetting>.LoadFromJson(SaveModels.SaveFile.UserSettingSave.ToString());
+        if(userSetting == null)
+        {
+            userSetting = new SaveModels.UserSetting();
+            userSetting.musicVolume = 1;
+            userSetting.soundVolume = 1;
+            SaveJson.SaveToJson(userSetting, SaveModels.SaveFile.UserSettingSave.ToString());
+        }
     }
 
     private void Start()
@@ -56,13 +66,14 @@ public class AudioManager : MonoBehaviour, Game.Common.Interface.ISingleton
 
     public void ToggleMusic()
     {
-
-
+        userSetting = LoadJson<SaveModels.UserSetting>.LoadFromJson(SaveModels.SaveFile.UserSettingSave.ToString());
+        musicSource.volume = userSetting.musicVolume;
     }
 
     public void ToggleSFX()
     {
-
+        userSetting = LoadJson<SaveModels.UserSetting>.LoadFromJson(SaveModels.SaveFile.UserSettingSave.ToString());
+        sfxSource.volume = userSetting.soundVolume;
     }
 
     public void SetMusicVolume (float volume)
@@ -82,5 +93,17 @@ public class AudioManager : MonoBehaviour, Game.Common.Interface.ISingleton
     public void UnregisterToContainer()
     {
         SingletonContainer.UnRegister(this);
+    }
+
+    public float GetMusicVolume()
+    {
+        userSetting = LoadJson<SaveModels.UserSetting>.LoadFromJson(SaveModels.SaveFile.UserSettingSave.ToString());
+        return userSetting.musicVolume;
+    }
+
+    public float GetSoundVolume()
+    {
+        userSetting = LoadJson<SaveModels.UserSetting>.LoadFromJson(SaveModels.SaveFile.UserSettingSave.ToString());
+        return userSetting.soundVolume;
     }
 }

@@ -14,6 +14,7 @@ namespace Game.Item
             if(player.mana.value < player.mana.max.value)
             {
                 player.AddMana(manaAmount);
+                SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.pickUp);
                 Destroy(this.gameObject);
             }
         }

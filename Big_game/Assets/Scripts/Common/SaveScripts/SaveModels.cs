@@ -42,8 +42,8 @@ namespace Game.Save
 
         public class UserSetting
         {
-            public float musicVolume;
-            public float soundVolume;
+            public float musicVolume = 1;
+            public float soundVolume = 1;
         }
     }
 }

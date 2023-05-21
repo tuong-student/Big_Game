@@ -15,6 +15,7 @@ namespace Game.Item
             if (player.health.value < player.health.max.value)
             {
                 player.AddHealth(healthAmount);
+                SingletonContainer.Resolve<AudioManager>().PlaySFX(sound.pickUp);
                 Destroy(this.gameObject);
             }
         }
